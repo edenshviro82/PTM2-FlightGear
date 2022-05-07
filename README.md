@@ -1,6 +1,6 @@
 # PTM2-FlightGear
 Patam 2 Project:
-Group members: Kfir Sitalkil, Alon Matias Eliron, Amit Ara the king, Eden Shviro, Lital Hekmati
+Group members: Kfir Sitalkil, Alon Matias Eliron, Amit Ara, Eden Shviro, Lital Hekmati
 
 Summary: A JavaFX flightGear Anomaly detection project in which we build 3 sections: Agent, FrontEnd and BackEnd.
 Each section has his own responsibilities and abilities.
