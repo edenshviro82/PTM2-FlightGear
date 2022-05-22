@@ -1,0 +1,13 @@
+Var ip 127.0.0.1
+Var port Plus 8000 Mul Div Plus 1 Minus 0 0 1 4
+Var left Plus 44 1
+Var right 100
+Var plus Plus left right
+Print plus
+Open ip port
+Print left + right = plus
+Print plus
+Print ip port
+Print left
+Print right
+Print Hello World
