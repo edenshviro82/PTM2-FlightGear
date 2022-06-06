@@ -188,8 +188,9 @@ public class DataCollector {
 
     private double calcMiles() {
         int size = flightData.getTs().getSize();
-        //we want to calculate the miles every 10 seconds and the time series get updated 10 times in a second
-        if (size%100 != 0)
+        int rate = Integer.parseInt(Properties.map.get("calc_miles_rate(secs)"));
+        //we want to calculate the miles every rate specified seconds and the time series get updated 10 times in a second
+        if (size%rate*10 != 0)
             return 0;
 
         //get the stream from 10 seconds ago to get the location of the plane

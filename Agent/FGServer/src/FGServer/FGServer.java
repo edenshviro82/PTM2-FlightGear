@@ -16,15 +16,13 @@ public class FGServer implements ServerService{
     private DataCollector dataCollector;
     private ExecutorService es;
     private HashMap<String,Runnable> commandMap;
-    private HashMap<String,String> properties;
     private volatile boolean stop;
     //model's service date members
     private PrintWriter out2model;
     private ObjectOutputStream objectOutputStream;
 
-    public FGServer(String PropertiesFileName) {
+    public FGServer() {
         this.dataCollector = new DataCollector();
-        this.initProperties();
         this.initCommandMap();
         es = Executors.newFixedThreadPool(3);
         es.execute(this::runFgServer);
@@ -33,7 +31,7 @@ public class FGServer implements ServerService{
 
     private void runFgServer() {
         try {
-            ServerSocket server = new ServerSocket(Integer.parseInt(properties.get("fgPort")));
+            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("fgPort")));
             System.out.println("flight gear server is open");
             server.setSoTimeout(1000);
             while(!stop) {
@@ -59,7 +57,7 @@ public class FGServer implements ServerService{
 
     private void runModelServer() {
         try {
-            ServerSocket server = new ServerSocket(Integer.parseInt(properties.get("modelPort")));
+            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("modelPort")));
             System.out.println("model server is open");
             server.setSoTimeout(1000);
             String line;
@@ -89,16 +87,6 @@ public class FGServer implements ServerService{
     }
 
     //init methods/////////////////////////////////////////////////////////////
-    private void initProperties() {
-        try {
-            this.properties = new HashMap<>();
-            Scanner sc = new Scanner(new FileReader("properties.txt"));
-            while (sc.hasNext()) {
-                String[] split = sc.next().split(",");
-                properties.put(split[0],split[1]);
-            }
-        } catch (FileNotFoundException e) { e.printStackTrace(); }
-    }
 
     private void initCommandMap() {
         this.commandMap = new HashMap<>();

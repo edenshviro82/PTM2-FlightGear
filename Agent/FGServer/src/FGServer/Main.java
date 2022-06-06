@@ -16,6 +16,7 @@ import java.util.Optional;
 
 public class Main {
     public static void main (String[] args) {
-        FGServer main = new FGServer("properties.txt");
+        new Properties("properties.txt");
+        FGServer main = new FGServer();
     }
 }
