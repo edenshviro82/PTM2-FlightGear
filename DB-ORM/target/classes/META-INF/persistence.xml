@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="default">
+
+        <class>DB.Fly</class>
+        <class>DB.Plane</class>
+        <class>DB.Time</class>
+        <properties>
+            <property name="hibernate.connection.url"
+                      value="jdbc:sqlserver://LAPTOP-R5Q2O5UR;databaseName=test;encrypt=false;trustServerCertificate=false"/>
+            <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="hibernate.connection.username" value="amit178"/>
+            <property name="hibernate.connection.password" value="amit178"/>
+            <property name="hibernate.show_sql" value="true"/>
+
+
+        </properties>
+    </persistence-unit>
+</persistence>
