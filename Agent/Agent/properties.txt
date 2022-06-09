@@ -1,0 +1,6 @@
+FGClient_ip,127.0.0.1
+FGClient_port,5403
+FGServer_ip,127.0.0.1
+FGServer_port,5401
+backend_port,5404
+view_print_stream_duration(secs),10
