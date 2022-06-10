@@ -38,33 +38,6 @@ public class DataCollector {
         this.initParamsIndex();
     }
 
-    //get methods//////////////////////////////////////////////////////////////
-    public String getAileron() {
-        return symbolTable.get("aileron");
-    }
-    public String getRudder() {
-        return symbolTable.get("rudder");
-    }
-    public String getThrottle() { return symbolTable.get("throttle"); }
-    public String getBreaks() { return symbolTable.get("speedbrake"); }
-    public String getElevators() { return symbolTable.get("elevator"); }
-    public String getAlt() {return symbolTable.get("altitude-ft");}
-    public String getHeading() { return symbolTable.get("heading-deg"); }
-    public String getAirSpeed() { return symbolTable.get("airspeed-kt"); }
-    public String getRoll() { return symbolTable.get("roll-deg"); }
-    public String getPitch() {
-        return symbolTable.get("pitch-deg");
-    }
-    public FlightData getFlight() { return this.flightData; }
-    public String getStream() { return flightData.getTs().getDataStreams().get(flightData.getTs().getDataStreams().size()-1); }
-
-    public Location getLocation() {
-        float longitude = Float.parseFloat(symbolTable.get("longitude-deg"));
-        float latitude = Float.parseFloat(symbolTable.get("latitude-deg"));
-        return new Location(longitude, latitude);
-    }
-
-
     //update methods////////////////////////////////////////////////////////////////////////
     public void initFlightData(String stream) {
         flightData.setStartTime(Instant.now().toString());
@@ -93,6 +66,7 @@ public class DataCollector {
         float latitude = Float.parseFloat(params[paramsIndex.get("latitude-deg")]);
         float altitude = Float.parseFloat(params[paramsIndex.get("altitude-ft")]);
         flightData.setFlyTo(new Location(longitude, latitude));
+        flightData.setMiles(this.calcMiles());
     }
 
     private void updateMaxValues(String stream) {
@@ -111,14 +85,16 @@ public class DataCollector {
         //given a new stream of data, split the data by , to get array of values and update the symbol table
         //the desired value index stored in the pramsIndex map
         String[] params = stream.split(",");
-        symbolTable.forEach((s1,s2) -> symbolTable.put(s1, params[paramsIndex.get(s1)]));
+        symbolTable.forEach((s1, s2) -> symbolTable.put(s1, params[paramsIndex.get(s1)]));
     }
 
     private void updateTimeSeries(String stream) {
         flightData.getTs().getDataStreams().add(stream);
     }
 
-    private void updateMiles() { flightData.setMiles(flightData.getMiles() + this.calcMiles());}
+    private void updateMiles() {
+        flightData.setMiles(flightData.getMiles() + this.calcMiles());
+    }
 
     //initialize methods///////////////////////////////////////////////////////
     private void initFlightParams(String xmlFileName) {
@@ -159,6 +135,61 @@ public class DataCollector {
             paramsIndex.put(params[i], i);
     }
 
+    //get methods//////////////////////////////////////////////////////////////
+    public String getAileron() {
+        return symbolTable.get("aileron");
+    }
+
+    public String getRudder() {
+        return symbolTable.get("rudder");
+    }
+
+    public String getThrottle() {
+        return symbolTable.get("throttle");
+    }
+
+    public String getBrakes() {
+        return symbolTable.get("speedbrake");
+    }
+
+    public String getElevators() {
+        return symbolTable.get("elevator");
+    }
+
+    public String getAlt() {
+        return symbolTable.get("altitude-ft");
+    }
+
+    public String getHeading() {
+        return symbolTable.get("heading-deg");
+    }
+
+    public String getAirSpeed() {
+        return symbolTable.get("airspeed-kt");
+    }
+
+    public String getRoll() {
+        return symbolTable.get("roll-deg");
+    }
+
+    public String getPitch() {
+        return symbolTable.get("pitch-deg");
+    }
+
+    public FlightData getFlight() {
+        return this.flightData;
+    }
+
+    public String getStream() {
+        return flightData.getTs().getDataStreams().get(flightData.getTs().getDataStreams().size() - 1);
+    }
+
+    public Location getLocation() {
+        float longitude = Float.parseFloat(symbolTable.get("longitude-deg"));
+        float latitude = Float.parseFloat(symbolTable.get("latitude-deg"));
+        return new Location(longitude, latitude);
+    }
+
     //calc distance method///////////////////////////////////////////////////////
     private double distance(Location loc1, Location loc2) {
         // The math module contains a function
@@ -174,7 +205,7 @@ public class DataCollector {
         double dlat = lat2 - lat1;
         double a = Math.pow(Math.sin(dlat / 2), 2)
                 + Math.cos(lat1) * Math.cos(lat2)
-                * Math.pow(Math.sin(dlon / 2),2);
+                * Math.pow(Math.sin(dlon / 2), 2);
 
         double c = 2 * Math.asin(Math.sqrt(a));
 
@@ -183,21 +214,22 @@ public class DataCollector {
         double r = 3956;
 
         // calculate the result
-        return(c * r);
+        return (c * r);
     }
 
     private double calcMiles() {
         int size = flightData.getTs().getSize();
-        int rate = Integer.parseInt(Properties.map.get("calc_miles_rate(secs)"));
         //we want to calculate the miles every rate specified seconds and the time series get updated 10 times in a second
-        if (size%rate*10 != 0)
+        int rate = Integer.parseInt(Properties.map.get("calc_miles_rate(secs)"))*10;
+
+        if (size%rate != 0)
             return 0;
 
         //get the stream from 10 seconds ago to get the location of the plane
-        String lastStream = flightData.getTs().getDataStreams().get(size-101);
-        String[] values = lastStream.split(", ");
-        Float long1 = Float.parseFloat(values[paramsIndex.get("longitude-deg")]);
-        Float lat1 = Float.parseFloat(values[paramsIndex.get("latitude-deg")]);
+        String lastStream = flightData.getTs().getDataStreams().get(size-100);
+        String[] values = lastStream.split(",");
+        float long1 = Float.parseFloat(values[paramsIndex.get("longitude-deg")]);
+        float lat1 = Float.parseFloat(values[paramsIndex.get("latitude-deg")]);
         Location loc1 = new Location(long1,lat1);
         //we already have a method to get the current location
         Location loc2 = this.getLocation();

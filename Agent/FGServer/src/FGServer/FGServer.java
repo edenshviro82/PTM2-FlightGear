@@ -93,7 +93,7 @@ public class FGServer implements ServerService{
         commandMap.put("aileron", this::getAileron);
         commandMap.put("rudder", this::getRudder);
         commandMap.put("throttle", this::getThrottle);
-        commandMap.put("breaks", this::getBreaks);
+        commandMap.put("brakes", this::getBrakes);
         commandMap.put("elevators", this::getElevators);
         commandMap.put("alt", this::getAlt);
         commandMap.put("heading", this::getHeading);
@@ -123,8 +123,8 @@ public class FGServer implements ServerService{
     }
 
     @Override
-    public void getBreaks() {
-        out2model.println(dataCollector.getBreaks());
+    public void getBrakes() {
+        out2model.println(dataCollector.getBrakes());
     }
 
     @Override

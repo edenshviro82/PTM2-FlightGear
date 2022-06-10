@@ -7,12 +7,14 @@ public class FlightData implements Serializable {
     private String endTime;
     private float maxSpeed;
     private float maxAltitude;
+    private double miles;
     private Location flyFrom;
     private Location flyTo;
     private TimeSeries ts;
 
     public FlightData() {
         this.ts = new TimeSeries();
+        this.miles = 0;
     }
 
     //getters/////////////////////////////////////////////////////////////////////////
@@ -26,6 +28,7 @@ public class FlightData implements Serializable {
     public float getMaxAltitude() {
         return maxAltitude;
     }
+    public double getMiles() { return miles; }
     public Location getFlyFrom() {
         return flyFrom;
     }
@@ -47,6 +50,7 @@ public class FlightData implements Serializable {
     public void setMaxAltitude(float maxAltitude) {
         this.maxAltitude = maxAltitude;
     }
+    public void setMiles(double miles) { this.miles = miles; }
     public void setTs(TimeSeries ts) {
         this.ts = ts;
     }
