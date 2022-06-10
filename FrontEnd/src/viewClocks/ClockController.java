@@ -27,7 +27,7 @@ FGauge clock1;
 @FXML
 Gauge clock2;
 @FXML
-FGauge clock3;
+Gauge clock3;
 @FXML
 FGauge clock4;
 @FXML

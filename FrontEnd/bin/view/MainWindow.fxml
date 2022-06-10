@@ -4,7 +4,6 @@
 <!-- <?import eu.hansolo.medusa.Gauge?> 
  -->
 
-<?import eu.hansolo.medusa.Gauge?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -60,8 +59,8 @@
 						      <Button fx:id="refresh" layoutX="858.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" styleClass="Symbols" />
 						            <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="861.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
 						               <image>
-						                  <Image url="@../style/refresh.png" />
-						               </image>
+ 						                  <Image url="@../style/refresh.png" />
+  						               </image>
 						            </ImageView>
       
                      </children></AnchorPane>
@@ -75,9 +74,12 @@
                         <BorderPane layoutY="-9.0" prefHeight="391.0" prefWidth="700.0">
 
                            <right>
- 	                 		  <fx:include fx:id="joystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="TOP_RIGHT" />      		  
+ 	                 		  <fx:include fx:id="joystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="CENTER_RIGHT" />      		  
                           </right>
+                         <center>
+                            <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="CENTER_RIGHT" /> 
                          
+                         </center>
                            <left>
                           	<fx:include fx:id="graphMonitoring" source="../viewGraph/Graph.fxml" BorderPane.alignment="TOP_RIGHT" />
                            </left>
@@ -95,21 +97,19 @@
                         <Button fx:id="buttonRun" layoutX="38.0" layoutY="327.0" mnemonicParsing="false" text="Run" />
                         <BorderPane layoutX="374.0" layoutY="7.0" prefHeight="359.0" prefWidth="519.0">
                            <center>
- 	                 		  <fx:include fx:id="joystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="TOP_RIGHT" />
-                           </center>
+  	                 		  <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="CENTER_RIGHT" /> 
+                        </center>
                            <right>
-                            <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="BOTTOM_RIGHT" /> 
-                           
+                            
+                           <fx:include fx:id="teleJoystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="CENTER_RIGHT" />
                            </right>
                            <left>
                            </left>
-                           <left>
-                              <Gauge BorderPane.alignment="CENTER" />
-                           </left>
+                          
                         </BorderPane>
-                        <ScrollPane layoutX="38.0" layoutY="24.0" prefHeight="297.0" prefWidth="285.0">
+                        <ScrollPane layoutX="38.0" layoutY="24.0" prefHeight="299.0" prefWidth="331.0">
                            <content>
-                              <TextField fx:id="textfieldTele" alignment="TOP_LEFT" prefHeight="294.0" prefWidth="299.0" />
+                              <TextField fx:id="textfieldTele" alignment="TOP_LEFT" prefHeight="298.0" prefWidth="342.0" />
                            </content>
                         </ScrollPane>
                      </children></AnchorPane>
@@ -122,11 +122,14 @@
                      <children>
                         <BorderPane layoutY="14.0" prefHeight="377.0" prefWidth="700.0">
                            <right>
-   	                 		  <fx:include fx:id="joystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="TOP_RIGHT" />
+   	                 		  <fx:include fx:id="joystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="CENTER_RIGHT" />
    	                 		  
-    	                 		 <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="BOTTOM_RIGHT" /> 
+    	                 		
  						               		  
                           </right>
+                          <center>
+                           <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="TOP_RIGHT" /> 
+                          </center>
                           <bottom>
                           	<fx:include fx:id="play" source="../viewPlay/Play.fxml" BorderPane.alignment="TOP_RIGHT" />
                           </bottom>

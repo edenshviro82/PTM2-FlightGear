@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import viewJoystick.*;
+import viewModel.ViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,6 +40,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import model.Plane;
 //import viewClocks.ClockController;
 
@@ -47,6 +49,13 @@ public class MainWindowController implements Initializable,Observer{
 
 //********************************************fleet Overview***************************************	
 
+	public ViewModel vm;
+	
+	private Stage stage;
+
+	@FXML
+	public JoystickController teleJoystickController;
+	
 	@FXML
 	private PieChart pieChart;
 
@@ -84,12 +93,14 @@ public class MainWindowController implements Initializable,Observer{
 	
 	
 
-	
-
-	
+		
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+	
+		
+		
 		
 		
 		//paint();
@@ -147,24 +158,9 @@ public class MainWindowController implements Initializable,Observer{
 		
 		fleetLineChart.getData().add(setLineChart);
 		
-//		Gauge gauge=new Gauge();
-//		Button btn=new Button();
-//		btn.setText("dedn");
-//		btn.setTranslateX(10);
-//		btn.setTranslateY(200);
-//		btn.setOnAction(new EventHandler<ActionEvent>() {
-//			
-//			@Override
-//			public void handle(ActionEvent event) {
-//					System.out.println("hello ");
-//					gauge.setAnimated(true);
-//					gauge.setValue(90);		
-//			}
-//		});
+		System.out.println("end");
 		
 	
-
-		
 	}
 	
 
@@ -182,9 +178,18 @@ public class MainWindowController implements Initializable,Observer{
 		this.canvasGc.drawImage(this.airplane, x, y, 50, 50);
 	}
 	
-//	public void ok() {
-//		viewModel.setXY();
-//	}
+
+	public void init1(ViewModel vm)
+	{	
+		System.out.println("init1");
+		this.vm= vm;
+		vm.throttle.bind(teleJoystickController.throttleSlider.valueProperty());
+		vm.rudder.bind(teleJoystickController.rudderSlider.valueProperty());
+		vm.aileron.bind(teleJoystickController.ailerons);
+		vm.elevators.bind(teleJoystickController.elevators);
+		
+		
+	}
 	
 
 	
@@ -199,6 +204,16 @@ public class MainWindowController implements Initializable,Observer{
 //		int newY = Integer.parseInt(y.getText());
 //		drawAirplane(newX, newY);
 	}
+
+
+
+
+
+	public void setStage(Stage primaryStage) {
+		this.stage=primaryStage;
+		
+	}
+
 	
 	
 }

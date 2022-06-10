@@ -19,38 +19,38 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Sphere;
 
 
-	public class JoystickController implements Initializable{
+	public class JoystickController extends Canvas implements Initializable{
 		
 
 		@FXML
-		Slider rudderSlider;
+		public Slider rudderSlider;
 		
 		@FXML
-		Slider throttleSlider;
+		public Slider throttleSlider;
 		
 		@FXML
-		Circle joystickCircle;
+		public Circle joystickCircle;
 		
 		@FXML
-		Label aileronLabel;
+		public Label aileronLabel;
 		
 		@FXML
-		Label elevatorLabel;
+		public Label elevatorLabel;
 		
 		@FXML
-		Label throttleLabel;
+		public Label throttleLabel;
 		
 		@FXML
-		Label rudderLabel;
+		public Label rudderLabel;
 	
 
 		@FXML
-		Canvas canJoystick;
+		public Canvas canJoystick;
 		
 		
 		Boolean mousePushed;
 		double jx,jy,mx,my;
-		DoubleProperty ailerons,elevators;
+		public DoubleProperty ailerons,elevators;
 		
 		
 		
@@ -68,7 +68,7 @@ import javafx.scene.shape.Sphere;
 			 mx=canJoystick.getWidth()/2;
 			 my=canJoystick.getHeight()/2;
 			gc.clearRect(0, 0, canJoystick.getWidth(), canJoystick.getHeight());
-			gc.strokeOval(jx-10,jy-10, 20,20);
+			gc.strokeOval(jx-10,jy-15, 20,20);
 			ailerons.set((jx-mx)/mx);
 			elevators.set((jy-my)/my);
 			
@@ -132,7 +132,8 @@ import javafx.scene.shape.Sphere;
 		}
 
 	/*
-	 * public void init(ViewModel vm) { this.vm= vm;
+	 * public void init(ViewModel vm) { 
+	 * this.vm= vm;
 	 * vm.throttle.bind(throttle.valueProperty());
 	 * vm.rudder.bind(rudder.valueProperty()); vm.aileron.bind(ailerons);
 	 * vm.elevators.bind(elevators);
