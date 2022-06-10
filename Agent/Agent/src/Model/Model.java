@@ -57,8 +57,8 @@ public class Model implements ModelAPI{
     public void setThrottle(float value) {
         out2FGClient.println("set throttle " +value);
     }
-    public void setBreaks(float value) {
-        out2FGClient.println("set breaks " + value);
+    public void setBrakes(float value) {
+        out2FGClient.println("set brakes " + value);
     }
 
     //get methods///////////////////////////////////////////////////////////////////////////
@@ -87,8 +87,8 @@ public class Model implements ModelAPI{
     }
 
     @Override
-    public String getBreaks() throws IOException {
-        out2FGServer.println("get breaks");
+    public String getBrakes() throws IOException {
+        out2FGServer.println("get brakes");
         return fromFGServer.readLine();
     }
 

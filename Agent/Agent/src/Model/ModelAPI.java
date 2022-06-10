@@ -11,14 +11,14 @@ public interface ModelAPI {
     public void setElevators(float value);
     public void setRudder(float value);
     public void setThrottle(float value);
-    public void setBreaks(float value);
+    public void setBrakes(float value);
 
     //get methods/////////////////////
     public String getAileron() throws IOException;
     public String getElevators() throws IOException;
     public String getRudder() throws IOException;
     public String getThrottle() throws IOException;
-    public String getBreaks() throws IOException;
+    public String getBrakes() throws IOException;
     public String getAlt() throws IOException;
     public String getHeading() throws IOException;
     public String getAirSpeed() throws IOException;

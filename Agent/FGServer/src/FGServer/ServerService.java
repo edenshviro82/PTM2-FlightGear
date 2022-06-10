@@ -4,7 +4,7 @@ public interface ServerService {
     public void getAileron();
     public void getRudder();
     public void getThrottle();
-    public void getBreaks();
+    public void getBrakes();
     public void getElevators();
     public void getAlt();
     public void getHeading();

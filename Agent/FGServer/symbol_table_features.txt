@@ -10,4 +10,3 @@ heading-deg
 airspeed-kt
 roll-deg
 pitch-deg
-

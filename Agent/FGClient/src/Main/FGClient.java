@@ -27,8 +27,8 @@ public class FGClient implements FGClientApi {
         map.put("aileron",(value)-> this.setAileron(value));
         map.put("throttle",(value)-> this.setThrottle(value));
         map.put("rudder",(value)-> this.setRudder(value));
-        map.put("breaks",(value)-> this.setBreaks(value));
-        map.put("elevator",(value)-> this.setElevators(value));
+        map.put("brakes",(value)-> this.setBrakes(value));
+        map.put("elevators",(value)-> this.setElevators(value));
     }
 
     public void runServer() {
@@ -41,7 +41,7 @@ public class FGClient implements FGClientApi {
                 try {
                     Socket agent = server.accept();
                     System.out.println("Agent is connected to my service");
-                    BufferedReader  in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+                    BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
                     while(!(line = in.readLine()).equals("bye")) {
                         System.out.println(line);
                         //command example: set aileron 1
@@ -73,7 +73,7 @@ public class FGClient implements FGClientApi {
         FlightGear.setRudder(value);
     }
 
-    public void setBreaks(float value) {
+    public void setBrakes(float value) {
         FlightGear.setBreaks(value);
     }
 

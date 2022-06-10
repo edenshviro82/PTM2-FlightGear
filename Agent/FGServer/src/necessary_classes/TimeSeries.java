@@ -19,4 +19,10 @@ public class TimeSeries implements Serializable {
     }
 
     public int getSize() { return dataStreams.size(); }
+
+    public String getStream(int index) {
+        if (index > 0 && index < dataStreams.size())
+            return dataStreams.get(index);
+        return null;
+    }
 }

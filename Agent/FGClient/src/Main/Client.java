@@ -58,7 +58,7 @@ public class Client {
         out2fg.println(command+" "+x);
     }
     public void setBreaks(float x) {
-        String command = properties.get("breaks");
+        String command = properties.get("brakes");
         out2fg.println(command+" "+x);
     }
 
