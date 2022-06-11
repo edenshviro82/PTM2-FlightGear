@@ -14,7 +14,7 @@
          <children>
             <Canvas id="canvasClocks" height="283.0" width="218.0" />
  <FGauge fx:id="clock1" layoutY="14.0" prefHeight="82.0" prefWidth="111.0" />
-            <Gauge fx:id="clock2" layoutX="107.0" layoutY="10.0" prefHeight="90.0" prefWidth="90.0" />
+            <Gauge fx:id="gauge" layoutX="107.0" layoutY="10.0" prefHeight="90.0" prefWidth="90.0" />
              <FGauge fx:id="clock4" layoutX="14.0" layoutY="103.0" prefHeight="78.0" prefWidth="79.0" />
              <Gauge fx:id="clock5" layoutX="107.0" layoutY="99.0" prefHeight="86.0" prefWidth="90.0" />
             <FGauge fx:id="clock6" layoutX="14.0" layoutY="168.0" prefHeight="108.0" prefWidth="81.0" />

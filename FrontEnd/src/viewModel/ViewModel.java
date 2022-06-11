@@ -3,8 +3,12 @@ package viewModel;
 import java.util.Observer;
 
 import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import model.Model;
 
 public class ViewModel implements Observer{
@@ -16,6 +20,7 @@ public class ViewModel implements Observer{
 	public DoubleProperty rudder;
 	public DoubleProperty throttle;
 	
+	public IntegerProperty isRunPushed;
 	
 	public ViewModel(Model m) {
 		// TODO Auto-generated constructor stub
@@ -26,11 +31,13 @@ public class ViewModel implements Observer{
 		elevators=new SimpleDoubleProperty();
 		rudder=new SimpleDoubleProperty();
 		throttle=new SimpleDoubleProperty();
+		isRunPushed=new SimpleIntegerProperty();
 		
 		aileron.addListener((o,ov,nv)->m.setAlieron((double)nv));
 		elevators.addListener((o,ov,nv)->m.setElevators((double)nv));
 		rudder.addListener((o,ov,nv)->m.setRudder((double)nv));
 		throttle.addListener((o,ov,nv)->m.setThrottle((double)nv));
+		isRunPushed.addListener((o,ov,nv)->m.sendTeleText());
 
 	}
 

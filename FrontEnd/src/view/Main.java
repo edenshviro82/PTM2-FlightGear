@@ -27,7 +27,7 @@ public class Main extends Application {
 		  primaryStage.setTitle("Flight gear controller");
 		  primaryStage.setScene(scene);
 		
-		  Model m=new Model("CLientProperties.txt");
+		  Model m=new Model("Properties.txt");
 		ViewModel vm=new ViewModel(m);
 			  
 		  MainWindowController controller = loader.getController();

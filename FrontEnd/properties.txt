@@ -1,6 +1,6 @@
 ip,127.0.0.1
-port,5403
+port,5405
 aileron,set aileron
-elevator,set elevator
+elevators,set elevator
 throttle,set throttle
 rudder,set rudder

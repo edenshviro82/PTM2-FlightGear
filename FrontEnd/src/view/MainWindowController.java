@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale.Category;
@@ -17,6 +18,10 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import viewJoystick.*;
 import viewModel.ViewModel;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +39,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
@@ -53,8 +59,7 @@ public class MainWindowController implements Initializable,Observer{
 	
 	private Stage stage;
 
-	@FXML
-	public JoystickController teleJoystickController;
+	
 	
 	@FXML
 	private PieChart pieChart;
@@ -84,6 +89,24 @@ public class MainWindowController implements Initializable,Observer{
 	@FXML
 	Canvas mapCanvas;	
 	
+	//************************************************************************************************
+	
+	//***************************************teleopration***********************************************
+	
+	@FXML
+	public JoystickController teleJoystickController;
+	
+	@FXML
+	public Button buttonRun;
+	
+	@FXML
+	public TextArea textAreaTele;
+	
+	private IntegerProperty isRunpush;
+	
+	//************************************************************************************************
+
+	
 	GraphicsContext canvasGc;
 	Image background;
 	Image airplane; 
@@ -101,8 +124,6 @@ public class MainWindowController implements Initializable,Observer{
 	
 		
 		
-		
-		
 		//paint();
 	//************************************************fleet overview************************************************
 	//map
@@ -112,6 +133,7 @@ public class MainWindowController implements Initializable,Observer{
 		this.canvasGc = mapCanvas.getGraphicsContext2D();
 		airplane=null;
 		background=null;
+	
 		try {
 			airplane = new Image(new FileInputStream("./imgs/plane.png"));
 			background = new Image(new FileInputStream("./imgs/map.jpeg"));
@@ -119,7 +141,6 @@ public class MainWindowController implements Initializable,Observer{
 
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -128,8 +149,7 @@ public class MainWindowController implements Initializable,Observer{
 		//pieChart
 		 ObservableList<PieChart.Data> pieChartData= FXCollections.observableArrayList(
 				new PieChart.Data("available", 39),
-				new PieChart.Data("not available",61));
-				
+				new PieChart.Data("not available",61));	
 		pieChart.setData(pieChartData);
 		
 		
@@ -137,8 +157,7 @@ public class MainWindowController implements Initializable,Observer{
 		XYChart.Series setL=new XYChart.Series<>();
 		setL.getData().add(new XYChart.Data<>("1",13));
 		setL.getData().add(new XYChart.Data<>("2",43));
-		setL.getData().add(new XYChart.Data<>("3",63));
-		
+		setL.getData().add(new XYChart.Data<>("3",63));	
 		barChart.getData().addAll(setL);
 
 		
@@ -146,25 +165,26 @@ public class MainWindowController implements Initializable,Observer{
 		XYChart.Series setL1=new XYChart.Series<>();
 		setL1.getData().add(new XYChart.Data<>("1",13));
 		setL1.getData().add(new XYChart.Data<>("2",93));
-//		setL1.getData().add(new XYChart.Data<>("3",63));
-//		
 		barChartYearly.getData().addAll(setL1);
-//		
+		
 		
 		//Fleet line chart
 		XYChart.Series setLineChart=new XYChart.Series<>();
 		setLineChart.getData().add(new XYChart.Data<>("1",133));
-		setLineChart.getData().add(new XYChart.Data<>("2",98));
-		
+		setLineChart.getData().add(new XYChart.Data<>("2",98));		
 		fleetLineChart.getData().add(setLineChart);
 		
+		//*********************************************************************************************
+	
+	//****************************teleopration****************************************************
+			
+		//textfieldTele = new TextField();
 		System.out.println("end");
+		isRunpush=new SimpleIntegerProperty(0);
 		
 	
 	}
-	
-
-	
+	//*********************************************************************************************
 	
 	
 	public void drawMap() {
@@ -183,12 +203,37 @@ public class MainWindowController implements Initializable,Observer{
 	{	
 		System.out.println("init1");
 		this.vm= vm;
+		
+		//***************** teleopration binding***********************************
+	
 		vm.throttle.bind(teleJoystickController.throttleSlider.valueProperty());
 		vm.rudder.bind(teleJoystickController.rudderSlider.valueProperty());
 		vm.aileron.bind(teleJoystickController.ailerons);
 		vm.elevators.bind(teleJoystickController.elevators);
+		vm.isRunPushed.bind(isRunpush);
+	
+		//*************************************************************************
+	
 		
-		
+	}
+	
+	public void runTeleCode()
+	{
+		 try {
+			
+			PrintWriter out=new PrintWriter(new File("teleoprationText.txt"));
+			out.println(textAreaTele.getText().toString());
+			out.flush();
+			out.close();
+			
+			//we increase the value in order to change the binding value		
+			isRunpush.set(isRunpush.getValue()+1);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 
