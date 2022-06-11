@@ -4,16 +4,11 @@ import necessary_classes.FlightData;
 import necessary_classes.Location;
 import necessary_classes.Properties;
 
-import java.beans.XMLDecoder;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Model implements ModelAPI{
-    HashMap<String,String> properties;
     ObjectInputStream objectInputStream;
     //FGClient's streams
     PrintWriter out2FGClient;
@@ -129,12 +124,6 @@ public class Model implements ModelAPI{
     }
 
     @Override
-    public void endFlight() {
-        out2FGServer.println("bye");
-        out2FGClient.println("bye");
-    }
-
-    @Override
     public Location getLocation() throws IOException, ClassNotFoundException {
         out2FGServer.println("get location");
         return (Location) objectInputStream.readObject();
@@ -145,4 +134,9 @@ public class Model implements ModelAPI{
         out2FGServer.println("get flight");
         return (FlightData) objectInputStream.readObject();
     }
+
+    //start,end methods
+    public void startFlight() { out2FGServer.println("start flight");}
+
+    public void endFlight()  { out2FGServer.println("end flight");}
 }

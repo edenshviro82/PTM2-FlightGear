@@ -2,6 +2,7 @@ package necessary_classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TimeSeries implements Serializable {
     ArrayList<String> dataStreams;

@@ -15,12 +15,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Controller implements Observer{
+    private volatile boolean stop;
     HashMap<String,Command> commandMap;
     Commands c;
     Model m;
-    private volatile boolean stop;
-    ExecutorService es;
     View v;
+    ExecutorService es;
 
 
     public Controller(Model m, View v) {
@@ -87,6 +87,8 @@ public class Controller implements Observer{
         commandMap.put("get location", c.new getLocationCommand());
         commandMap.put("get flight", c.new getFlightCommand());
         commandMap.put("get stream", c.new getStreamCommand());
+        commandMap.put("start flight",c.new startFlightCommand());
+        commandMap.put("end flight",c.new endFlightCommand());
     }
 
     @Override

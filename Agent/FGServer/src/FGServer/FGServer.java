@@ -16,7 +16,9 @@ public class FGServer implements ServerService{
     private DataCollector dataCollector;
     private ExecutorService es;
     private HashMap<String,Runnable> commandMap;
+//    private volatile boolean stopFg;
     private volatile boolean stop;
+    Socket flightGear;
     //model's service date members
     private PrintWriter out2model;
     private ObjectOutputStream objectOutputStream;
@@ -26,36 +28,41 @@ public class FGServer implements ServerService{
         this.initCommandMap();
         es = Executors.newFixedThreadPool(3);
         es.execute(this::runFgServer);
-        es.execute(this::runModelServer);
+//        es.execute(this::runModelServer);
     }
 
+    //servers methods////////////////////////////////////////////////////////////////////////
     private void runFgServer() {
         try {
             ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("fgPort")));
             System.out.println("flight gear server is open");
-            server.setSoTimeout(1000);
-            while(!stop) {
-                try {
-                    Socket client = server.accept();
-                    System.out.println("simulator is connected to my server");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                    this.dataCollector.initFlightData(in.readLine());
-                    while(!stop) {
-                        String stream = in.readLine();
-                        es.execute(()-> dataCollector.updateFlightData(stream));
-                    }
-                    //get the last stream from flight gear to set the last details flightData needs
-                    String lastStream = dataCollector.getStream();
-                    this.dataCollector.completeFlightData();
-                }
-                catch(SocketTimeoutException e) { }
-            }
+            flightGear = server.accept();
+            System.out.println("simulator is connected to my server");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void runModelServer() {
+    private void startFlight() {
+        this.stop = false;
+        while (!stop) {
+            try {
+                BufferedReader in = new BufferedReader(new InputStreamReader(flightGear.getInputStream()));
+                this.dataCollector.initFlightData(in.readLine());
+                while(!stop) {
+                    String stream = in.readLine();
+                    es.execute(()-> dataCollector.updateFlightData(stream));
+                }
+            } catch (IOException e) { e.printStackTrace(); }
+        }
+    }
+
+    private void endFlight() {
+        this.stop = true;
+        this.dataCollector.completeFlightData();
+    }
+
+    public void runModelServer() {
         try {
             ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("modelPort")));
             System.out.println("model server is open");
@@ -72,37 +79,36 @@ public class FGServer implements ServerService{
                     while(!(line = in.readLine()).equals("bye")) {
                         System.out.println(line); // for debug
                         //command example: get aileron
-                        String[] split = line.split(" ");
-                        String command = split[1];
-                        if (commandMap.containsKey(command))
-                            es.execute(()-> commandMap.get(command).run());
+                        if (commandMap.containsKey(line)) {
+                            String finalLine = line;
+                            es.execute(()-> commandMap.get(finalLine).run());
+                        }
                     }
-                    this.stop = true;
                 }
                 catch(SocketTimeoutException e) { }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace();}
     }
 
     //init methods/////////////////////////////////////////////////////////////
 
     private void initCommandMap() {
         this.commandMap = new HashMap<>();
-        commandMap.put("aileron", this::getAileron);
-        commandMap.put("rudder", this::getRudder);
-        commandMap.put("throttle", this::getThrottle);
-        commandMap.put("brakes", this::getBrakes);
-        commandMap.put("elevators", this::getElevators);
-        commandMap.put("alt", this::getAlt);
-        commandMap.put("heading", this::getHeading);
-        commandMap.put("airspeed", this::getAirSpeed);
-        commandMap.put("roll", this::getRoll);
-        commandMap.put("pitch", this::getPitch);
-        commandMap.put("location", this::getLocation);
-        commandMap.put("flight", this::getFlight);
-        commandMap.put("stream", this::getStream);
+        commandMap.put("get aileron", this::getAileron);
+        commandMap.put("get rudder", this::getRudder);
+        commandMap.put("get throttle", this::getThrottle);
+        commandMap.put("get brakes", this::getBrakes);
+        commandMap.put("get elevators", this::getElevators);
+        commandMap.put("get alt", this::getAlt);
+        commandMap.put("get heading", this::getHeading);
+        commandMap.put("get airspeed", this::getAirSpeed);
+        commandMap.put("get roll", this::getRoll);
+        commandMap.put("get pitch", this::getPitch);
+        commandMap.put("get location", this::getLocation);
+        commandMap.put("get flight", this::getFlight);
+        commandMap.put("get stream", this::getStream);
+        commandMap.put("start flight",this::startFlight);
+        commandMap.put("end flight",this::endFlight);
     }
 
 
@@ -182,6 +188,7 @@ public class FGServer implements ServerService{
     protected void finalize() throws Throwable {
         this.out2model.close();
         this.objectOutputStream.close();
+        flightGear.close();
         this.es.shutdown();
     }
 }

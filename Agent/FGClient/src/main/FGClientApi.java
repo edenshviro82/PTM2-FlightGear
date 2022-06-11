@@ -1,4 +1,4 @@
-package main;
+package Main;
 
 public interface FGClientApi {
     public void setAileron(float value);

@@ -1,6 +1,7 @@
 package Controller;
 import Model.Model;
 import View.View;
+import necessary_classes.FlightData;
 import necessary_classes.Properties;
 
 import java.io.*;
@@ -12,8 +13,6 @@ public class Commands {
 
     //the shared state of all commands
     private class SharedSate {
-        HashMap<String,String> properties;
-        BufferedReader inFromBack;
         PrintWriter out2back;
         ObjectOutputStream objectOutputStream;
 
@@ -168,11 +167,126 @@ public class Commands {
         }
     }
 
-    public class endFlightCommand implements Command {
+    public class startFlightCommand implements Command {
+
         @Override
-        public void execute(String input) throws IOException {
+        public void execute(String input)  {
+            sharedSate.m.startFlight();
+        }
+    }
+
+    public class endFlightCommand implements Command {
+
+        @Override
+        public void execute(String input) {
             sharedSate.m.endFlight();
         }
     }
-    
+
+
+    //view commands////////////////////////////////////////////////////////////////////////////
+    public class viewSetAileronCommand extends ViewCommand {
+
+        public viewSetAileronCommand(String name) {super(name);}
+
+        @Override
+        public void execute(String text) throws IOException {
+            sharedSate.m.setAileron(Float.parseFloat(text));
+        }
+    }
+
+    public class viewSetThrottleCommand extends ViewCommand {
+
+        public viewSetThrottleCommand(String name) {super(name);}
+
+        @Override
+        public void execute(String text) throws IOException {
+            sharedSate.m.setThrottle(Float.parseFloat(text));
+        }
+    }
+
+    public class viewSetElevatorsCommand extends ViewCommand {
+
+        public viewSetElevatorsCommand(String name) {super(name);}
+
+        @Override
+        public void execute(String text) throws IOException {
+            sharedSate.m.setElevators(Float.parseFloat(text));
+        }
+    }
+
+    public class viewSetBrakesCommand extends ViewCommand {
+
+        public viewSetBrakesCommand(String name) {super(name);}
+
+        @Override
+        public void execute(String text) throws IOException {
+            sharedSate.m.setBrakes(Float.parseFloat(text));
+        }
+    }
+
+    public class viewSetRudderCommand extends ViewCommand {
+
+        public viewSetRudderCommand(String name) {super(name);}
+
+        @Override
+        public void execute(String text) throws IOException {
+            sharedSate.m.setRudder(Float.parseFloat(text));
+        }
+    }
+
+    public class viewPrintStreamCommand extends ViewCommand {
+        PrintWriter out;
+
+        public viewPrintStreamCommand(String name, PrintWriter out) {
+            super(name);
+            this.out = out;
+        }
+
+        @Override
+        public void execute(String text) throws IOException {
+            //get current time in milliseconds
+            long start = System.currentTimeMillis();
+            //get duration from properties txt file
+            long duration = Long.parseLong(Properties.map.get("view_print_stream_duration(secs)")) *1000;
+            //send the stream to the client
+            while (System.currentTimeMillis() - start < duration)
+                out.println(sharedSate.m.getStream());
+        }
+    }
+
+    public class viewCLI implements Command {
+        HashMap <Integer,ViewCommand> map;
+        Socket aClient;
+        Scanner in;
+        PrintWriter out;
+        Commands c;
+
+        public viewCLI(Socket client) throws IOException {
+            this.out = new PrintWriter(aClient.getOutputStream());
+            this.in = new Scanner(aClient.getInputStream());
+            this.map = new HashMap<Integer, ViewCommand>();
+            map.put(1,c.new viewSetAileronCommand("Set Aileron"));
+            map.put(2,c.new viewSetElevatorsCommand("Set Elevators"));
+            map.put(3,c.new viewSetThrottleCommand("Set Throttle"));
+            map.put(4, c.new viewSetRudderCommand("Set Rudder"));
+            map.put(5, c.new viewSetBrakesCommand("Set Brakes"));
+            map.put(6,c.new viewPrintStreamCommand("Print stream",this.out));
+        }
+
+        @Override
+        public void execute(String text) throws IOException {
+            out.print("hello and welcome to Flight Gear Agent's view!\n");
+            out.print("please enter the number of the command you want to execute\n");
+            map.forEach((integer, viewCommand) -> out.print(integer + ". \t" + viewCommand.name + "\n"));
+            int choice = in.nextInt();
+            if (choice < 5) {
+                out.println("please enter the value you want to sed (valid value is between -1 to 1)");
+                map.get(choice).execute(in.next());
+            }
+            else
+                map.get(choice).execute(text);
+            aClient.close();
+        }
+    }
 }

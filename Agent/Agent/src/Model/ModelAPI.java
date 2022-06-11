@@ -28,4 +28,5 @@ public interface ModelAPI {
     public FlightData getFlight() throws IOException, ClassNotFoundException;
     public String getStream() throws IOException;
     public void endFlight();
+    public void startFlight();
 }

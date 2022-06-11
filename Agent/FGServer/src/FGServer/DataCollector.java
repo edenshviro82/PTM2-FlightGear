@@ -45,8 +45,6 @@ public class DataCollector {
         float longitude = Float.parseFloat(params[paramsIndex.get("longitude-deg")]);
         float latitude = Float.parseFloat(params[paramsIndex.get("latitude-deg")]);
         flightData.setFlyFrom(new Location(longitude, latitude));
-        //init the first line with of the time series with the flight params to get headlines
-        flightData.getTs().getDataStreams().add(stream);
         //after flight data initiated, we also need to update the first stream values
         this.updateFlightData(stream);
     }
@@ -60,11 +58,10 @@ public class DataCollector {
 
     public void completeFlightData() {
         //get the parameters from the last time stamp of the flight
-        String[] params = flightData.getTs().getDataStreams().get(flightData.getTs().getDataStreams().size() - 1).split(",");
         flightData.setEndTime(Instant.now().toString());
+        String[] params = flightData.getTs().getDataStreams().get(flightData.getTs().getDataStreams().size() - 1).split(",");
         float longitude = Float.parseFloat(params[paramsIndex.get("longitude-deg")]);
         float latitude = Float.parseFloat(params[paramsIndex.get("latitude-deg")]);
-        float altitude = Float.parseFloat(params[paramsIndex.get("altitude-ft")]);
         flightData.setFlyTo(new Location(longitude, latitude));
         flightData.setMiles(this.calcMiles());
     }
@@ -136,9 +133,7 @@ public class DataCollector {
     }
 
     //get methods//////////////////////////////////////////////////////////////
-    public String getAileron() {
-        return symbolTable.get("aileron");
-    }
+    public String getAileron() { return symbolTable.get("aileron"); }
 
     public String getRudder() {
         return symbolTable.get("rudder");
