@@ -7,6 +7,7 @@ import necessary_classes.Properties;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Commands {
@@ -185,63 +186,10 @@ public class Commands {
 
 
     //view commands////////////////////////////////////////////////////////////////////////////
-    public class viewSetAileronCommand extends ViewCommand {
-
-        public viewSetAileronCommand(String name) {super(name);}
-
-        @Override
-        public void execute(String text) throws IOException {
-            sharedSate.m.setAileron(Float.parseFloat(text));
-        }
-    }
-
-    public class viewSetThrottleCommand extends ViewCommand {
-
-        public viewSetThrottleCommand(String name) {super(name);}
-
-        @Override
-        public void execute(String text) throws IOException {
-            sharedSate.m.setThrottle(Float.parseFloat(text));
-        }
-    }
-
-    public class viewSetElevatorsCommand extends ViewCommand {
-
-        public viewSetElevatorsCommand(String name) {super(name);}
-
-        @Override
-        public void execute(String text) throws IOException {
-            sharedSate.m.setElevators(Float.parseFloat(text));
-        }
-    }
-
-    public class viewSetBrakesCommand extends ViewCommand {
-
-        public viewSetBrakesCommand(String name) {super(name);}
-
-        @Override
-        public void execute(String text) throws IOException {
-            sharedSate.m.setBrakes(Float.parseFloat(text));
-        }
-    }
-
-    public class viewSetRudderCommand extends ViewCommand {
-
-        public viewSetRudderCommand(String name) {super(name);}
-
-        @Override
-        public void execute(String text) throws IOException {
-            sharedSate.m.setRudder(Float.parseFloat(text));
-        }
-    }
-
-    public class viewPrintStreamCommand extends ViewCommand {
+    public class viewPrintStreamCommand implements Command {
         PrintWriter out;
 
-        public viewPrintStreamCommand(String name, PrintWriter out) {
-            super(name);
-            this.out = out;
-        }
+        public viewPrintStreamCommand(PrintWriter out) { this.out = out; }
 
         @Override
         public void execute(String text) throws IOException {
@@ -256,37 +204,29 @@ public class Commands {
     }
 
     public class viewCLI implements Command {
-        HashMap <Integer,ViewCommand> map;
-        Socket aClient;
-        Scanner in;
+        HashMap <String,Command> map;
         PrintWriter out;
         Commands c;
 
         public viewCLI(Socket client) throws IOException {
-            this.out = new PrintWriter(aClient.getOutputStream());
-            this.in = new Scanner(aClient.getInputStream());
-            this.map = new HashMap<Integer, ViewCommand>();
-            map.put(1,c.new viewSetAileronCommand("Set Aileron"));
-            map.put(2,c.new viewSetElevatorsCommand("Set Elevators"));
-            map.put(3,c.new viewSetThrottleCommand("Set Throttle"));
-            map.put(4, c.new viewSetRudderCommand("Set Rudder"));
-            map.put(5, c.new viewSetBrakesCommand("Set Brakes"));
-            map.put(6,c.new viewPrintStreamCommand("Print stream",this.out));
+            this.out = new PrintWriter(client.getOutputStream());
+            this.map = new HashMap<String, Command>();
+
+            map.put("set aileron", new setAileronCommand());
+            map.put("set elevators", new setElevatorsCommand());
+            map.put("set throttle", new setThrottleCommand());
+            map.put("set rudder", new setRudderCommand());
+            map.put("set brakes", new setBreaksCommand());
+            map.put("print stream", new viewPrintStreamCommand(this.out));
         }
 
         @Override
-        public void execute(String text) throws IOException {
-            out.print("hello and welcome to Flight Gear Agent's view!\n");
-            out.print("please enter the number of the command you want to execute\n");
-            map.forEach((integer, viewCommand) -> out.print(integer + ". \t" + viewCommand.name + "\n"));
-            int choice = in.nextInt();
-            if (choice < 5) {
-                out.println("please enter the value you want to sed (valid value is between -1 to 1)");
-                map.get(choice).execute(in.next());
-            }
-            else
-                map.get(choice).execute(text);
-            aClient.close();
+        public void execute(String text) throws IOException, ClassNotFoundException {
+            System.out.println("from view: " + text);
+            String[] split = text.split(" ");
+            String command = split.length > 1? split[0] + " " + split[1] : split[0];
+            if (this.map.containsKey(command))
+                map.get(command).execute(text);
         }
     }
 }

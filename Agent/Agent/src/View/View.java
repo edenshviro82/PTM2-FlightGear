@@ -12,24 +12,25 @@ import java.util.Observable;
 
 public class View extends Observable {
     private String Command;
-    PrintWriter out2client;
+    Socket waiting;
+    Socket connected;
 
-    void runViewServer() {
+    public View() {
+        new Thread(this::runViewServer).start();
+    }
+
+    public void runViewServer() {
         try {
-            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("backend_port")));
-            System.out.println("Backend server is open");
+            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("view_client_port")));
+            System.out.println("waiting for client to connect...");
             server.setSoTimeout(1000);
-            String line;
             while(true) {
                 try {
-                    Socket client = server.accept();
+                    this.waiting = server.accept();
                     System.out.println("Client is connected to my service");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                    OutputStream out = client.getOutputStream();
-                    out2client = new PrintWriter(out);
-                    line = in.readLine();
-                    System.out.println(line); // for debug
-                    this.setCommand(line);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(waiting.getInputStream()));
+                    this.setCommand(in.readLine());
+                    this.connected = waiting;
                     this.setChanged();
                     this.notifyObservers();
                 }
@@ -40,8 +41,9 @@ public class View extends Observable {
         }
     }
 
-    public String getCommand() { return Command; }
-    public void setCommand(String command) { Command = command; }
+    public Socket getConnected() { return connected; }
 
-    public PrintWriter getOut2client() { return out2client; }
+    public String getCommand() {return Command;}
+
+    public void setCommand(String command) {Command = command;}
 }

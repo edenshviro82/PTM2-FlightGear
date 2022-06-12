@@ -7,8 +7,9 @@ import necessary_classes.Properties;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Observable;
 
-public class Model implements ModelAPI{
+public class Model extends Observable implements ModelAPI {
     ObjectInputStream objectInputStream;
     //FGClient's streams
     PrintWriter out2FGClient;
@@ -139,4 +140,5 @@ public class Model implements ModelAPI{
     public void startFlight() { out2FGServer.println("start flight");}
 
     public void endFlight()  { out2FGServer.println("end flight");}
+
 }

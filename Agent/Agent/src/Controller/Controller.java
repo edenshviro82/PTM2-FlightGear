@@ -29,6 +29,8 @@ public class Controller implements Observer{
         this.es = Executors.newSingleThreadExecutor();
         this.c = new Commands(m,v);
         this.initCommandMap();
+        v.addObserver(this);
+        m.addObserver(this);
     }
 
     public void runBackendServer() {
@@ -93,6 +95,13 @@ public class Controller implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o == this.v) {
+            es.execute(()-> {
+                try {
+                    c.new viewCLI(v.getConnected()).execute(v.getCommand());
+                } catch (IOException | ClassNotFoundException e) {e.printStackTrace();}
+            });
+        }
     }
+
 }
