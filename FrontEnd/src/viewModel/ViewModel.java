@@ -23,7 +23,7 @@ public class ViewModel implements Observer{
 	public DoubleProperty throttle;
 	
 	public DoubleProperty verticalSpeed;
-	public FloatProperty headDeg,rollDeg,longitude,airspeed,altitude;
+	public DoubleProperty headDeg,rollDeg,longitude,airspeed,altitude;
 	
 	public IntegerProperty isRunPushed;
 	
@@ -41,12 +41,12 @@ public class ViewModel implements Observer{
 		throttle=new SimpleDoubleProperty();
 		isRunPushed=new SimpleIntegerProperty();
 		
-		altitude=new SimpleFloatProperty();
-		headDeg=new SimpleFloatProperty();
-		rollDeg=new SimpleFloatProperty();
-		longitude=new SimpleFloatProperty();
+		altitude=new SimpleDoubleProperty();
+		headDeg=new SimpleDoubleProperty();
+		rollDeg=new SimpleDoubleProperty();
+		longitude=new SimpleDoubleProperty();
 		verticalSpeed=new SimpleDoubleProperty();
-		airspeed=new SimpleFloatProperty();
+		airspeed=new SimpleDoubleProperty();
 		
 		
 		aileron.addListener((o,ov,nv)->m.setAlieron((double)nv));
@@ -57,13 +57,33 @@ public class ViewModel implements Observer{
 		
 		verticalSpeed.bind(m.verticalSpeed);
 		altitude.bind(m.altitude);
-		altitude.addListener((o,ov,nv)->m.altitude.setValue(altitude.getValue()));
-		headDeg.addListener((o,ov,nv)->m.headDeg.setValue(headDeg.getValue()));
-		rollDeg.addListener((o,ov,nv)->m.rollDeg.setValue(rollDeg.getValue()));
-		longitude.addListener((o,ov,nv)->m.longitude.setValue(longitude.getValue()));
+		headDeg.bind(m.headDeg);
+		rollDeg.bind(m.rollDeg);
+		longitude.bind(m.longitude);
+		airspeed.bind(m.airspeed);
+		
+		
+		//altitude.addListener((o,ov,nv)->m.altitude.setValue(altitude.getValue()));
+		//headDeg.addListener((o,ov,nv)->m.headDeg.setValue(headDeg.getValue()));
+		//rollDeg.addListener((o,ov,nv)->m.rollDeg.setValue(rollDeg.getValue()));
+		//longitude.addListener((o,ov,nv)->m.longitude.setValue(longitude.getValue()));
 		//verticalSpeed.addListener((o,ov,nv)->m.verticalSpeed.setValue(verticalSpeed.getValue()));
+		//airspeed.addListener((o,ov,nv)->m.airspeed.setValue(airspeed.getValue()));
+
+		/*
+		 altitude.bind(m.altitude);
+		altitude.addListener((o,ov,nv)->m.altitude.setValue(altitude.getValue()));
+		headDeg.bind(m.headDeg);
+		headDeg.addListener((o,ov,nv)->m.headDeg.setValue(headDeg.getValue()));
+		rollDeg.bind(rollDeg);
+		rollDeg.addListener((o,ov,nv)->m.rollDeg.setValue(rollDeg.getValue()));
+		longitude.bind(longitude);
+		longitude.addListener((o,ov,nv)->m.longitude.setValue(longitude.getValue()));
+		verticalSpeed.bind(m.verticalSpeed);
+		verticalSpeed.addListener((o,ov,nv)->m.verticalSpeed.setValue(verticalSpeed.getValue()));
+		airspeed.bind(airspeed);
 		airspeed.addListener((o,ov,nv)->m.airspeed.setValue(airspeed.getValue()));
-//		System.out.println("vs= "+verticalSpeed.floatValue());
+		 */
 	}
 
 	@Override

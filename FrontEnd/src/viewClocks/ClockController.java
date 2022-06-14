@@ -47,7 +47,8 @@ public class ClockController implements Initializable{
         clock1.setDecimals(0); 
         clock1.setValue(50.00); //deafult position of needle on gauage
         clock1.setAnimated(true);
-        //gauge.setAnimationDuration(500); 
+
+        //clock1.setAnimationDuration(500); 
 
         clock1.setValueColor(Color.WHITE); 
         clock1.setTitleColor(Color.WHITE); 

@@ -2,7 +2,6 @@
 
 <!-- <?import eu.hansolo.medusa.FGauge?>-->
 
-<?import eu.hansolo.medusa.FGauge?>
 <?import eu.hansolo.medusa.Gauge?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,12 +12,12 @@
       <AnchorPane prefHeight="283.0" prefWidth="341.0" BorderPane.alignment="CENTER">
          <children>
             <Canvas id="canvasClocks" height="283.0" width="218.0" />
- <Gauge fx:id="clock1" layoutY="14.0" prefHeight="82.0" prefWidth="111.0" />
-            <Gauge fx:id="clock2" layoutX="107.0" layoutY="10.0" prefHeight="90.0" prefWidth="90.0" />
-             <Gauge fx:id="clock4" layoutX="14.0" layoutY="103.0" prefHeight="78.0" prefWidth="79.0" />
-             <Gauge fx:id="clock5" layoutX="107.0" layoutY="99.0" prefHeight="86.0" prefWidth="90.0" />
-            <Gauge fx:id="clock6" layoutX="14.0" layoutY="168.0" prefHeight="108.0" prefWidth="81.0" />
-            <Gauge fx:id="clock3" layoutX="107.0" layoutY="185.0" prefHeight="86.0" prefWidth="90.0" />   
+ 			<Gauge fx:id="clock1" layoutX="10.0" layoutY="9.0" prefHeight="89.0" prefWidth="120.0" />
+            <Gauge fx:id="clock2" layoutX="105.0" layoutY="8.0" prefHeight="89.0" prefWidth="120.0" />
+             <Gauge fx:id="clock4" layoutX="10.0" layoutY="97.0" prefHeight="89.0" prefWidth="120.0" />
+             <Gauge fx:id="clock5" layoutX="105.0" layoutY="97.0" prefHeight="89.0" prefWidth="120.0" />
+            <Gauge fx:id="clock6" layoutX="10.0" layoutY="186.0" prefHeight="89.0" prefWidth="120.0" />
+            <Gauge fx:id="clock3" layoutX="105.0" layoutY="186.0" prefHeight="89.0" prefWidth="120.0" />   
          </children>
       </AnchorPane>
    </center>
