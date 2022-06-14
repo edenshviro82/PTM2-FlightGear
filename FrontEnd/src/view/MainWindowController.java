@@ -19,8 +19,11 @@ import java.util.ResourceBundle;
 import viewJoystick.*;
 import viewModel.ViewModel;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +51,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.Plane;
+import viewClocks.ClockController;
 //import viewClocks.ClockController;
 
 
@@ -97,6 +101,9 @@ public class MainWindowController implements Initializable,Observer{
 	public JoystickController teleJoystickController;
 	
 	@FXML
+	public ClockController teleClockController;
+	
+	@FXML
 	public Button buttonRun;
 	
 	@FXML
@@ -137,7 +144,7 @@ public class MainWindowController implements Initializable,Observer{
 		try {
 			airplane = new Image(new FileInputStream("./imgs/plane.png"));
 			background = new Image(new FileInputStream("./imgs/map.jpeg"));
-			this.drawAirplane(0, 0);
+			this.drawAirplane(30, 50);
 
 			
 		} catch (FileNotFoundException e) {
@@ -188,12 +195,12 @@ public class MainWindowController implements Initializable,Observer{
 	
 	
 	public void drawMap() {
-		System.out.println("draw map");
+		//System.out.println("draw map");
 		this.canvasGc.drawImage(this.background, 0, 0, mapCanvas.getHeight(), mapCanvas.getWidth());
 	}
 	
 	public void drawAirplane(int x, int y) {
-		System.out.println("draw air");
+		//System.out.println("draw air");
 		this.drawMap();
 		this.canvasGc.drawImage(this.airplane, x, y, 50, 50);
 	}
@@ -211,7 +218,14 @@ public class MainWindowController implements Initializable,Observer{
 		vm.aileron.bind(teleJoystickController.ailerons);
 		vm.elevators.bind(teleJoystickController.elevators);
 		vm.isRunPushed.bind(isRunpush);
-	
+		
+
+		teleClockController.clock1.valueProperty().bind(vm.altitude);
+		teleClockController.clock2.valueProperty().bind(vm.headDeg);
+		teleClockController.clock3.valueProperty().bind(vm.rollDeg);
+		teleClockController.clock4.valueProperty().bind(vm.longitude);
+		teleClockController.clock5.valueProperty().bind(vm.verticalSpeed);
+		teleClockController.clock6.valueProperty().bind(vm.airspeed);
 		//*************************************************************************
 	
 		

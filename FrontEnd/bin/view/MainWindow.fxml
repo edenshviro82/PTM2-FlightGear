@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="403.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainWindowController">
+<BorderPane id="border" prefHeight="403.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainWindowController">
     <center>
    
       <TabPane prefHeight="403.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -28,7 +28,7 @@
      
           <Tab text="Fleet Overview">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="989.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="989.0" style="-fx-background-color: white;">
                      <children>
                         <Canvas fx:id="mapCanvas" height="366.0" layoutX="14.0" layoutY="14.0" width="366.0" />
                         <PieChart fx:id="pieChart" layoutX="681.0" layoutY="202.0" prefHeight="136.0" prefWidth="200.0" title="available %" />
@@ -97,7 +97,7 @@
                         <Button fx:id="buttonRun" layoutX="38.0" layoutY="327.0" mnemonicParsing="false" onAction="#runTeleCode" text="Run" />
                         <BorderPane layoutX="374.0" layoutY="7.0" prefHeight="359.0" prefWidth="519.0">
                            <center>
-  	                 		  <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="CENTER_RIGHT" /> 
+  	                 		  <fx:include fx:id="teleClock" source="../viewClocks/Clocks.fxml" BorderPane.alignment="CENTER_RIGHT" /> 
                         </center>
                            <right>
                             
@@ -109,7 +109,7 @@
                         </BorderPane>
                         <ScrollPane layoutX="38.0" layoutY="24.0" prefHeight="299.0" prefWidth="331.0">
                            <content>
-                              <TextArea fx:id="textAreaTele" prefHeight="298.0" prefWidth="331.0" text="enter your code here" />
+                              <TextArea fx:id="textAreaTele" prefHeight="298.0" prefWidth="331.0" promptText="enter your code here" />
                            </content>
                         </ScrollPane>
                      </children></AnchorPane>

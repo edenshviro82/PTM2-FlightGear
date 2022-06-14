@@ -16,15 +16,19 @@ import javafx.fxml.FXMLLoader;
 
 
 public class Main extends Application {
+	
+	private static Stage guiStage;
 	@Override
-	public void start(Stage primaryStage) throws Exception{
+	public void start(Stage primaryStage) throws Exception
+	{
+		guiStage = primaryStage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 		  Parent root = loader.load();
 		  
 		  Scene scene = new Scene(root,1100,450);
 		  scene.getStylesheets().add("application.css");
 		  
-		  primaryStage.setTitle("Flight gear controller");
+		  primaryStage.setTitle("FlightGear Simulator");
 		  primaryStage.setScene(scene);
 		
 		  Model m=new Model("Properties.txt");
@@ -39,5 +43,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	public static Stage getGuiStage()
+	{
+		return guiStage;
 	}
 }

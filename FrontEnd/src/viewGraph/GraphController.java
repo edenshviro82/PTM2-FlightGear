@@ -10,13 +10,20 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
+import model.Data;
 
 public class GraphController implements Initializable {
-
-	public @FXML ListView list;
+	
+	
+	
     public @FXML LineChart leftGraph,rightGraph;
     public @FXML StackPane stackPane;
-    XYChart.Series leftSeries,rightSeries;
+    public XYChart.Series leftSeries,rightSeries;
+    
+    public @FXML  ListView<String> listView;
+    public Data data;
+    
+    
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -26,6 +33,9 @@ public class GraphController implements Initializable {
         rightGraph.setAnimated(false);
         leftGraph.setCreateSymbols(false);
         rightGraph.setCreateSymbols(false);
+        data = new Data();
+        listView.getItems().addAll(data.fps);
+        
     }
 
 //    public void display(ObservableList<Float> leftListItem,ObservableList<Float> rightListItem)
