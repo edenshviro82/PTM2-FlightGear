@@ -75,6 +75,14 @@ public class Commands {
         }
     }
 
+    public class setFinishedFlight implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            FlightData flightData = (FlightData) sharedSate.objectInputStream.readObject();
+            sharedSate.m.setFinishedFlight("127","865",flightData);
+        }
+    }
+
     //get commands//////////////////////////////////////////////////////////////////////////
     public class getAileronCommand implements Command {
         @Override
@@ -198,7 +206,8 @@ public class Commands {
     public class getFleetSizeCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
-            sharedSate.out2front.println(sharedSate.m.getFleetsize());
+            int month = Integer.parseInt(sharedSate.inFromFront.readLine());
+            sharedSate.out2front.println(sharedSate.m.getFleetSize(month));
         }
     }
 
@@ -225,6 +234,10 @@ public class Commands {
             sharedSate.out2front.println(sharedSate.inFromAgent.readLine());
         }
     }
+
+
+
+
 
 
 }

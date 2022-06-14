@@ -25,23 +25,26 @@ public class dbhandler  implements dbhandler_api  {
          history = entityManager.createNamedQuery("getHistory",History.class);
          plane = entityManager.createNamedQuery("getPlane",Plane.class);
     }
+    //encoding
     private Object bytesToObject (byte[] bytes) throws IOException, ClassNotFoundException {
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         ObjectInputStream is = new ObjectInputStream(in);
         return is.readObject();
     }
+    //decoding
     private byte[] objectToBytes(Object obj) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ObjectOutputStream os = new ObjectOutputStream(out);
         os.writeObject(obj);
         return out.toByteArray();
     }
-    @Override
+
+    @Override //get active planes via agnet
     public int getActivePlanes() {
         return 0;
     }
 
-    @Override
+    @Override //returns avg miles per month of all planes
     public HashMap<String, Double> getMilesPerMonth(int month) {
             HashMap<String, Double> map = new HashMap<>();
             for (int i = 0; i < fly.getResultList().size(); i++) {
@@ -55,12 +58,11 @@ public class dbhandler  implements dbhandler_api  {
                 }
             }
             return map;
-
         }
 
 
 
-    @Override
+    @Override // returns a map of miles per month of all planes for each month
     public HashMap<Integer, Double> getMilesPerMonthYear() {
         HashMap<Integer,Double> avgPerMonth = new HashMap<>();
         int month = Integer.parseInt(Instant.now().toString().split("T")[0].split("-")[1]);
@@ -80,19 +82,39 @@ public class dbhandler  implements dbhandler_api  {
         return avgPerMonth;
     }
 
-    @Override
-    public double getFleetsize() {
-        double size = plane.getResultList().size();
-        return size;
+    @Override // get fleet size n each month until desired month
+    public HashMap<Integer, Integer> getFleetSize(int month) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int i = 1; i <=month ; i++) {
+            map.put(i,0);
+        }
+        for (int i= 0; i<plane.getResultList().size();i++)
+        {
+            String id = plane.getResultList().get(i).getPlaneid();
+            for (int j=1; j<=month;j++)
+            {
+                if(activeplane(id,j))
+                {
+                    map.put(j,map.get(j)+1);
+                }
+            }
+        }
+        return map;
+    }
+    //a help function to the function above
+    public boolean activeplane (String id,int month)
+    {
+        for(int i=0; i<fly.getResultList().size();i++)
+        {
+            if((fly.getResultList().get(i).getPlaneid().equals(id))&& (fly.getResultList().get(i).getStartTime().toLocalDate().getMonth().getValue()==month))
+                return true;
+        }
+        return false;
     }
 
-    @Override
-    public void getPlaneproper() {
 
 
-    }
-
-    @Override
+    @Override // pulls a flight record according to flight id as a timeseries
     public TimeSeries getFlightRecord(String id) throws IOException, ClassNotFoundException {
         for (int i = 0; i < history.getResultList().size() ; i++) {
             if (history.getResultList().get(i).getFlightid().equals(id)){
@@ -103,7 +125,7 @@ public class dbhandler  implements dbhandler_api  {
         return null;
     }
 
-    @Override
+    @Override// a function to save a finished flight record in DataBase , use in function below
     public void setFlightData(String fid , String pid , byte[]ts) {
         transaction.begin();
         History history1 = new History();
@@ -112,10 +134,9 @@ public class dbhandler  implements dbhandler_api  {
         history1.setTimeseries(ts);
         entityManager.persist(history1);
         transaction.commit();
-
     }
 
-    @Override
+    @Override //a function to save a finished flight in DataBase- flights table , plane table, and history table
     public void setFinishedFlight(String pid, String fid, FlightData flightData) throws IOException {
         transaction.begin();
         Flights flights = new Flights();
@@ -153,7 +174,7 @@ public class dbhandler  implements dbhandler_api  {
 
     }
 
-    @Override
+    @Override // a help function to other function
     public boolean isFirstFlight(String pid) {
         for (int i = 0; i < plane.getResultList().size() ; i++) {
             if (plane.getResultList().get(i).getPlaneid().equals(pid))
@@ -162,7 +183,7 @@ public class dbhandler  implements dbhandler_api  {
         return false;
     }
 
-    @Override
+    @Override //a help function to other function
     public Date dateFirstFlight(String pid) {
         for (int i = 0; i < plane.getResultList().size() ; i++) {
             if (plane.getResultList().get(i).getPlaneid().equals(pid))
@@ -173,7 +194,9 @@ public class dbhandler  implements dbhandler_api  {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         dbhandler db = new dbhandler();
-        //TimeSeries ts2 = db.getFlightRecord("999");
-        //ts2.getDataStreams().forEach(s -> System.out.println(s));
+        HashMap<Integer,Integer> map = db.getFleetSize(6);
+        int x = 1;
+        int y = 2;
+        System.out.println(x+y);
     }
 }

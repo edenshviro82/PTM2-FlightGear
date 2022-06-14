@@ -33,14 +33,10 @@ public class Model extends Observable implements Model_api {
     }
 
     @Override
-    public double getFleetsize() {
-        return db.getFleetsize();
+    public HashMap<Integer, Integer> getFleetSize(int month) {
+        return db.getFleetSize(month);
     }
 
-    @Override
-    public void getPlaneproper() {
-        db.getPlaneproper();
-    }
 
     @Override
     public TimeSeries getFlightRecord(String id) throws IOException, ClassNotFoundException {
