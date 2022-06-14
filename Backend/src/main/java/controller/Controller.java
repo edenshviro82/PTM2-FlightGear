@@ -58,7 +58,7 @@ public class Controller implements Observer {
         commandMap.put("date FirstFlight", c.new dateFirstFlightCommand());
         commandMap.put("get FleetSize", c.new getFleetSizeCommand());
     }
-
+    // met open server.
     public void openServer() throws IOException, ClassNotFoundException {
         ServerSocket ss = new ServerSocket(4999);
         Socket s = ss.accept();
