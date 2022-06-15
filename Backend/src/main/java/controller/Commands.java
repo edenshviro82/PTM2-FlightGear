@@ -5,6 +5,7 @@ import model.Model;
 import necessary_classes.FlightData;
 import view.View;
 import java.io.*;
+import java.net.Socket;
 
 public class Commands {
     //the shared state of all commands
@@ -33,11 +34,21 @@ public class Commands {
     //commands data members
     private SharedSate sharedSate;
 
-    //commands constructor
+    //commands constructors
     public Commands(Model m,View v) {
         this.sharedSate = new SharedSate(m,v);
     }
-
+    //setting connections
+    public void setAgentStreams (Socket agent) throws IOException {
+        sharedSate.inFromAgent = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+        sharedSate.objectInputStream = new ObjectInputStream(agent.getInputStream());
+        sharedSate.out2agent = new PrintWriter(agent.getOutputStream(), true);
+    }
+    public void setFrontStreams (Socket front) throws IOException {
+        sharedSate.inFromFront = new BufferedReader(new InputStreamReader(front.getInputStream()));
+        sharedSate.objectOutputStream = new ObjectOutputStream(front.getOutputStream());
+        sharedSate.out2front = new PrintWriter(front.getOutputStream(),true);
+    }
     //commands implementation//////////////////////////////////////////////////////////////
     //set commands
     public class setAileronCommand implements Command {
@@ -82,6 +93,19 @@ public class Commands {
             sharedSate.m.setFinishedFlight("127","865",flightData);
         }
     }
+    public class startFlightCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+            sharedSate.out2agent.println(input);
+        }
+    }
+    public class endFlightCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+            sharedSate.out2agent.println(input);
+        }
+    }
+
 
     //get commands//////////////////////////////////////////////////////////////////////////
     public class getAileronCommand implements Command {
