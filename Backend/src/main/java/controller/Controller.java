@@ -58,6 +58,13 @@ public class Controller implements Observer {
         commandMap.put("get brakes", c.new getBrakesCommand());
         commandMap.put("start flight", c.new startFlightCommand());
         commandMap.put("end flight", c.new endFlightCommand());
+        // command for view
+        commandMap.put("1", c.new endFlightCommand());
+        commandMap.put("2", c.new endFlightCommand());
+        commandMap.put("3", c.new endFlightCommand());
+        commandMap.put("4", c.new endFlightCommand());
+        commandMap.put("5", c.new endFlightCommand());
+
     }
     // met open server.
     public void openServer() throws IOException, ClassNotFoundException {

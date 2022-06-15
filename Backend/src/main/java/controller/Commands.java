@@ -258,7 +258,38 @@ public class Commands {
             sharedSate.out2front.println(sharedSate.inFromAgent.readLine());
         }
     }
+    // view commands
 
+    public class shutDown implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class reset implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class listOfTasks implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class listOfThreads implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class ListOfActiveAgents implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
 
 
 
