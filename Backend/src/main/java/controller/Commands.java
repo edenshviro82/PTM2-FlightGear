@@ -93,16 +93,19 @@ public class Commands {
             sharedSate.m.setFinishedFlight("127","865",flightData);
         }
     }
+    // start and end of flight
     public class startFlightCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
             sharedSate.out2agent.println(input);
         }
     }
+    //after we send to agent we expect to get the flight data
     public class endFlightCommand implements Command {
         @Override
-        public void execute(String input) throws IOException {
+        public void execute(String input) throws IOException, ClassNotFoundException {
             sharedSate.out2agent.println(input);
+           FlightData fd=(FlightData) sharedSate.objectInputStream.readObject();
         }
     }
 
