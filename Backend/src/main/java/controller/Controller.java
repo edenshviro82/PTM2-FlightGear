@@ -99,7 +99,7 @@ public class Controller implements Observer {
             c.setAgentStreams(Agent);
         } catch (IOException e) { e.printStackTrace(); }
     }
-
+    // test main to check connections
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Model m = new Model();
         View v = new View();

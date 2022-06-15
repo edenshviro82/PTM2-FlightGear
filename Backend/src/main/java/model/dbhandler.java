@@ -16,7 +16,7 @@ public class dbhandler  implements dbhandler_api  {
     TypedQuery<Flights> fly;
     TypedQuery<History> history;
     TypedQuery<Plane> plane;
-
+    // constructor
     public dbhandler() {
          managerFactory = Persistence.createEntityManagerFactory("default");
          entityManager = managerFactory.createEntityManager();
