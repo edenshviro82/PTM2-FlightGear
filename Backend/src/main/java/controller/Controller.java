@@ -96,6 +96,7 @@ public class Controller implements Observer {
                 break;
         }
     }
+
     @Override
     public void update(Observable o, Object arg) {
     }

@@ -1,10 +1,11 @@
 package necessary_classes;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class FlightData implements Serializable {
-    private String startTime;
-    private String endTime;
+    private java.sql.Date startTime;
+    private Date endTime;
     private float maxSpeed;
     private float maxAltitude;
     private double miles;
@@ -18,8 +19,8 @@ public class FlightData implements Serializable {
     }
 
     //getters/////////////////////////////////////////////////////////////////////////
-    public String getStartTime() { return startTime; }
-    public String getEndTime() {
+    public java.sql.Date getStartTime() { return startTime; }
+    public Date getEndTime() {
         return endTime;
     }
     public float getMaxSpeed() {
@@ -40,8 +41,8 @@ public class FlightData implements Serializable {
     }
 
     //setters///////////////////////////////////////////////////////////////////////
-    public void setStartTime(String startTime) { this.startTime = startTime; }
-    public void setEndTime(String endTime) {
+    public void setStartTime(Date startTime) { this.startTime = startTime; }
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
     public void setMaxSpeed(float maxSpeed) {
