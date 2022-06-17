@@ -26,7 +26,7 @@
       <TabPane fx:id="tabPane" prefHeight="403.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
      
-          <Tab text="Fleet Overview">
+          <Tab onSelectionChanged="#fleetTabSelection" text="Fleet Overview">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="989.0" style="-fx-background-color: white;">
                      <children>
@@ -69,7 +69,7 @@
             </content>
           </Tab> 
      
-           <Tab text="Monitoring ">
+           <Tab onSelectionChanged="#moniTabSelection" text="Monitoring ">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="400.0">
                      <children>
@@ -92,7 +92,7 @@
             </content>
           </Tab> 
      
-            <Tab text="Teleopration">
+            <Tab onSelectionChanged="#teleTabSelection" text="Teleopration">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -118,7 +118,7 @@
               </content>
             </Tab>
      
-            <Tab text="Time Capsule">
+            <Tab onSelectionChanged="#timeCapsuleTabSelection" text="Time Capsule">
              <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="400.0">
                      <children>
