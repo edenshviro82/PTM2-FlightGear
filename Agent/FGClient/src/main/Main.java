@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.io.File;
 import java.net.URL;

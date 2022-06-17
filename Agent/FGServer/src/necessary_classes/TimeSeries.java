@@ -2,8 +2,8 @@ package necessary_classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+//time series object will store all the streams we get from the simulator
 public class TimeSeries implements Serializable {
     ArrayList<String> dataStreams;
 

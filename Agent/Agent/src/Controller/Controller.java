@@ -3,7 +3,6 @@ package Controller;
 import Model.Model;
 import View.View;
 import necessary_classes.Properties;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -88,6 +87,7 @@ public class Controller implements Observer{
         commandMap.put("get pitch", c.new getPitchCommand());
         commandMap.put("get location", c.new getLocationCommand());
         commandMap.put("get flight", c.new getFlightCommand());
+        commandMap.put("get plain", c. new getPlainCommand());
         commandMap.put("get stream", c.new getStreamCommand());
         commandMap.put("start flight",c.new startFlightCommand());
         commandMap.put("end flight",c.new endFlightCommand());

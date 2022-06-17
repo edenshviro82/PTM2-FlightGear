@@ -2,11 +2,11 @@ package Model;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
+import necessary_classes.Plain;
 import necessary_classes.Properties;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.Observable;
 
 public class Model extends Observable implements ModelAPI {
@@ -134,6 +134,11 @@ public class Model extends Observable implements ModelAPI {
     public FlightData getFlight() throws IOException, ClassNotFoundException {
         out2FGServer.println("get flight");
         return (FlightData) objectInputStream.readObject();
+    }
+
+    public Plain getPlain() throws IOException, ClassNotFoundException {
+        out2FGServer.println("get plain");
+        return (Plain) objectInputStream.readObject();
     }
 
     //start,end methods

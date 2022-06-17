@@ -1,14 +1,11 @@
 package Controller;
+
 import Model.Model;
 import View.View;
-import necessary_classes.FlightData;
 import necessary_classes.Properties;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class Commands {
 
@@ -16,7 +13,6 @@ public class Commands {
     private class SharedSate {
         PrintWriter out2back;
         ObjectOutputStream objectOutputStream;
-
         Model m;
         View v;
 
@@ -24,8 +20,8 @@ public class Commands {
             this.m = m;
             this.v = v;
         }
-
     }
+
     //commands data members
     private SharedSate sharedSate;
 
@@ -165,6 +161,13 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             sharedSate.objectOutputStream.writeObject(sharedSate.m.getFlight());
+        }
+    }
+
+    public class getPlainCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            sharedSate.objectOutputStream.writeObject(sharedSate.m.getPlain());
         }
     }
 

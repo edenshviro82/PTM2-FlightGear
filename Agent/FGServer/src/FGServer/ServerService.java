@@ -14,4 +14,5 @@ public interface ServerService {
     public void getStream();
     public void getLocation();
     public void getFlight();
+    public void getPlane();
 }

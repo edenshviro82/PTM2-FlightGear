@@ -2,12 +2,12 @@ package FGServer;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
+import necessary_classes.Plain;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,17 +15,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
+//date collector class is responsible for collecting the data from flight gear simulator, store it
+//and make analytics
 public class DataCollector {
     //params index hash map will give us the ability to get a desired parameter from a stream by O(1)
     private final HashMap<String, Integer> paramsIndex;
+    //symbol table, contains the values of desired flight parameters to be accessible by O(1), configurable from txt file
     private ConcurrentHashMap<String, String> symbolTable;
-    //string with all the parameters the process collects from flight gear
+    //string with all the parameters the process collects from flight gear, give us the ability to know exactly
+    //on which parameter we are looking (flight gear send a long string with all the parameters separated by ",")
     private String flightParams;
     private FlightData flightData;
 
@@ -38,7 +41,10 @@ public class DataCollector {
         this.initParamsIndex();
     }
 
-    //update methods////////////////////////////////////////////////////////////////////////
+    //update methods - the current methods is going to react to the given data stream from flight gear/////////////////
+
+    //at the beginning of the flight, we want to init the flight data object with the start time of the flight
+    //and with the source location of the flight
     public void initFlightData(String stream) {
         flightData.setStartTime(Instant.now().toString());
         String[] params = stream.split(",");
@@ -49,6 +55,7 @@ public class DataCollector {
         this.updateFlightData(stream);
     }
 
+    //this method is called every time a new stream is coming from flight gear and contains all the necessary update methods
     public void updateFlightData(String stream) {
         this.updateTimeSeries(stream);
         this.updateSymTable(stream);
@@ -56,6 +63,8 @@ public class DataCollector {
         this.updateMiles();
     }
 
+    //at the end of the flight, we want to add the last details of our flight data (end time, dest location)
+    //so he will be ready to sent to backend
     public void completeFlightData() {
         //get the parameters from the last time stamp of the flight
         flightData.setEndTime(Instant.now().toString());
@@ -80,11 +89,12 @@ public class DataCollector {
 
     private void updateSymTable(String stream) {
         //given a new stream of data, split the data by , to get array of values and update the symbol table
-        //the desired value index stored in the pramsIndex map
+        //the desired value index in that stream array stored in the pramsIndex map
         String[] params = stream.split(",");
         symbolTable.forEach((s1, s2) -> symbolTable.put(s1, params[paramsIndex.get(s1)]));
     }
 
+    //add the stream to the time series
     private void updateTimeSeries(String stream) {
         flightData.getTs().getDataStreams().add(stream);
     }
@@ -94,6 +104,10 @@ public class DataCollector {
     }
 
     //initialize methods///////////////////////////////////////////////////////
+
+    /*this method will read the names of the parameters we collect from flight gear from the xml configuration
+    file and concat the parameters names with "," using string builder. at the end our flightParams string
+    is going to be updated with the names of all the parameters that we collect*/
     private void initFlightParams(String xmlFileName) {
         try {
             File fXmlFile = new File(xmlFileName);
@@ -114,6 +128,8 @@ public class DataCollector {
         }
     }
 
+    //open symbol table features file to get all the parameters we want to store in our symbol table and init the
+    //map with the name as key and 0 as value
     private void initSymTable(String SymTblFileName) {
         try {
             Scanner sc = new Scanner(new FileReader(SymTblFileName));
@@ -126,6 +142,9 @@ public class DataCollector {
         }
     }
 
+    /*this map will split flightParams string that we collected before, separate with "," to get value names array
+    and store in the hashmap the value name and his index in the stream array, give us the ability to get desired
+    value from live stream by O(1)*/
     public void initParamsIndex() {
         String[] params = flightParams.split(",");
         for (int i = 0; i < params.length; i++)
@@ -176,6 +195,7 @@ public class DataCollector {
     }
 
     public String getStream() {
+        //get the last stream from the time series
         return flightData.getTs().getDataStreams().get(flightData.getTs().getDataStreams().size() - 1);
     }
 
@@ -183,6 +203,17 @@ public class DataCollector {
         float longitude = Float.parseFloat(symbolTable.get("longitude-deg"));
         float latitude = Float.parseFloat(symbolTable.get("latitude-deg"));
         return new Location(longitude, latitude);
+    }
+
+    public Plain getPlain() {
+        Plain plain = new Plain();
+        plain.plainId = Properties.map.get("planeID");
+        plain.flightID = Properties.map.get("flightID");
+        plain.alt = Double.parseDouble(this.getAlt());
+        plain.heading = Double.parseDouble(this.getHeading());
+        plain.location = this.getLocation();
+        plain.speed = Double.parseDouble(this.getAirSpeed());
+        return plain;
     }
 
     //calc distance method///////////////////////////////////////////////////////
@@ -214,13 +245,14 @@ public class DataCollector {
 
     private double calcMiles() {
         int size = flightData.getTs().getSize();
-        //we want to calculate the miles every rate specified seconds and the time series get updated 10 times in a second
+        //we want to calculate the miles every rate specified seconds (configurable from properties txt file)
+        //and the time series get updated 10 times in a second
         int rate = Integer.parseInt(Properties.map.get("calc_miles_rate(secs)"))*10;
 
         if (size%rate != 0)
             return 0;
 
-        //get the stream from 10 seconds ago to get the location of the plane
+        //get the stream from 10 seconds ago to get the previous location of the plane
         String lastStream = flightData.getTs().getDataStreams().get(size-100);
         String[] values = lastStream.split(",");
         float long1 = Float.parseFloat(values[paramsIndex.get("longitude-deg")]);

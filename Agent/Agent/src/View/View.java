@@ -1,13 +1,10 @@
 package View;
 
-import Controller.Commands;
 import necessary_classes.Properties;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.Map;
 import java.util.Observable;
 
 public class View extends Observable {

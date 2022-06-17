@@ -2,6 +2,7 @@ package Model;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
+import necessary_classes.Plain;
 
 import java.io.IOException;
 
@@ -26,6 +27,7 @@ public interface ModelAPI {
     public String getPitch() throws IOException;
     public Location getLocation() throws IOException, ClassNotFoundException;
     public FlightData getFlight() throws IOException, ClassNotFoundException;
+    public Plain getPlain() throws IOException, ClassNotFoundException;
     public String getStream() throws IOException;
     public void endFlight();
     public void startFlight();

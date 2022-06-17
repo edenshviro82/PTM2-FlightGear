@@ -1,25 +1,23 @@
 package FGServer;
 
-import java.beans.XMLEncoder;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
+
+//FGServer class will wrap the data collector class and will be responsible for open servers to flight gear
+//simulator and the agent's model, and act by given stream of date from flight gear or any request from agent
 public class FGServer implements ServerService{
     private DataCollector dataCollector;
     private ExecutorService es;
     private HashMap<String,Runnable> commandMap;
-//    private volatile boolean stopFg;
     private volatile boolean stop;
     Socket flightGear;
-    //model's service date members
+    //model's service members
     private PrintWriter out2model;
     private ObjectOutputStream objectOutputStream;
 
@@ -28,10 +26,11 @@ public class FGServer implements ServerService{
         this.initCommandMap();
         es = Executors.newFixedThreadPool(3);
         es.execute(this::runFgServer);
-//        es.execute(this::runModelServer);
     }
 
     //servers methods////////////////////////////////////////////////////////////////////////
+
+    //this method is responsible for establish connection with flight gear simulator
     private void runFgServer() {
         try {
             ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("fgPort")));
@@ -43,6 +42,7 @@ public class FGServer implements ServerService{
         }
     }
 
+    //given a "start flight" instruction from the agent, we will start to collect data from fight gear
     private void startFlight() {
         this.stop = false;
         while (!stop) {
@@ -107,6 +107,7 @@ public class FGServer implements ServerService{
         commandMap.put("get location", this::getLocation);
         commandMap.put("get flight", this::getFlight);
         commandMap.put("get stream", this::getStream);
+        commandMap.put("get plain", this::getPlane);
         commandMap.put("start flight",this::startFlight);
         commandMap.put("end flight",this::endFlight);
     }
@@ -182,6 +183,14 @@ public class FGServer implements ServerService{
             objectOutputStream.writeObject(dataCollector.getFlight());
             objectOutputStream.flush();
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public void getPlane() {
+        try {
+            objectOutputStream.writeObject(dataCollector.getPlain());
+            objectOutputStream.flush();
+        } catch (IOException e) {e.printStackTrace();}
     }
 
     @Override
