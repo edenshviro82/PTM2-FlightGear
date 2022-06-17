@@ -5,11 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.concurrent.ExecutorService;
@@ -17,19 +19,23 @@ import java.util.concurrent.Executors;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import necessary_classes.Plane;
 
 public class Model extends Observable {
 
 String propFileName;
 HashMap<String, String> prop;
 HashMap<String, String> streamprop;
-Socket agent,streamSock;
+HashMap<String, String> tabHash;
+Socket agent,streamSock,tabSock;
 String sp[];
-PrintWriter out2agent,out2streamSock;
+PrintWriter out2agent,out2streamSock,out2TabSock;
 boolean flightstart;
 public FloatProperty altitude,headDeg,rollDeg,longitude,verticalSpeed,airspeed;
 public DoubleProperty moniAileron;
@@ -39,6 +45,12 @@ public DoubleProperty moniElevators;
 Data data;
 volatile boolean stopStream;
 ExecutorService es;
+private IntegerProperty isFleetPushed;
+private IntegerProperty isMoniPushed;
+private IntegerProperty isTelePushed;
+private IntegerProperty isTimeCapsulePushed;
+
+public ArrayList<Plane> planes;
 
 
 //the constructor read the file and connect to the flightgear as a Socket
@@ -57,8 +69,13 @@ ExecutorService es;
 		moniThrottle=new SimpleDoubleProperty(0);
 		//run at another thread
 		es = Executors.newFixedThreadPool(3);
+		isFleetPushed = new SimpleIntegerProperty(0);
+		isMoniPushed = new SimpleIntegerProperty(0);
+		isTelePushed = new SimpleIntegerProperty(0);
+		isTimeCapsulePushed = new SimpleIntegerProperty(0);
+
 		
-	
+		planes= new ArrayList<>();
 		stopStream=false;
 		data=new Data();
 		flightstart=false;
@@ -123,82 +140,100 @@ ExecutorService es;
 		        			}
 		            	
 		            			     
-		            	});
-			
+		            	});		
+		             		             
+	}
+	
+	
+	public void CurrentTab(String tabHashFileName)
+	{
+		System.out.println("tabHashMap");
+		tabHash=initHashMap(tabHashFileName,tabHash);
+		int port= Integer.parseInt(tabHash.get("port"));
+		
 			es.execute(()-> {
 
 				try {
-					//The port is 5404 in order to connect to the backEnd stream socket
-					streamSock=new Socket(streamprop.get("ip"),port); 
-		             BufferedReader  in = new BufferedReader(new InputStreamReader(streamSock.getInputStream()));
-					 OutputStream out = streamSock.getOutputStream();
-		             out2streamSock = new PrintWriter(out,true);// auto flush
+					//The port is 5401 in order to connect to the backEnd stream socket
+					tabSock=new Socket(tabHash.get("ip"),port); 
+		             BufferedReader  in = new BufferedReader(new InputStreamReader(tabSock.getInputStream()));
+					 OutputStream out = tabSock.getOutputStream();
+		             out2TabSock = new PrintWriter(new OutputStreamWriter(out),true);// auto flush
+		             ObjectInputStream ob = new ObjectInputStream(tabSock.getInputStream());
 		             
-		             System.out.println("2:Connected to the stream sock->agent controller");	
-		           	
-		             Thread.sleep(2000);
-		             out2streamSock.println("start flight");
+		             while(isFleetPushed.get()==1)
+		             {
+		            	 	
+							Thread.sleep(250); 
+		            	 	out2TabSock.println("get planes");
+//							planes=(ArrayList<Plane>) ob.readObject();
+//							System.out.println(planes.toString());
+		            	 	Plane p=(Plane)ob.readObject();
+		            	 
+		             }
 		             
-	            	Thread.sleep(2000);
-	            	out2streamSock.println("get aileron");
-            		String value = in.readLine();
-            	//	System.out.println(value + "get aileron test string");
+		             while(isMoniPushed.get()==1)
+		             {
 
-		             //System.out.println(v+"first str");
-						
-		            	while(!stopStream) {
-		            		
-		            		Thread.sleep(2000);
-		            		out2streamSock.println("get pitch");
-		            		 value = in.readLine();
+			            	Thread.sleep(2000);
+		            	 	out2TabSock.println("get aileron");
+		            		String value = in.readLine();
 		            		 int d=Integer.parseInt(value);
 		            		 moniAileron.set(d);
 		            		 System.out.println("aileron "+moniAileron.getValue());
 		            		Thread.sleep(2000);
 
 		            		Thread.sleep(500);
-							out2streamSock.println("get elevators");
+		            		out2TabSock.println("get elevators");
 							 value = in.readLine();
 							 moniElevators.set(Double.parseDouble(value));
 							 System.out.println("elevator "+moniElevators.getValue());
 			            		Thread.sleep(2000);
 
 			            		Thread.sleep(500);
-							out2streamSock.println("get rudder");
+			            		out2TabSock.println("get rudder");
 							 value = in.readLine();
 							 moniRudder.set((Double.parseDouble(value)));
 							 System.out.println("rudder "+moniRudder.getValue());
 			            		Thread.sleep(2000);
 
 							 Thread.sleep(500);
-							out2streamSock.println("get throttle");
+							 out2TabSock.println("get throttle");
 							 value = in.readLine();
 							 moniThrottle.set(Double.parseDouble(value));
 							 System.out.println("throttle "+moniThrottle.getValue());
 			            		Thread.sleep(2000);
 		            		
-		            		
+		             }
 		            
+		            
+		             while(isTimeCapsulePushed.get()==1)
+		             {
+		            	 
+		             }
+		             
+		             
+            	
+					}
+				catch (IOException e) {
+				e.printStackTrace();
+				}
+				catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    	
 
-		            		
-
-		            	}
-		            	
-							}catch (InterruptedException e1) {
-		            			e1.printStackTrace();
-		        			}
-		        		      catch (IOException e) {
-		        				e.printStackTrace();
-		        			}
-		            	
-		
-		            	});
-		
-		
-		
-		
-		
-		             		             
+    	});
+	}
+	
+	
+	public ArrayList<Plane> getPlanes()
+	{
+		return planes;
 	}
 	
 	public HashMap<String, String> initHashMap(String propFileName,HashMap<String, String> prop)

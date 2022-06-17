@@ -112,8 +112,18 @@ public class MainWindowController implements Initializable,Observer{
 	
 	int posX,posY;
 	
-	private IntegerProperty isPlanepush;
+	private IntegerProperty isPlanepushOnce;
+	private IntegerProperty isPlanepushTwice;
 	
+	
+	private IntegerProperty isFleetPushed;
+	private IntegerProperty isMoniPushed;
+	private IntegerProperty isTelePushed;
+	private IntegerProperty isTimeCapsulePushed;
+
+
+	
+
 	//************************************************************************************************
 	
 	
@@ -177,6 +187,9 @@ public class MainWindowController implements Initializable,Observer{
 		this.canvasGc = mapCanvas.getGraphicsContext2D();
 		airplane=null;
 		background=null;
+		isPlanepushOnce=new SimpleIntegerProperty();
+		isPlanepushTwice= new SimpleIntegerProperty();
+		
 	
 		try {
 			airplane = new Image(new FileInputStream(("./imgs/plane.png")));
@@ -188,6 +201,9 @@ public class MainWindowController implements Initializable,Observer{
 			e.printStackTrace();
 		}
 	
+		
+		vm.isPlanepushOnce.bind(isPlanepushOnce);
+		vm.isPlanepushTwice.bind(isPlanepushTwice);
 		
 		
 		//pieChart
@@ -231,6 +247,11 @@ public class MainWindowController implements Initializable,Observer{
 	//*********************************************************************************************
 	
 	
+	
+	
+	
+	
+	
 	public void drawMap() {
 		//System.out.println("draw map");
 		this.canvasGc.drawImage(this.background, 0, 0, mapCanvas.getHeight(), mapCanvas.getWidth());
@@ -254,6 +275,7 @@ public class MainWindowController implements Initializable,Observer{
 
 	public void moveButton() {
 		
+		isPlanepushOnce.set(isPlanepushOnce.getValue()+1);
 		//System.out.println("clicked!!");
 		this.textAreaPlane.setLayoutX(posX+50);
 		this.textAreaPlane.setLayoutY(posY+50);
@@ -270,6 +292,7 @@ public class MainWindowController implements Initializable,Observer{
 	public void isMouseDoubleClicked(MouseEvent me) {
 		
 		if(me.getClickCount() == 2){
+			isPlanepushTwice.set(isPlanepushTwice.get()+1);
            // System.out.println("Double clicked");
             tabPane.getSelectionModel().selectNext();;
 				this.textAreaPlane.setLayoutX(2000);

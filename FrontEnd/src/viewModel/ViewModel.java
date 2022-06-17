@@ -31,6 +31,9 @@ public class ViewModel implements Observer{
 	public DoubleProperty moniThrottle;
 	
 	public IntegerProperty isRunPushed;
+
+	public IntegerProperty isPlanepushTwice;
+	public IntegerProperty isPlanepushOnce;
 	
 	
 	
@@ -57,6 +60,9 @@ public class ViewModel implements Observer{
 		longitude=new SimpleDoubleProperty();
 		verticalSpeed=new SimpleDoubleProperty();
 		airspeed=new SimpleDoubleProperty();
+		
+		isPlanepushOnce=new SimpleIntegerProperty();
+		isPlanepushTwice= new SimpleIntegerProperty();
 		
 		
 		moniAileron.bind(m.moniAileron);
