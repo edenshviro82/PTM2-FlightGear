@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -51,6 +53,7 @@ import javafx.scene.shape.Sphere;
 		Boolean mousePushed;
 		double jx,jy,mx,my;
 		public DoubleProperty ailerons,elevators;
+
 		
 		
 		
@@ -59,8 +62,9 @@ import javafx.scene.shape.Sphere;
 			mousePushed=false;
 			jx=0.0;
 			jy=0.0;
-			ailerons=new SimpleDoubleProperty();
-			elevators=new SimpleDoubleProperty();
+			ailerons=new SimpleDoubleProperty(0);
+			elevators=new SimpleDoubleProperty(0);
+			
 		}
 		
 		void paint() {
@@ -72,12 +76,18 @@ import javafx.scene.shape.Sphere;
 			ailerons.set((jx-mx)/mx);
 			elevators.set((jy-my)/my);
 			
-			
-			aileronLabel.setText(String.format("%.2f",ailerons.doubleValue()));
-			elevatorLabel.setText(String.format("%.2f",elevators.doubleValue()));
+			setLabels();
 
 			
 			System.out.println(ailerons+","+elevators);
+		}
+		
+		public void setLabels() {
+			aileronLabel.setText(String.format("%.2f",ailerons.doubleValue()));
+			elevatorLabel.setText(String.format("%.2f",elevators.doubleValue()));
+			throttleLabel.setText(String.format("%.2f",throttleSlider.getValue()));
+			rudderLabel.setText(String.format("%.2f",rudderSlider.getValue()));
+
 		}
 		
 		public void mouseDown(MouseEvent me) {
@@ -111,12 +121,11 @@ import javafx.scene.shape.Sphere;
 
 		@Override
 		public void initialize(URL location, ResourceBundle resources) {
-			
 			throttleSlider.valueProperty().addListener(new ChangeListener<Number>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					throttleLabel.setText(String.format("%.2f",throttleSlider.getValue()));
+					throttleLabel.setText(String.format("%.4f",throttleSlider.getValue()));
 
 				}
 			});
@@ -124,12 +133,42 @@ import javafx.scene.shape.Sphere;
 
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					rudderLabel.setText(String.format("%.2f",rudderSlider.getValue()));
+					rudderLabel.setText(String.format("%.4f",rudderSlider.getValue()));
+
+				}
+			});
+			
+			ailerons.addListener(new ChangeListener<Number>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					aileronLabel.setText(String.format("%.4f",ailerons.getValue()));
+
+				}
+			});
+			
+			
+			elevators.addListener(new ChangeListener<Number>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					elevatorLabel.setText(String.format("%.4f",elevators.getValue()));
+
+				}
+			});
+			
+			rudderSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					rudderLabel.setText(String.format("%.4f",rudderSlider.getValue()));
 
 				}
 			});
 			
 		}
+
+
 
 	/*
 	 * public void init(ViewModel vm) { 

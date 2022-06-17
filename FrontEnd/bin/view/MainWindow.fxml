@@ -20,10 +20,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane id="border" prefHeight="403.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainWindowController">
+<BorderPane id="border" prefHeight="403.0" prefWidth="916.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainWindowController">
     <center>
    
-      <TabPane prefHeight="403.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" prefHeight="403.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
      
           <Tab text="Fleet Overview">
@@ -62,6 +62,8 @@
  						                  <Image url="@../style/refresh.png" />
   						               </image>
 						            </ImageView>
+                        <Button fx:id="airplane1Button" layoutX="54.0" layoutY="64.0" mnemonicParsing="false" onAction="#moveButton" onMouseClicked="#isMouseDoubleClicked" onMouseDragged="#isMouseDoubleClicked" prefHeight="69.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="." />
+                        <TextArea fx:id="textAreaPlane" layoutX="134.0" layoutY="99.0" prefHeight="78.0" prefWidth="125.0" />
       
                      </children></AnchorPane>
             </content>
@@ -74,10 +76,10 @@
                         <BorderPane layoutY="-9.0" prefHeight="391.0" prefWidth="700.0">
 
                            <right>
- 	                 		  <fx:include fx:id="joystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="CENTER_RIGHT" />      		  
+ 	                 		  <fx:include fx:id="moniJoystick" source="../viewJoystick/Joystick.fxml" BorderPane.alignment="CENTER_RIGHT" />      		  
                           </right>
                          <center>
-                            <fx:include fx:id="clocks" source="../viewClocks/Clocks.fxml" BorderPane.alignment="CENTER_RIGHT" /> 
+                            <fx:include fx:id="moniClock" source="../viewClocks/Clocks.fxml" BorderPane.alignment="CENTER_RIGHT" /> 
                          
                          </center>
                            <left>

@@ -16,7 +16,7 @@ public class dbhandler  implements dbhandler_api  {
     TypedQuery<Flights> fly;
     TypedQuery<History> history;
     TypedQuery<Plane> plane;
-
+    // constructor
     public dbhandler() {
          managerFactory = Persistence.createEntityManagerFactory("default");
          entityManager = managerFactory.createEntityManager();
@@ -143,34 +143,21 @@ public class dbhandler  implements dbhandler_api  {
         if (isFirstFlight(pid)) {
             Plane plane1 =new Plane();
             plane1.setPlaneid(pid);
-            //plane1.setFirstflight();
+            plane1.setFirstflight(flightData.getStartTime());
             entityManager.persist(plane1);
-            flights.setFlightid(fid);
-            flights.setPlaneid(pid);
-            //flights.setStartTime(st);
-            //flights.setEndTime(et);
             //flights.setFlyFrom();
             //flights.setFlyTo();
-            flights.setMiles(flightData.getMiles());
-            flights.setMaxSpeed((double) flightData.getMaxSpeed());
-            flights.setMaxAlitude((double) flightData.getMaxAltitude());
-            setFlightData(fid,pid ,this.objectToBytes(flightData.getTs()));
-            entityManager.persist(flights);
-            transaction.commit();
         }
-        else {
-            flights.setFlightid(fid);
-            flights.setPlaneid(pid);
-            //flights.setStartTime(st);
-            //flights.setEndTime(et);
-            //flights.setFlyFrom();
-            //flights.setFlyTo();
-            flights.setMiles(flightData.getMiles());
-            flights.setMaxSpeed((double) flightData.getMaxSpeed());
-            flights.setMaxAlitude((double) flightData.getMaxAltitude());
-            entityManager.persist(flights);
-            transaction.commit();
-        }
+        flights.setFlightid(fid);
+        flights.setPlaneid(pid);
+        flights.setStartTime(flightData.getStartTime());
+        flights.setEndTime(flightData.getEndTime());
+        flights.setMiles(flightData.getMiles());
+        flights.setMaxSpeed((double) flightData.getMaxSpeed());
+        flights.setMaxAlitude((double) flightData.getMaxAltitude());
+        setFlightData(fid,pid ,this.objectToBytes(flightData.getTs()));
+        entityManager.persist(flights);
+        transaction.commit();
 
     }
 

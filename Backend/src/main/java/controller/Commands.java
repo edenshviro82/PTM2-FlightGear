@@ -3,8 +3,11 @@ package controller;
 import command.Command;
 import model.Model;
 import necessary_classes.FlightData;
+import necessary_classes.TimeSeries;
 import view.View;
 import java.io.*;
+import java.net.Socket;
+import java.time.Instant;
 
 public class Commands {
     //the shared state of all commands
@@ -33,11 +36,21 @@ public class Commands {
     //commands data members
     private SharedSate sharedSate;
 
-    //commands constructor
+    //commands constructors
     public Commands(Model m,View v) {
         this.sharedSate = new SharedSate(m,v);
     }
-
+    //setting connections
+    public void setAgentStreams (Socket agent) throws IOException {
+        sharedSate.inFromAgent = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+        sharedSate.objectInputStream = new ObjectInputStream(agent.getInputStream());
+        sharedSate.out2agent = new PrintWriter(agent.getOutputStream(), true);
+    }
+    public void setFrontStreams (Socket front) throws IOException {
+        sharedSate.inFromFront = new BufferedReader(new InputStreamReader(front.getInputStream()));
+        sharedSate.objectOutputStream = new ObjectOutputStream(front.getOutputStream());
+        sharedSate.out2front = new PrintWriter(front.getOutputStream(),true);
+    }
     //commands implementation//////////////////////////////////////////////////////////////
     //set commands
     public class setAileronCommand implements Command {
@@ -82,6 +95,22 @@ public class Commands {
             sharedSate.m.setFinishedFlight("127","865",flightData);
         }
     }
+    // start and end of flight
+    public class startFlightCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+            sharedSate.out2agent.println(input);
+        }
+    }
+    //after we send to agent we expect to get the flight data
+    public class endFlightCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            sharedSate.out2agent.println(input);
+           FlightData fd=(FlightData) sharedSate.objectInputStream.readObject();
+        }
+    }
+
 
     //get commands//////////////////////////////////////////////////////////////////////////
     public class getAileronCommand implements Command {
@@ -177,7 +206,7 @@ public class Commands {
     public class getMilesPerMonthCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
-            int month = Integer.parseInt(sharedSate.inFromAgent.readLine());
+            int month = Integer.parseInt(Instant.now().toString().split("T")[0].split("-")[1]);
             sharedSate.objectOutputStream.writeObject(sharedSate.m.getMilesPerMonth(month));
         }
     }
@@ -206,7 +235,7 @@ public class Commands {
     public class getFleetSizeCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
-            int month = Integer.parseInt(sharedSate.inFromFront.readLine());
+            int month = Integer.parseInt(Instant.now().toString().split("T")[0].split("-")[1]);
             sharedSate.out2front.println(sharedSate.m.getFleetSize(month));
         }
     }
@@ -235,6 +264,45 @@ public class Commands {
         }
     }
 
+    public class getFlightRecord implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            String str = input.split(" ")[2];
+            sharedSate.objectOutputStream.writeObject(sharedSate.m.getFlightRecord(str));
+        }
+    }
+    // view commands
+
+    public class shutDown implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class reset implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class listOfTasks implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class listOfThreads implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
+    public class ListOfActiveAgents implements Command {
+        @Override
+        public void execute(String input) throws IOException {
+
+        }
+    }
 
 
 
