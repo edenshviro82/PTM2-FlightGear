@@ -30,22 +30,54 @@ public class Controller implements Observer{
         this.initCommandMap();
         v.addObserver(this);
         m.addObserver(this);
-        this.connect2backend();
+        this.connect2backendStreams();
     }
 
-    public void runBackendServer() {
+//    public void runBackendServer() {
+//        try {
+//            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("backend_server_port")));
+//            System.out.println("Backend server is open");
+//            server.setSoTimeout(1000);
+//            String line;
+//            while(!stop) {
+//                try {
+//                    Socket backend = server.accept();
+//                    System.out.println("Backend is connected to my service");
+//                    BufferedReader in = new BufferedReader(new InputStreamReader(backend.getInputStream()));
+//                    OutputStream out = backend.getOutputStream();
+////                    this.c.setOutputStream(out);
+//                    while(!(line = in.readLine()).equals("bye")) {
+//                        System.out.println(line); // for debug
+//                        //command example: get aileron , set aileron 1
+//                        String[] split = line.split(" ");
+//                        String command = split[0] + " " +split[1];
+//                        if (commandMap.containsKey(command)) {
+//                            String finalLine = line;
+//                            es.execute(()-> {
+//                                try {
+//                                    commandMap.get(command).execute(finalLine);
+//                                } catch (IOException | ClassNotFoundException e) { e.printStackTrace();}
+//                            });
+//                        }
+//                    }
+//                    this.stop = true;
+//                }
+//                catch(SocketTimeoutException e) { }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public void connect2backendOperation() {
         try {
-            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("backend_server_port")));
-            System.out.println("Backend server is open");
-            server.setSoTimeout(1000);
-            String line;
+            Socket backend = new Socket(Properties.map.get("backend_ip"),Integer.parseInt(Properties.map.get("backend_port")));
+            c.setOutputStream(backend.getOutputStream());
             while(!stop) {
                 try {
-                    Socket backend = server.accept();
-                    System.out.println("Backend is connected to my service");
                     BufferedReader in = new BufferedReader(new InputStreamReader(backend.getInputStream()));
                     OutputStream out = backend.getOutputStream();
-//                    this.c.setOutputStream(out);
+                    String line;
                     while(!(line = in.readLine()).equals("bye")) {
                         System.out.println(line); // for debug
                         //command example: get aileron , set aileron 1
@@ -64,15 +96,12 @@ public class Controller implements Observer{
                 }
                 catch(SocketTimeoutException e) { }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
-    public void connect2backend() {
+    public void connect2backendStreams() {
         try {
-            Socket backend = new Socket(Properties.map.get("backend_ip"),Integer.parseInt(Properties.map.get("backend_port")));
-            c.setOutputStream(backend.getOutputStream());
+            Socket backend = new Socket(Properties.map.get("backend_ip"),Integer.parseInt(Properties.map.get("stream_port")));
         } catch (IOException e) { e.printStackTrace(); }
     }
 
