@@ -57,8 +57,6 @@ public class Commands {
     //commands implementation//////////////////////////////////////////////////////////////
     //set commands
     public class  setAgentCommand implements Command  {
-
-
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             String str = input.split(" ")[2];

@@ -70,7 +70,7 @@ public class Controller implements Observer {
         commandMap.put("5", c.new endFlightCommand());
 
     }
-    // met open server.
+    // open frontend server
     public void openServer() throws IOException, ClassNotFoundException {
         ServerSocket ss = new ServerSocket(4999);
         System.out.println("server is running....");
@@ -101,6 +101,7 @@ public class Controller implements Observer {
                 break;
         }
     }
+    // open agents server and maps each agent port to his id via map
     public void openAgentsServer(){
         ServerSocket ss = null;
         try {
