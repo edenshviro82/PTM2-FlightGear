@@ -24,6 +24,11 @@ public class ViewModel implements Observer{
 	
 	public DoubleProperty verticalSpeed;
 	public DoubleProperty headDeg,rollDeg,longitude,airspeed,altitude;
+
+	public DoubleProperty moniAileron;
+	public DoubleProperty moniElevators;
+	public DoubleProperty moniRudder;
+	public DoubleProperty moniThrottle;
 	
 	public IntegerProperty isRunPushed;
 	
@@ -41,12 +46,24 @@ public class ViewModel implements Observer{
 		throttle=new SimpleDoubleProperty();
 		isRunPushed=new SimpleIntegerProperty();
 		
+		moniAileron = new SimpleDoubleProperty();
+		moniElevators=new SimpleDoubleProperty();
+		moniRudder=new SimpleDoubleProperty();
+		moniThrottle=new SimpleDoubleProperty();
+		
 		altitude=new SimpleDoubleProperty();
 		headDeg=new SimpleDoubleProperty();
 		rollDeg=new SimpleDoubleProperty();
 		longitude=new SimpleDoubleProperty();
 		verticalSpeed=new SimpleDoubleProperty();
 		airspeed=new SimpleDoubleProperty();
+		
+		
+		moniAileron.bind(m.moniAileron);
+		moniElevators.bind(m.moniElevators);
+		moniRudder.bind(m.moniRudder);
+		moniThrottle.bind(m.moniThrottle);
+
 		
 		
 		aileron.addListener((o,ov,nv)->m.setAlieron((double)nv));

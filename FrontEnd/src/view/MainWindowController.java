@@ -25,6 +25,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,21 +44,30 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import model.Plane;
+import necessary_classes.*;
 import viewClocks.ClockController;
 //import viewClocks.ClockController;
 
 
 public class MainWindowController implements Initializable,Observer{
 
+	
+	
+	@FXML
+	private TabPane tabPane;
+	
 //********************************************fleet Overview***************************************	
 
 	public ViewModel vm;
@@ -92,6 +103,28 @@ public class MainWindowController implements Initializable,Observer{
 	
 	@FXML
 	Canvas mapCanvas;	
+	
+	@FXML
+	Button airplane1Button;
+	
+	@FXML
+	public TextArea textAreaPlane;
+	
+	int posX,posY;
+	
+	private IntegerProperty isPlanepush;
+	
+	//************************************************************************************************
+	
+	
+	//***************************************monitoring***********************************************
+
+	@FXML
+	public JoystickController moniJoystickController;
+	
+	@FXML
+	public ClockController moniClockController;
+	
 	
 	//************************************************************************************************
 	
@@ -134,15 +167,19 @@ public class MainWindowController implements Initializable,Observer{
 		//paint();
 	//************************************************fleet overview************************************************
 	//map
-		
-		
+//		 ImageView airpka = new ImageView("http://i.stack.imgur.com/oURrw.png");
+//	        img.setPickOnBounds(true); // allows click on transparent areas
+//	        img.setOnMouseClicked((MouseEvent e) -> {
+//	            System.out.println("Clicked!"); // change functionality
+//	        });
+//		
 		planes= new HashMap<>();
 		this.canvasGc = mapCanvas.getGraphicsContext2D();
 		airplane=null;
 		background=null;
 	
 		try {
-			airplane = new Image(new FileInputStream("./imgs/plane.png"));
+			airplane = new Image(new FileInputStream(("./imgs/plane.png")));
 			background = new Image(new FileInputStream("./imgs/map.jpeg"));
 			this.drawAirplane(30, 50);
 
@@ -150,7 +187,7 @@ public class MainWindowController implements Initializable,Observer{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+	
 		
 		
 		//pieChart
@@ -201,15 +238,113 @@ public class MainWindowController implements Initializable,Observer{
 	
 	public void drawAirplane(int x, int y) {
 		//System.out.println("draw air");
+		this.posX=x;
+		this.posY=y;
 		this.drawMap();
-		this.canvasGc.drawImage(this.airplane, x, y, 50, 50);
+		this.airplane1Button.setBackground(null);
+		this.airplane1Button.setLayoutX(x);
+		this.airplane1Button.setLayoutY(y);
+		this.textAreaPlane.setLayoutX(2000);
+		this.textAreaPlane.setLayoutY(2000);
+		this.textAreaPlane.setBackground(null);
+		
+		this.canvasGc.drawImage(airplane, x, y,50,50);
 	}
 	
 
+	public void moveButton() {
+		
+		//System.out.println("clicked!!");
+		this.textAreaPlane.setLayoutX(posX+50);
+		this.textAreaPlane.setLayoutY(posY+50);
+		this.textAreaPlane.setText("clicked");
+		//this.textAreaPlane.setLayoutX(2000);
+		//this.textAreaPlane.setLayoutY(2000);
+		
+
+		
+		
+		
+	}
+	
+	public void isMouseDoubleClicked(MouseEvent me) {
+		
+		if(me.getClickCount() == 2){
+           // System.out.println("Double clicked");
+            tabPane.getSelectionModel().selectNext();;
+				this.textAreaPlane.setLayoutX(2000);
+				this.textAreaPlane.setLayoutY(2000);
+		}
+		
+		
+	}
 	public void init1(ViewModel vm)
 	{	
 		System.out.println("init1");
 		this.vm= vm;
+		
+		
+		//*******************************monitoring binding******************
+		
+		moniClockController.clock1.valueProperty().bind(vm.altitude);
+		moniClockController.clock2.valueProperty().bind(vm.headDeg);
+		moniClockController.clock3.valueProperty().bind(vm.rollDeg);
+		moniClockController.clock4.valueProperty().bind(vm.longitude);
+		moniClockController.clock5.valueProperty().bind(vm.verticalSpeed);
+		moniClockController.clock6.valueProperty().bind(vm.airspeed);
+		
+		moniJoystickController.ailerons.bind(vm.moniAileron);
+		moniJoystickController.elevators.bind(vm.moniElevators);
+		moniJoystickController.rudderSlider.valueProperty().bind(vm.moniRudder);
+		moniJoystickController.throttleSlider.valueProperty().bind(vm.moniThrottle);
+		
+		vm.moniThrottle.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+	
+				double d = moniJoystickController.throttleSlider.getValue();
+				moniJoystickController.throttleLabel.setText(""+d);
+				System.out.println(moniJoystickController.throttleLabel.getText());
+			}
+		});
+		
+		
+		moniJoystickController.rudderSlider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				
+				double d = moniJoystickController.rudderSlider.getValue();
+				moniJoystickController.rudderLabel.setText(""+d);
+				System.out.println(moniJoystickController.rudderLabel.toString());
+
+			}
+		});
+		
+		moniJoystickController.ailerons.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			
+				double d = moniJoystickController.ailerons.getValue();
+				moniJoystickController.aileronLabel.setText(""+d);
+				System.out.println(moniJoystickController.aileronLabel.toString());
+
+			}
+		});
+		
+		moniJoystickController.elevators.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				
+				double d = moniJoystickController.elevators.getValue();
+				moniJoystickController.elevatorLabel.setText(""+d);
+				System.out.println(moniJoystickController.elevatorLabel.toString());
+
+			}
+		});
 		
 		//***************** teleopration binding***********************************
 	
@@ -228,6 +363,7 @@ public class MainWindowController implements Initializable,Observer{
 		teleClockController.clock6.valueProperty().bind(vm.airspeed);
 		//*************************************************************************
 	
+		
 		
 	}
 	

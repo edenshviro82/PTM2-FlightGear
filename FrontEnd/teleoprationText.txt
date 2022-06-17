@@ -1,11 +1,1 @@
-set /controls/flight/rudder 0.7
-set /controls/flight/rudder 0.2
-set /controls/flight/rudder 1
-set /controls/flight/rudder 0.0
-set /controls/flight/rudder 0.3
-set /controls/flight/elevator 1
-set /controls/flight/elevator 0.6
-set /controls/flight/elevator 0.3
-set /controls/flight/elevator 0.5
-set /controls/flight/elevator 0.1
-
+set aileron 1

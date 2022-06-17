@@ -15,7 +15,9 @@ import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -30,7 +32,12 @@ String sp[];
 PrintWriter out2agent,out2streamSock;
 boolean flightstart;
 public FloatProperty altitude,headDeg,rollDeg,longitude,verticalSpeed,airspeed;
+public DoubleProperty moniAileron;
+public DoubleProperty moniRudder;
+public DoubleProperty moniThrottle;
+public DoubleProperty moniElevators;
 Data data;
+volatile boolean stopStream;
 ExecutorService es;
 
 
@@ -43,10 +50,16 @@ ExecutorService es;
 		altitude=new SimpleFloatProperty(0);
 		verticalSpeed=new SimpleFloatProperty(0);
 		airspeed=new SimpleFloatProperty(0);
+		
+		moniAileron=new SimpleDoubleProperty(0);
+		moniElevators=new SimpleDoubleProperty(0);
+		moniRudder=new SimpleDoubleProperty(0);
+		moniThrottle=new SimpleDoubleProperty(0);
 		//run at another thread
-		es = Executors.newSingleThreadExecutor();
+		es = Executors.newFixedThreadPool(3);
 		
 	
+		stopStream=false;
 		data=new Data();
 		flightstart=false;
 		prop=initHashMap(propFileName,prop);
@@ -64,54 +77,128 @@ ExecutorService es;
 	
 	//get stream from back-end
 	public void streamSocket(String propFileName) {
-		 
+	
 		System.out.println("stream socket");
 		streamprop=initHashMap(propFileName,streamprop);
 		int port= Integer.parseInt(streamprop.get("streamPort"));
-		//			String line=null;
-		//			//The port is 5401 in order to connect to the backEnd stream socket
-		//			 streamSock=new Socket(streamprop.get("ip"),port); 
-		//             BufferedReader  in = new BufferedReader(new InputStreamReader(streamSock.getInputStream()));
-		//			 OutputStream out = streamSock.getOutputStream();
-		//             out2streamSock = new PrintWriter(new OutputStreamWriter(out),true);// auto flush
-		//             
-		//             System.out.println("Connected to the stream sock->agent controller");	
-		//           
-		//          
-		//				Thread.sleep(2000);
-		//				 out2streamSock.println("start flight");
-		//				Thread.sleep(2000);
-		//				//line=in.readLine();
-		//	            out2streamSock.println("get stream");
-		//	            line = in.readLine();
-		//	            System.out.println(line);
-		//	            sp= line.split(",");
-		//	             
-		//	             //altitude-ft - high, vertical-speed-fps , airspeed-kt, heading-deg , roll-deg ,longitude-deg
-		//	             altitude.set(Float.parseFloat(sp[data.paramsIndex.get("altitude-ft")]));
-		//	             airspeed.set(Float.parseFloat(sp[data.paramsIndex.get("airspeed-kt")]));
-		//	             headDeg.set(Float.parseFloat(sp[data.paramsIndex.get("heading-deg")]));
-		//	             longitude.set(Float.parseFloat(sp[data.paramsIndex.get("longitude-deg")]));
-		//	             rollDeg.set(Float.parseFloat(sp[data.paramsIndex.get("roll-deg")]));
-		//	             verticalSpeed.set(Float.parseFloat(sp[data.paramsIndex.get("vertical-speed-fps")]));
-		//	             
-//		
-//					
-			             
-			             es.execute(()-> {
-			            	 altitude.setValue(20.00);
-			            	 headDeg.setValue(30.00);
-			            	 rollDeg.setValue(90.00);
-			            	 longitude.setValue(25.00);
-			            	 verticalSpeed.setValue(90.00);
-			            	 airspeed.setValue(1000.00);
-			            	 
-				             System.out.println("clocks after change");
-
-			             });
 		
-			             
-			             
+			es.execute(()-> {
+
+				try {
+					//The port is 5401 in order to connect to the backEnd stream socket
+					streamSock=new Socket(streamprop.get("ip"),port); 
+		             BufferedReader  in = new BufferedReader(new InputStreamReader(streamSock.getInputStream()));
+					 OutputStream out = streamSock.getOutputStream();
+		             out2streamSock = new PrintWriter(new OutputStreamWriter(out),true);// auto flush
+		             
+		             System.out.println("Connected to the stream sock->agent controller");	
+		           	
+		             Thread.sleep(2000);
+		             out2streamSock.println("start flight");
+		             
+		            	while(!stopStream) {
+			            	
+							Thread.sleep(Long.parseLong(streamprop.get("rate")));
+		            		out2streamSock.println("get stream");
+							String line = in.readLine();
+							//System.out.println(line);
+							
+				            sp= line.split(",");
+				             
+			             //altitude-ft - high, vertical-speed-fps , airspeed-kt, heading-deg , roll-deg ,longitude-deg
+				             altitude.set(Float.parseFloat(sp[data.paramsIndex.get("altitude-ft")]));
+				             airspeed.set(Float.parseFloat(sp[data.paramsIndex.get("airspeed-kt")]));
+				             headDeg.set(Float.parseFloat(sp[data.paramsIndex.get("heading-deg")]));
+				             longitude.set(Float.parseFloat(sp[data.paramsIndex.get("longitude-deg")]));
+				             rollDeg.set(Float.parseFloat(sp[data.paramsIndex.get("roll-deg")]));
+				             verticalSpeed.set(Float.parseFloat(sp[data.paramsIndex.get("vertical-speed-fps")]));
+				             
+		            		}
+		            	
+							}catch (InterruptedException e1) {
+		            			e1.printStackTrace();
+		        			}
+		        		      catch (IOException e) {
+		        				e.printStackTrace();
+		        			}
+		            	
+		            			     
+		            	});
+			
+			es.execute(()-> {
+
+				try {
+					//The port is 5404 in order to connect to the backEnd stream socket
+					streamSock=new Socket(streamprop.get("ip"),port); 
+		             BufferedReader  in = new BufferedReader(new InputStreamReader(streamSock.getInputStream()));
+					 OutputStream out = streamSock.getOutputStream();
+		             out2streamSock = new PrintWriter(out,true);// auto flush
+		             
+		             System.out.println("2:Connected to the stream sock->agent controller");	
+		           	
+		             Thread.sleep(2000);
+		             out2streamSock.println("start flight");
+		             
+	            	Thread.sleep(2000);
+	            	out2streamSock.println("get aileron");
+            		String value = in.readLine();
+            	//	System.out.println(value + "get aileron test string");
+
+		             //System.out.println(v+"first str");
+						
+		            	while(!stopStream) {
+		            		
+		            		Thread.sleep(2000);
+		            		out2streamSock.println("get pitch");
+		            		 value = in.readLine();
+		            		 int d=Integer.parseInt(value);
+		            		 moniAileron.set(d);
+		            		 System.out.println("aileron "+moniAileron.getValue());
+		            		Thread.sleep(2000);
+
+		            		Thread.sleep(500);
+							out2streamSock.println("get elevators");
+							 value = in.readLine();
+							 moniElevators.set(Double.parseDouble(value));
+							 System.out.println("elevator "+moniElevators.getValue());
+			            		Thread.sleep(2000);
+
+			            		Thread.sleep(500);
+							out2streamSock.println("get rudder");
+							 value = in.readLine();
+							 moniRudder.set((Double.parseDouble(value)));
+							 System.out.println("rudder "+moniRudder.getValue());
+			            		Thread.sleep(2000);
+
+							 Thread.sleep(500);
+							out2streamSock.println("get throttle");
+							 value = in.readLine();
+							 moniThrottle.set(Double.parseDouble(value));
+							 System.out.println("throttle "+moniThrottle.getValue());
+			            		Thread.sleep(2000);
+		            		
+		            		
+		            
+
+		            		
+
+		            	}
+		            	
+							}catch (InterruptedException e1) {
+		            			e1.printStackTrace();
+		        			}
+		        		      catch (IOException e) {
+		        				e.printStackTrace();
+		        			}
+		            	
+		
+		            	});
+		
+		
+		
+		
+		
+		             		             
 	}
 	
 	public HashMap<String, String> initHashMap(String propFileName,HashMap<String, String> prop)
@@ -136,6 +223,14 @@ ExecutorService es;
 	
 	//*******************************fleet overView*********************************
 	
+	public void GetPlaneProp() {
+		
+		out2streamSock.println("get planes");
+		
+		
+	
+	}
+	
 	
 	//******************************************************************************
 	
@@ -148,6 +243,23 @@ ExecutorService es;
 	
 	//*******************************teleopration*********************************
 	
+	public void sendTeleText() {
+		
+		try {
+			BufferedReader in=new BufferedReader(new FileReader("teleoprationText.txt"));
+			String line;
+			while((line=in.readLine())!=null)
+			{
+				System.out.println(line);
+				out2agent.println(line);
+				out2agent.flush();
+			}
+			in.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	//******************************************************************************
 	
@@ -226,23 +338,7 @@ ExecutorService es;
 		out2agent.flush();
 	}
 
-	public void sendTeleText() {
-		
-		try {
-			BufferedReader in=new BufferedReader(new FileReader("teleoprationText.txt"));
-			String line;
-			while((line=in.readLine())!=null)
-			{
-				System.out.println(line);
-				out2agent.println(line);
-				out2agent.flush();
-			}
-			in.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 	
 	//******************************************************************************
 }
