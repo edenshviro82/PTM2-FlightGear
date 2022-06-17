@@ -19,7 +19,7 @@ public class View extends Observable {
     public void runViewServer() {
         try {
             ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("view_client_port")));
-            System.out.println("waiting for client to connect...");
+            System.out.println("view: waiting for client to connect...");
             server.setSoTimeout(1000);
             while(true) {
                 try {

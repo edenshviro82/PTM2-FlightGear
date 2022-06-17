@@ -2,6 +2,7 @@ package test;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
+import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class Test {
     HashMap<String, Consumer<Float>> setMap;
 
     public Test() throws IOException {
-        Socket agent = new Socket("127.0.0.1", 4999);
+        Socket agent = new Socket("127.0.0.1", 5401);
         in = new Scanner(agent.getInputStream());
         out = new PrintWriter(agent.getOutputStream(),true);
         objectInputStream = new ObjectInputStream(agent.getInputStream());
@@ -41,6 +42,7 @@ public class Test {
         getMap.put("get stream", this::getStream);
         getMap.put("get location", this::getLocation);
         getMap.put("get flight", this::getFlight);
+        getMap.put("get plane", this::getPlane);
         getMap.put("start flight",this::startFlight);
         getMap.put("end flight", this::endFlight);
         getMap.put("1 1", this::getMilesPerMonth);
@@ -160,6 +162,20 @@ public class Test {
         } catch (IOException | ClassNotFoundException e) { e.printStackTrace(); }
     }
 
+    public void getPlane() {
+        try {
+            out.println("get plane");
+            Plane plane = (Plane) objectInputStream.readObject();
+            System.out.println("alt: " +plane.getAlt());
+            System.out.println("plane id: " +plane.getPlainId());
+            System.out.println("flight id: " +plane.getFlightID());
+            System.out.println("heading: " +plane.getHeading());
+            System.out.println(plane.getLocation());
+            System.out.println("speed: " +plane.getSpeed());
+        } catch (IOException e) { e.printStackTrace();}
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+    }
+
     public void startFlight() {
         out.println("start flight");
     }
@@ -231,8 +247,5 @@ public class Test {
 //    }
     //public boolean isFirstFlight(String pid);
     //public Date dateFirstFlight(String pid){}
-
-
-
 
 }

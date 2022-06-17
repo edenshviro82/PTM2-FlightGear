@@ -2,7 +2,7 @@ package FGServer;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
-import necessary_classes.plane;
+import necessary_classes.Plane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -205,15 +205,15 @@ public class DataCollector {
         return new Location(longitude, latitude);
     }
 
-    public plane getPlain() {
-        plane plain = new plane();
-        plain.plainId = Properties.map.get("planeID");
-        plain.flightID = Properties.map.get("flightID");
-        plain.alt = Double.parseDouble(this.getAlt());
-        plain.heading = Double.parseDouble(this.getHeading());
-        plain.location = this.getLocation();
-        plain.speed = Double.parseDouble(this.getAirSpeed());
-        return plain;
+    public Plane getPlane() {
+        Plane plane = new Plane();
+        plane.plainId = Properties.map.get("planeID");
+        plane.flightID = Properties.map.get("flightID");
+        plane.alt = Double.parseDouble(this.getAlt());
+        plane.heading = Double.parseDouble(this.getHeading());
+        plane.location = this.getLocation();
+        plane.speed = Double.parseDouble(this.getAirSpeed());
+        return plane;
     }
 
     //calc distance method///////////////////////////////////////////////////////

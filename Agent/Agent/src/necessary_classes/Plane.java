@@ -2,7 +2,7 @@ package necessary_classes;
 
 import java.io.Serializable;
 
-public class plane implements Serializable {
+public class Plane implements Serializable {
     public String plainId;
     public String flightID;
     public double heading;
