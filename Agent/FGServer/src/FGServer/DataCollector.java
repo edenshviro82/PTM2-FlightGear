@@ -2,7 +2,7 @@ package FGServer;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
-import necessary_classes.Plain;
+import necessary_classes.plane;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -205,8 +205,8 @@ public class DataCollector {
         return new Location(longitude, latitude);
     }
 
-    public Plain getPlain() {
-        Plain plain = new Plain();
+    public plane getPlain() {
+        plane plain = new plane();
         plain.plainId = Properties.map.get("planeID");
         plain.flightID = Properties.map.get("flightID");
         plain.alt = Double.parseDouble(this.getAlt());
