@@ -145,8 +145,8 @@ public class dbhandler  implements dbhandler_api  {
             plane1.setPlaneid(pid);
             plane1.setFirstflight(flightData.getStartTime());
             entityManager.persist(plane1);
-            //flights.setFlyFrom();
-            //flights.setFlyTo();
+            flights.setFlyFrom(objectToBytes(flightData.getFlyFrom()));
+            flights.setFlyTo(objectToBytes(flightData.getFlyTo()));
         }
         flights.setFlightid(fid);
         flights.setPlaneid(pid);

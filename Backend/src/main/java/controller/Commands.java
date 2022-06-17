@@ -3,15 +3,18 @@ package controller;
 import command.Command;
 import model.Model;
 import necessary_classes.FlightData;
+import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
 import view.View;
 import java.io.*;
 import java.net.Socket;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Commands {
     //the shared state of all commands
-    private class SharedSate {
+    protected class SharedSate {
         //agent
         PrintWriter out2agent;
         BufferedReader inFromAgent;
@@ -53,6 +56,16 @@ public class Commands {
     }
     //commands implementation//////////////////////////////////////////////////////////////
     //set commands
+    public class  setAgentCommand implements Command  {
+
+
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            String str = input.split(" ")[2];
+            setAgentStreams(Controller.activePlanes.get(str));
+        }
+    }
+
     public class setAileronCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
@@ -172,9 +185,19 @@ public class Commands {
     public class getPlanePositionCommand implements Command {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
-            sharedSate.out2agent.println(input);
-            sharedSate.objectOutputStream.writeObject(sharedSate.objectInputStream.readObject());
+            List<Plane> planesArr = new ArrayList<Plane>();
+            Controller.activePlanes.forEach((s, socket) ->{
+                try {
+                    setAgentStreams(socket);
+                    sharedSate.out2agent.println("get plane");
+                    planesArr.add((Plane) sharedSate.objectInputStream.readObject());
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
+            sharedSate.objectOutputStream.writeObject(planesArr);
         }
+
     }
 
     public class getFlightDataCommand implements Command {

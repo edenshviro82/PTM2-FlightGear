@@ -18,14 +18,15 @@ public class Controller implements Observer {
     HashMap<String,Command> commandMap;
     Commands c ;
     ExecutorService es ;
+    public static HashMap<String,Socket> activePlanes= new HashMap<>();
     private boolean stop ;
     public Controller(Model m, View v){
         this.m=m;
         m.addObserver(this);
         this.v=v;
         v.addObserver(this);
-        this.es = Executors.newSingleThreadExecutor();
-        //this.es = Executors.newFixedThreadPool(5);
+       // this.es = Executors.newSingleThreadExecutor();
+        this.es = Executors.newFixedThreadPool(5);
         this.c = new Commands(m,v);
         initCommandMap();
     }
@@ -33,6 +34,7 @@ public class Controller implements Observer {
 
     private void initCommandMap() {
         this.commandMap = new HashMap<String, Command>();
+        commandMap.put("set agent", c.new setAgentCommand());
         commandMap.put("set aileron", c.new setAileronCommand());
         commandMap.put("set rudder", c.new setRudderCommand());
         commandMap.put("set throttle", c.new setThrottleCommand());
@@ -59,6 +61,7 @@ public class Controller implements Observer {
         commandMap.put("get FlightRecord", c.new getFlightRecord());
         commandMap.put("start flight", c.new startFlightCommand());
         commandMap.put("end flight", c.new endFlightCommand());
+        commandMap.put("get planes", c.new getPlanePositionCommand());
         // command for view
         commandMap.put("1", c.new endFlightCommand());
         commandMap.put("2", c.new endFlightCommand());
@@ -98,7 +101,28 @@ public class Controller implements Observer {
                 break;
         }
     }
+    public void openAgentsServer(){
+        ServerSocket ss = null;
+        try {
+            ss = new ServerSocket(9444);
+            System.out.println("agents server is open.....");
+            while(true)
+                try {
+            System.out.println(" waiting for agent....");
+            Socket agent = ss.accept();
+            System.out.println("agent has connected");
+            BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+            String agentId = in.readLine();
+            activePlanes.put(agentId,agent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+
+    }
     @Override
     public void update(Observable o, Object arg) {
     }
