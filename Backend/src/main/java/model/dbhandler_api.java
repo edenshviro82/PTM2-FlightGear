@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface dbhandler_api {
-    public int getActivePlanes();
     public Map<String,Double > getMilesPerMonth(int month);
     public HashMap<Integer,Double> getMilesPerMonthYear();
     public HashMap<Integer, Integer> getFleetSize (int month);

@@ -39,10 +39,7 @@ public class dbhandler  implements dbhandler_api  {
         return out.toByteArray();
     }
 
-    @Override //get active planes via agnet
-    public int getActivePlanes() {
-        return 0;
-    }
+
 
     @Override //returns avg miles per month of all planes
     public HashMap<String, Double> getMilesPerMonth(int month) {

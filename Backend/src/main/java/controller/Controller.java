@@ -29,6 +29,16 @@ public class Controller implements Observer {
         this.es = Executors.newFixedThreadPool(5);
         this.c = new Commands(m,v);
         initCommandMap();
+        this.es.execute(this::openAgentsServer);
+        this.es.execute(() -> {
+            try {
+                openServer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
     }
     //Command map .
 
@@ -138,8 +148,9 @@ public class Controller implements Observer {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Model m = new Model();
         View v = new View();
-        Controller c = new Controller(m,v);
-        c.connectToFGAgent();
-        c.openServer();
+        Controller controller = new Controller(m,v);
+
+
+
     }
 }

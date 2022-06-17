@@ -17,10 +17,7 @@ public class Model extends Observable implements Model_api {
         this.db =new dbhandler();
     }
 
-    @Override
-    public int getActivePlanes() {
-        return db.getActivePlanes();
-    }
+
 
     @Override
     public Map<String, Double> getMilesPerMonth(int month) {
