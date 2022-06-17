@@ -1,3 +1,7 @@
 streamPort,5404
 ip,127.0.0.1
 rate,1000
+aileron,set aileron
+elevators,set elevator
+throttle,set throttle
+rudder,set rudder

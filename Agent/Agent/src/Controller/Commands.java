@@ -2,8 +2,13 @@ package Controller;
 
 import Model.Model;
 import View.View;
+import necessary_classes.Plane;
 import necessary_classes.Properties;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
 
@@ -164,10 +169,13 @@ public class Commands {
         }
     }
 
-    public class getPlainCommand implements Command {
+    public class getPlaneCommand implements Command {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
-            sharedSate.objectOutputStream.writeObject(sharedSate.m.getPlain());
+            Plane plane = (Plane) sharedSate.m.getPlane();
+            plane.setPlainId(Properties.map.get("plainId"));
+            plane.setFlightID(Properties.map.get("flightId"));
+            sharedSate.objectOutputStream.writeObject(plane);
         }
     }
 

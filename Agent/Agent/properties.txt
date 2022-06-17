@@ -7,4 +7,6 @@ view_print_stream_duration(secs),10
 view_client_port,5405
 backend_ip,127.0.0.1
 backend_port,9444
-stream_port
+stream_port,9000
+plainId,100
+flightId,1000

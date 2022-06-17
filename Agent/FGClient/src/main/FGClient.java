@@ -1,7 +1,7 @@
 package main;
 
 import main.Client;
-import Main.FGClientApi;
+import main.FGClientApi;
 
 import java.io.BufferedReader;
 import java.io.IOException;

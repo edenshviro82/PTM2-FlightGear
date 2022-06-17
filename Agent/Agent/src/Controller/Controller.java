@@ -4,7 +4,6 @@ import Model.Model;
 import View.View;
 import necessary_classes.Properties;
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
@@ -111,8 +110,8 @@ public class Controller implements Observer{
         commandMap.put("set rudder", c.new setRudderCommand());
         commandMap.put("set throttle", c.new setThrottleCommand());
         commandMap.put("set elevators", c.new setElevatorsCommand());
-        commandMap.put("set breaks", c.new setBreaksCommand());
-        commandMap.put("get breaks", c.new getBreaksCommand());
+        commandMap.put("set brakes", c.new setBreaksCommand());
+        commandMap.put("get brakes", c.new getBreaksCommand());
         commandMap.put("get aileron", c.new getAileronCommand());
         commandMap.put("get rudder", c.new getRudderCommand());
         commandMap.put("get throttle", c.new getThrottleCommand());
@@ -124,7 +123,7 @@ public class Controller implements Observer{
         commandMap.put("get pitch", c.new getPitchCommand());
         commandMap.put("get location", c.new getLocationCommand());
         commandMap.put("get flight", c.new getFlightCommand());
-        commandMap.put("get plain", c. new getPlainCommand());
+        commandMap.put("get plane", c. new getPlaneCommand());
         commandMap.put("get stream", c.new getStreamCommand());
         commandMap.put("start flight",c.new startFlightCommand());
         commandMap.put("end flight",c.new endFlightCommand());

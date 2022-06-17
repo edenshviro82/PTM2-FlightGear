@@ -1,6 +1,8 @@
 package viewModel;
 
 import java.util.Observer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -16,6 +18,9 @@ import model.Model;
 public class ViewModel implements Observer{
 	
 	public	Model m;
+	public ExecutorService es;
+
+	
 	
 	public DoubleProperty aileron;
 	public DoubleProperty elevators;
@@ -35,7 +40,10 @@ public class ViewModel implements Observer{
 	public IntegerProperty isPlanepushTwice;
 	public IntegerProperty isPlanepushOnce;
 	
-	
+	public IntegerProperty isFleetPushed;
+	public IntegerProperty isMoniPushed;
+	public IntegerProperty isTelePushed;
+	public IntegerProperty isTimeCapsulePushed;
 	
 	
 	public ViewModel(Model m) {
@@ -61,8 +69,24 @@ public class ViewModel implements Observer{
 		verticalSpeed=new SimpleDoubleProperty();
 		airspeed=new SimpleDoubleProperty();
 		
+		isFleetPushed = new SimpleIntegerProperty();
+		isMoniPushed = new SimpleIntegerProperty();
+		isTelePushed = new SimpleIntegerProperty();
+		isTimeCapsulePushed = new SimpleIntegerProperty();
+
+		
 		isPlanepushOnce=new SimpleIntegerProperty();
 		isPlanepushTwice= new SimpleIntegerProperty();
+		
+		es = Executors.newFixedThreadPool(3);
+
+		
+		isFleetPushed.addListener((o,ov,nv)->es.execute(()-> m.fleetActive()));
+		isMoniPushed.addListener((o,ov,nv)->es.execute(()-> m.moniActive()));
+		isTelePushed.addListener((o,ov,nv)->es.execute(()-> m.teleActive()));
+		isTimeCapsulePushed.addListener((o,ov,nv)->es.execute(()-> m.tcActive()));
+
+		
 		
 		
 		moniAileron.bind(m.moniAileron);

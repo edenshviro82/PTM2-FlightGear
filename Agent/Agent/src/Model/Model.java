@@ -2,7 +2,7 @@ package Model;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
-import necessary_classes.plane;
+import necessary_classes.Plane;
 import necessary_classes.Properties;
 
 import java.io.*;
@@ -53,9 +53,7 @@ public class Model extends Observable implements ModelAPI {
     public void setThrottle(float value) {
         out2FGClient.println("set throttle " +value);
     }
-    public void setBrakes(float value) {
-        out2FGClient.println("set brakes " + value);
-    }
+    public void setBrakes(float value) {out2FGClient.println("set brakes " + value);}
 
     //get methods///////////////////////////////////////////////////////////////////////////
     @Override
@@ -136,9 +134,9 @@ public class Model extends Observable implements ModelAPI {
         return (FlightData) objectInputStream.readObject();
     }
 
-    public plane getPlain() throws IOException, ClassNotFoundException {
-        out2FGServer.println("get plain");
-        return (plane) objectInputStream.readObject();
+    public Plane getPlane() throws IOException, ClassNotFoundException {
+        out2FGServer.println("get plane");
+        return (Plane) objectInputStream.readObject();
     }
 
     //start,end methods

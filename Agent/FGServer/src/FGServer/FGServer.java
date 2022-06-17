@@ -107,7 +107,7 @@ public class FGServer implements ServerService{
         commandMap.put("get location", this::getLocation);
         commandMap.put("get flight", this::getFlight);
         commandMap.put("get stream", this::getStream);
-        commandMap.put("get plain", this::getPlane);
+        commandMap.put("get plane", this::getPlane);
         commandMap.put("start flight",this::startFlight);
         commandMap.put("end flight",this::endFlight);
     }
@@ -188,7 +188,7 @@ public class FGServer implements ServerService{
     @Override
     public void getPlane() {
         try {
-            objectOutputStream.writeObject(dataCollector.getPlain());
+            objectOutputStream.writeObject(dataCollector.getPlane());
             objectOutputStream.flush();
         } catch (IOException e) {e.printStackTrace();}
     }
