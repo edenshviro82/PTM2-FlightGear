@@ -2,12 +2,15 @@ package test;
 
 import necessary_classes.FlightData;
 import necessary_classes.Location;
+import necessary_classes.TimeSeries;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -159,4 +162,29 @@ public class Test {
     public void endFlight() {
         out.println("end flight");
     }
+
+    ///////////////////////////////////Backed/////////////////////
+
+
+    public Map<String,Double > getMilesPerMonth(int month) throws IOException, ClassNotFoundException {
+        out.println("get MilesPerMonth");
+        return (Map<String, Double>) objectInputStream.readObject();
+    }
+    public HashMap<Integer,Double> getMilesPerMonthYear() throws IOException, ClassNotFoundException {
+        out.println("get MilesPerMonthYear");
+        return (HashMap<Integer, Double>) objectInputStream.readObject();
+    }
+    public HashMap<Integer, Integer> getFleetSize (int month) throws IOException, ClassNotFoundException {
+        out.println("get MilesPerMonthYear");
+        return (HashMap<Integer, Integer>) objectInputStream.readObject();
+    }
+    public TimeSeries getFlightRecord (String id) throws IOException, ClassNotFoundException;
+    public void setFlightData (String fid , String pid , byte[]ts);
+    public void setFinishedFlight(String pid , String fid , FlightData flightData) throws IOException;
+    public boolean isFirstFlight(String pid);
+    public Date dateFirstFlight(String pid);
+
+
+
+
 }

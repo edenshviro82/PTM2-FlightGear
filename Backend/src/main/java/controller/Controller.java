@@ -2,7 +2,6 @@ package controller;
 import command.Command;
 import model.Model;
 import view.View;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -30,6 +29,7 @@ public class Controller implements Observer {
         this.c = new Commands(m,v);
         initCommandMap();
     }
+    //Command map .
 
     private void initCommandMap() {
         this.commandMap = new HashMap<String, Command>();
@@ -56,6 +56,7 @@ public class Controller implements Observer {
         commandMap.put("date FirstFlight", c.new dateFirstFlightCommand());
         commandMap.put("get FleetSize", c.new getFleetSizeCommand());
         commandMap.put("get brakes", c.new getBrakesCommand());
+        commandMap.put("get FlightRecord", c.new getFlightRecord());
         commandMap.put("start flight", c.new startFlightCommand());
         commandMap.put("end flight", c.new endFlightCommand());
         // command for view

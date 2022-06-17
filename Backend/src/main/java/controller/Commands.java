@@ -3,6 +3,7 @@ package controller;
 import command.Command;
 import model.Model;
 import necessary_classes.FlightData;
+import necessary_classes.TimeSeries;
 import view.View;
 import java.io.*;
 import java.net.Socket;
@@ -259,6 +260,14 @@ public class Commands {
         public void execute(String input) throws IOException {
             sharedSate.out2agent.println(input);
             sharedSate.out2front.println(sharedSate.inFromAgent.readLine());
+        }
+    }
+
+    public class getFlightRecord implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            String str = input.split(" ")[2];
+            sharedSate.objectOutputStream.writeObject(sharedSate.m.getFlightRecord(str));
         }
     }
     // view commands
