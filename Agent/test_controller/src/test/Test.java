@@ -23,7 +23,7 @@ public class Test {
     HashMap<String, Consumer<Float>> setMap;
 
     public Test() throws IOException {
-        Socket agent = new Socket("127.0.0.1", 5401);
+        Socket agent = new Socket("127.0.0.1", 7070);
         in = new Scanner(agent.getInputStream());
         out = new PrintWriter(agent.getOutputStream(),true);
         objectInputStream = new ObjectInputStream(agent.getInputStream());
@@ -188,7 +188,7 @@ public class Test {
 
 
     public void getMilesPerMonth()  {
-        out.println("get MilesPerMonth ");
+        out.println("get MilesPerMonth");
         try {
             Map<String,Double> miles = (Map<String, Double>) objectInputStream.readObject();
             miles.forEach((s, aDouble) -> {
@@ -216,7 +216,7 @@ public class Test {
         }
     }
     public void getFleetSize () {
-        out.println("get MilesPerMonthYear ");
+        out.println("get MilesPerMonthYear");
         try {
             HashMap<Integer,Integer> fleetSize=(HashMap<Integer, Integer>) objectInputStream.readObject();
 //            fleetSize.forEach((s, aDouble) -> {

@@ -83,7 +83,7 @@ public class Controller implements Observer {
     }
     // open frontend server
     public void openServer() throws IOException, ClassNotFoundException {
-        ServerSocket ss = new ServerSocket(4999);
+        ServerSocket ss = new ServerSocket(7070);
         System.out.println("server is running....");
         Socket s = ss.accept();
         //try
@@ -116,7 +116,7 @@ public class Controller implements Observer {
     public void openAgentsServer(){
         ServerSocket ss = null;
         try {
-            ss = new ServerSocket(9444);
+            ss = new ServerSocket(6060);
             System.out.println("agents server is open.....");
             while(true)
                 try {
@@ -126,14 +126,15 @@ public class Controller implements Observer {
             BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
             String agentId = in.readLine();
             System.out.println(agentId);
-            if (Controller.activePlanes.containsKey(agentId))
-            {
-                Controller.activePlanes.get(agentId).setManage(agent);
-            }
-            else{
-                AgentSockets as =new AgentSockets(null,agent);
-                 Controller.activePlanes.put(agentId,as);
-            }
+//            if (Controller.activePlanes.containsKey(agentId))
+//            {
+//                Controller.activePlanes.get(agentId).setManage(agent);
+//            }
+//            else{
+//                AgentSockets as =new AgentSockets(null,agent);
+//                 Controller.activePlanes.put(agentId,as);
+//            }
+            Controller.activePlanes.put("100",new AgentSockets(null,agent));
             commandMap.get("set agent").execute("set agent 100");
         } catch (IOException e) {
             e.printStackTrace();
@@ -149,24 +150,24 @@ public class Controller implements Observer {
     public void openAgentsStreamServer(){
         ServerSocket stream = null;
         try {
-            stream = new ServerSocket(9000);
+            stream = new ServerSocket(5050);
             System.out.println("agents stream server is open.....");
             while(true)
                 try {
                     System.out.println(" waiting for agent...");
                     Socket agent = stream.accept();
                     System.out.println("agent has connected");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-                    String agentId = in.readLine();
-                    System.out.println(agentId);
-                    if (Controller.activePlanes.containsKey(agentId))
-                    {
-                        Controller.activePlanes.get(agentId).setStream(agent);
-                    }
-                    else{
-                        AgentSockets as =new AgentSockets(agent,null);
-                        Controller.activePlanes.put(agentId,as);
-                    }
+                    //BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+                    //String agentId = in.readLine();
+                    //System.out.println(agentId);
+                    //if (Controller.activePlanes.containsKey(agentId))
+                    //{
+                    //    Controller.activePlanes.get(agentId).setStream(agent);
+                    //}
+                    //else{
+                    //    AgentSockets as =new AgentSockets(agent,null);
+                    //    Controller.activePlanes.put(agentId,as);
+                    //}
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -191,8 +192,5 @@ public class Controller implements Observer {
         Model m = new Model();
         View v = new View();
         Controller controller = new Controller(m,v);
-
-
-
     }
 }
