@@ -70,6 +70,7 @@ public class Controller implements Observer {
     // met open server.
     public void openServer() throws IOException, ClassNotFoundException {
         ServerSocket ss = new ServerSocket(4999);
+        System.out.println("server is running....");
         Socket s = ss.accept();
         //try
         c.setFrontStreams(s);

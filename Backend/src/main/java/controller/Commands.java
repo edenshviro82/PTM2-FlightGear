@@ -7,6 +7,7 @@ import necessary_classes.TimeSeries;
 import view.View;
 import java.io.*;
 import java.net.Socket;
+import java.time.Instant;
 
 public class Commands {
     //the shared state of all commands
@@ -205,7 +206,7 @@ public class Commands {
     public class getMilesPerMonthCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
-            int month = Integer.parseInt(sharedSate.inFromAgent.readLine());
+            int month = Integer.parseInt(Instant.now().toString().split("T")[0].split("-")[1]);
             sharedSate.objectOutputStream.writeObject(sharedSate.m.getMilesPerMonth(month));
         }
     }
@@ -234,7 +235,7 @@ public class Commands {
     public class getFleetSizeCommand implements Command {
         @Override
         public void execute(String input) throws IOException {
-            int month = Integer.parseInt(sharedSate.inFromFront.readLine());
+            int month = Integer.parseInt(Instant.now().toString().split("T")[0].split("-")[1]);
             sharedSate.out2front.println(sharedSate.m.getFleetSize(month));
         }
     }

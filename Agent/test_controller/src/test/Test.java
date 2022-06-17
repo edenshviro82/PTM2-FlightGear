@@ -22,7 +22,7 @@ public class Test {
     HashMap<String, Consumer<Float>> setMap;
 
     public Test() throws IOException {
-        Socket agent = new Socket("127.0.0.1", 5404);
+        Socket agent = new Socket("127.0.0.1", 4999);
         in = new Scanner(agent.getInputStream());
         out = new PrintWriter(agent.getOutputStream(),true);
         objectInputStream = new ObjectInputStream(agent.getInputStream());
@@ -43,6 +43,11 @@ public class Test {
         getMap.put("get flight", this::getFlight);
         getMap.put("start flight",this::startFlight);
         getMap.put("end flight", this::endFlight);
+        getMap.put("1 1", this::getMilesPerMonth);
+        getMap.put("2 2", this::getMilesPerMonthYear);
+        getMap.put("3 3", this::getFleetSize);
+        getMap.put("4 4", this::getFlightRecord);
+
 
         setMap = new HashMap<>();
         setMap.put("set aileron", this::setAileron);
@@ -166,23 +171,66 @@ public class Test {
     ///////////////////////////////////Backed/////////////////////
 
 
-    public Map<String,Double > getMilesPerMonth(int month) throws IOException, ClassNotFoundException {
-        out.println("get MilesPerMonth");
-        return (Map<String, Double>) objectInputStream.readObject();
+    public void getMilesPerMonth()  {
+        out.println("get MilesPerMonth ");
+        try {
+            Map<String,Double> miles = (Map<String, Double>) objectInputStream.readObject();
+            miles.forEach((s, aDouble) -> {
+                System.out.println(s);
+                System.out.println(aDouble);
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-    public HashMap<Integer,Double> getMilesPerMonthYear() throws IOException, ClassNotFoundException {
+    public void getMilesPerMonthYear()  {
         out.println("get MilesPerMonthYear");
-        return (HashMap<Integer, Double>) objectInputStream.readObject();
+        try {
+            HashMap<Integer,Double> milesYear= (HashMap<Integer, Double>) objectInputStream.readObject();
+            milesYear.forEach((s, aDouble) -> {
+                System.out.println(s);
+                System.out.println(aDouble);
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-    public HashMap<Integer, Integer> getFleetSize (int month) throws IOException, ClassNotFoundException {
-        out.println("get MilesPerMonthYear");
-        return (HashMap<Integer, Integer>) objectInputStream.readObject();
+    public void getFleetSize () {
+        out.println("get MilesPerMonthYear ");
+        try {
+            HashMap<Integer,Integer> fleetSize=(HashMap<Integer, Integer>) objectInputStream.readObject();
+//            fleetSize.forEach((s, aDouble) -> {
+//                System.out.println(s);
+//                System.out.println(aDouble);
+//            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-    public TimeSeries getFlightRecord (String id) throws IOException, ClassNotFoundException;
-    public void setFlightData (String fid , String pid , byte[]ts);
-    public void setFinishedFlight(String pid , String fid , FlightData flightData) throws IOException;
-    public boolean isFirstFlight(String pid);
-    public Date dateFirstFlight(String pid);
+    public void getFlightRecord (){
+        out.println("get FlightRecord 999");
+        try {
+            TimeSeries ts =(TimeSeries) objectInputStream.readObject();
+            int num = ts.getSize();
+            System.out.println(ts.getSize());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+//    public void setFinishedFlight(String pid , String fid , FlightData flightData) throws IOException{
+//        out.println("get Flight "+pid+" "+fid+" "+flightData);
+//
+//    }
+    //public boolean isFirstFlight(String pid);
+    //public Date dateFirstFlight(String pid){}
 
 
 
