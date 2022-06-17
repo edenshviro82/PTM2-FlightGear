@@ -1,6 +1,6 @@
-package Main;
+package main;
 
-import Main.Client;
+import main.Client;
 import Main.FGClientApi;
 
 import java.io.BufferedReader;

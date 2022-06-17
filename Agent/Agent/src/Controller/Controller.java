@@ -73,7 +73,9 @@ public class Controller implements Observer{
         try {
             Socket backend = new Socket(Properties.map.get("backend_ip"),Integer.parseInt(Properties.map.get("backend_port")));
             c.setOutputStream(backend.getOutputStream());
-        } catch (IOException e) { e.printStackTrace(); }
+            Thread.sleep(200);
+            //new PrintWriter(backend.getOutputStream(),true).println(Properties.map.get("planeId"));
+        } catch (IOException | InterruptedException e) { e.printStackTrace(); }
     }
 
     private void initCommandMap() {

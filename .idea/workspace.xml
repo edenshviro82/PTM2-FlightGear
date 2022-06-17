@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f1a7b64-1875-4540-8695-ce3f8f817e45" name="Changes" comment="" />
+    <list default="true" id="6f1a7b64-1875-4540-8695-ce3f8f817e45" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPlainCommand.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/plane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Command.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$SharedSate.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$SharedSate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$endFlightCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$endFlightCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAileronCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAileronCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAirSpeedCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAirSpeedCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAltCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAltCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getBreaksCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getBreaksCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getElevatorsCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getElevatorsCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getFlightCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getFlightCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getHeadingCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getHeadingCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getLocationCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getLocationCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPitchCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPitchCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRollCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRollCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRudderCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRudderCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getStreamCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getStreamCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getThrottleCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getThrottleCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setAileronCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setAileronCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setBreaksCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setBreaksCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setElevatorsCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setElevatorsCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setRudderCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setRudderCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setThrottleCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setThrottleCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$startFlightCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$startFlightCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewCLI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewCLI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewPrintStreamCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewPrintStreamCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/ControllerAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/ControllerAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/Model.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/ModelAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/ModelAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/View.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/ViewAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/ViewAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/FlightData.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/FlightData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Location.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Location.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Properties.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Properties.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/TimeSeries.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/TimeSeries.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/FGClient/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -11,15 +53,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2AZnF5V9C8z55rqdTOTELUH7gPG" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Agent/Agent" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -30,10 +76,25 @@
       <option name="presentableId" value="Default" />
       <updated>1655225868229</updated>
       <workItem from="1655225869929" duration="72000" />
+      <workItem from="1655480554503" duration="225000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

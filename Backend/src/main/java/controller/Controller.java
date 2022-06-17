@@ -26,7 +26,7 @@ public class Controller implements Observer {
         this.v=v;
         v.addObserver(this);
        // this.es = Executors.newSingleThreadExecutor();
-        this.es = Executors.newFixedThreadPool(5);
+        this.es = Executors.newFixedThreadPool(10);
         this.c = new Commands(m,v);
         initCommandMap();
         this.es.execute(this::openAgentsServer);
@@ -123,11 +123,15 @@ public class Controller implements Observer {
             Socket agent = ss.accept();
             System.out.println("agent has connected");
             BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-            String agentId = in.readLine();
-            activePlanes.put(agentId,agent);
+            //String agentId = in.readLine();
+            //System.out.println(agentId);
+            activePlanes.put("100",agent);
+            commandMap.get("set agent").execute("set agent 100");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
         } catch (IOException e) {
             e.printStackTrace();
         }

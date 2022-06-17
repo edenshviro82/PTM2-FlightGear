@@ -32,6 +32,7 @@ public class Commands {
 
     public void setOutputStream(OutputStream out) throws IOException {
         this.sharedSate.out2back = new PrintWriter(out,true);
+        sharedSate.out2back.flush();
         this.sharedSate.objectOutputStream = new ObjectOutputStream(out);
     }
 
