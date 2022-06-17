@@ -60,7 +60,7 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             String str = input.split(" ")[2];
-            setAgentStreams(Controller.activePlanes.get(str));
+            setAgentStreams(Controller.activePlanes.get(str).manage);
         }
     }
 
@@ -184,9 +184,9 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             List<Plane> planesArr = new ArrayList<Plane>();
-            Controller.activePlanes.forEach((s, socket) ->{
+            Controller.activePlanes.forEach((s, aSocket) ->{
                 try {
-                    setAgentStreams(socket);
+                    setAgentStreams(aSocket.manage);
                     sharedSate.out2agent.println("get plane");
                     planesArr.add((Plane) sharedSate.objectInputStream.readObject());
                 } catch (IOException | ClassNotFoundException e) {

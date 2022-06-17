@@ -18,7 +18,7 @@ public class Controller implements Observer {
     HashMap<String,Command> commandMap;
     Commands c ;
     ExecutorService es ;
-    public static HashMap<String,Socket> activePlanes= new HashMap<>();
+    public static HashMap<String,AgentSockets> activePlanes= new HashMap<>();
     private boolean stop ;
     public Controller(Model m, View v){
         this.m=m;
@@ -123,13 +123,50 @@ public class Controller implements Observer {
             Socket agent = ss.accept();
             System.out.println("agent has connected");
             BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-            //String agentId = in.readLine();
-            //System.out.println(agentId);
-            activePlanes.put("100",agent);
+            String agentId = in.readLine();
+            System.out.println(agentId);
+            if (Controller.activePlanes.containsKey(agentId))
+            {
+                Controller.activePlanes.get(agentId).setManage(agent);
+            }
+            else{
+                AgentSockets as =new AgentSockets(null,agent);
+                 Controller.activePlanes.put(agentId,as);
+            }
             commandMap.get("set agent").execute("set agent 100");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public void openAgentsStreamServer(){
+        ServerSocket stream = null;
+        try {
+            stream = new ServerSocket(9000);
+            System.out.println("agents stream server is open.....");
+            while(true)
+                try {
+                    System.out.println(" waiting for agent...");
+                    Socket agent = stream.accept();
+                    System.out.println("agent has connected");
+                    BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+                    String agentId = in.readLine();
+                    System.out.println(agentId);
+                    if (Controller.activePlanes.containsKey(agentId))
+                    {
+                        Controller.activePlanes.get(agentId).setStream(agent);
+                    }
+                    else{
+                        AgentSockets as =new AgentSockets(agent,null);
+                        Controller.activePlanes.put(agentId,as);
+                    }
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
         } catch (IOException e) {
