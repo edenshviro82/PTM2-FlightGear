@@ -39,6 +39,7 @@ public class Controller implements Observer {
                 e.printStackTrace();
             }
         });
+        this.es.execute(this::openAgentsStreamServer);
     }
     //Command map .
 
