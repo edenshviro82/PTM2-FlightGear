@@ -68,6 +68,11 @@ public class MainWindowController implements Initializable,Observer{
 	@FXML
 	private TabPane tabPane;
 	
+	public IntegerProperty isFleetPushed;
+	public IntegerProperty isMoniPushed;
+	public IntegerProperty isTelePushed;
+	public IntegerProperty isTimeCapsulePushed;
+	
 //********************************************fleet Overview***************************************	
 
 	public ViewModel vm;
@@ -116,10 +121,7 @@ public class MainWindowController implements Initializable,Observer{
 	private IntegerProperty isPlanepushTwice;
 	
 	
-	private IntegerProperty isFleetPushed;
-	private IntegerProperty isMoniPushed;
-	private IntegerProperty isTelePushed;
-	private IntegerProperty isTimeCapsulePushed;
+
 
 
 	
@@ -171,7 +173,12 @@ public class MainWindowController implements Initializable,Observer{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-	
+		isFleetPushed = new SimpleIntegerProperty(0);
+		isMoniPushed = new SimpleIntegerProperty(0);
+		isTelePushed = new SimpleIntegerProperty(0);
+		isTimeCapsulePushed = new SimpleIntegerProperty(0);
+		
+
 		
 		
 		//paint();
@@ -190,6 +197,9 @@ public class MainWindowController implements Initializable,Observer{
 		isPlanepushOnce=new SimpleIntegerProperty();
 		isPlanepushTwice= new SimpleIntegerProperty();
 		
+		
+
+		
 	
 		try {
 			airplane = new Image(new FileInputStream(("./imgs/plane.png")));
@@ -202,8 +212,8 @@ public class MainWindowController implements Initializable,Observer{
 		}
 	
 		
-		vm.isPlanepushOnce.bind(isPlanepushOnce);
-		vm.isPlanepushTwice.bind(isPlanepushTwice);
+//		vm.isPlanepushOnce.bind(isPlanepushOnce);
+//		vm.isPlanepushTwice.bind(isPlanepushTwice);
 		
 		
 		//pieChart
@@ -301,6 +311,28 @@ public class MainWindowController implements Initializable,Observer{
 		
 		
 	}
+	
+	
+	public void fleetTabSelection() {
+		
+		if (isFleetPushed != null)
+			isFleetPushed.set(isFleetPushed.getValue()+1);
+	}
+	
+	public void teleTabSelection() {
+		isTelePushed.set(isTelePushed.getValue()+1);
+
+	}
+	
+	public void moniTabSelection() {
+		isMoniPushed.set(isMoniPushed.getValue()+1);
+	}
+	
+	public void timeCapsuleTabSelection() {
+		isTimeCapsulePushed.set(isTimeCapsulePushed.getValue()+1);
+	}	
+	
+	
 	public void init1(ViewModel vm)
 	{	
 		System.out.println("init1");
@@ -376,6 +408,11 @@ public class MainWindowController implements Initializable,Observer{
 		vm.aileron.bind(teleJoystickController.ailerons);
 		vm.elevators.bind(teleJoystickController.elevators);
 		vm.isRunPushed.bind(isRunpush);
+		vm.isFleetPushed.bind(isFleetPushed);
+		vm.isMoniPushed.bind(isMoniPushed);
+		vm.isTelePushed.bind(isTelePushed);
+		vm.isTimeCapsulePushed.bind(isTimeCapsulePushed);
+	
 		
 
 		teleClockController.clock1.valueProperty().bind(vm.altitude);

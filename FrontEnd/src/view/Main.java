@@ -32,7 +32,7 @@ public class Main extends Application {
 		  primaryStage.setScene(scene);
 		
 		  Model m=new Model("Properties.txt");
-		ViewModel vm=new ViewModel(m);
+		  ViewModel vm=new ViewModel(m);
 			  
 		  MainWindowController controller = loader.getController();
 		  controller.setStage(primaryStage);
