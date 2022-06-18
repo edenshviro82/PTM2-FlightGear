@@ -61,6 +61,9 @@ public  HashMap<Integer,Integer> fleetSize;
 public HashMap<Integer,Double> milesYear;
 public Map<String,Double> miles;
 
+public String currentId;
+
+
 //the constructor read the file and connect to the flightgear as a Socket
 	public Model(String propFileName) {
 		activeTabsHash = new ConcurrentHashMap<>();
@@ -211,13 +214,12 @@ public Map<String,Double> miles;
 			System.out.println("fleet tab");
 			try {
 			Thread.sleep(2500);
-			Plane p;
 			
-			
-			
- //   	 	out2TabSock.println("get plane");
+			//Plane p;
+//    	 	out2TabSock.println("get planes");
 //			planes=(ArrayList<Plane>) ob.readObject();
-////			System.out.println(planes.toString());
+//			System.out.println(planes.toString());
+			
 //			p = (Plane)ob.readObject();
 //			System.out.println(p.getFlightID());
 //			} catch (ClassNotFoundException e) {
@@ -227,25 +229,25 @@ public Map<String,Double> miles;
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
 			
-			  out2TabSock.println("get MilesPerMonth");
-			  miles = (Map<String, Double>)ob.readObject();
-		            
-			  out2TabSock.println("get MilesPerMonthYear");
-		      milesYear= (HashMap<Integer, Double>)ob.readObject();
-		      
-		      out2TabSock.println("get MilesPerMonthYear");
-		      HashMap<Integer,Integer> fleetSize=(HashMap<Integer, Integer>)ob.readObject();
+//			  out2TabSock.println("get MilesPerMonth");
+//			  miles = (Map<String, Double>)ob.readObject();
+//		            
+//			  out2TabSock.println("get MilesPerMonthYear");
+//		      milesYear= (HashMap<Integer, Double>)ob.readObject();
+//		      
+//		      out2TabSock.println("get getFleetSize");
+//		      HashMap<Integer,Integer> fleetSize=(HashMap<Integer, Integer>)ob.readObject();
 
 		           
 			
-		     } catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-		     } catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			catch (InterruptedException e) {
+//		     } catch (ClassNotFoundException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//		     } catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+			}catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				}
@@ -260,6 +262,7 @@ public Map<String,Double> miles;
 	public void moniActive() {
 		
 		this.activeTab("moni");		
+		out2TabSock.println("set agent"+ currentId);
 		while(activeTabsHash.get("moni").get() == true)
         {
 			System.out.println("moni tab");
@@ -488,7 +491,20 @@ public Map<String,Double> miles;
 	
 	public void GetPlaneProp() {
 		
-		out2streamSock.println("get planes");
+		out2TabSock.println("get planes");
+		try {
+			planes=(ArrayList<Plane>) ob.readObject();
+			System.out.println(planes.toString());
+		 	Plane p=(Plane)ob.readObject();
+		 	System.out.println(p.toString());
+		 	
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	
@@ -524,7 +540,6 @@ public Map<String,Double> miles;
 		}
 	}
 	
-	//******************************************************************************
 	
 	
 	//*******************************time capsule*********************************

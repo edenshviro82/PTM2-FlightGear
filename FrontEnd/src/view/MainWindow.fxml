@@ -56,14 +56,16 @@
                             <NumberAxis fx:id="yl" side="LEFT" />
                           </yAxis>
                         </LineChart>
-						      <Button fx:id="refresh" layoutX="858.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="23.0" styleClass="Symbols" />
-						            <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="861.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+						      <Button fx:id="refreshButton" layoutX="858.0" layoutY="14.0" mnemonicParsing="false" onAction="#refresh" prefHeight="25.0" prefWidth="23.0" styleClass="Symbols" />
+						            <ImageView fitHeight="21.0" fitWidth="28.0" layoutX="861.0" layoutY="16.0" onMouseClicked="#refresh" pickOnBounds="true" preserveRatio="true">
 						               <image>
  						                  <Image url="@../style/refresh.png" />
   						               </image>
 						            </ImageView>
                         <Button fx:id="airplane1Button" layoutX="54.0" layoutY="64.0" mnemonicParsing="false" onAction="#moveButton" onMouseClicked="#isMouseDoubleClicked" onMouseDragged="#isMouseDoubleClicked" prefHeight="69.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="." />
                         <TextArea fx:id="textAreaPlane" layoutX="134.0" layoutY="99.0" prefHeight="78.0" prefWidth="125.0" />
+                        <Button fx:id="airplane2Button" layoutX="54.0" layoutY="162.0" mnemonicParsing="false" onAction="#moveButton2" onMouseClicked="#isMouseDoubleClicked2" prefHeight="69.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="." />
+                        <TextArea fx:id="textAreaPlane2" layoutX="151.0" layoutY="202.0" prefHeight="78.0" prefWidth="125.0" />
       
                      </children></AnchorPane>
             </content>
