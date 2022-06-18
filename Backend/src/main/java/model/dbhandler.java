@@ -3,6 +3,7 @@ import DB.Flights;
 import DB.History;
 import DB.Plane;
 import necessary_classes.FlightData;
+import necessary_classes.Location;
 import necessary_classes.TimeSeries;
 import javax.persistence.*;
 import java.io.*;
@@ -124,7 +125,7 @@ public class dbhandler  implements dbhandler_api  {
 
     @Override// a function to save a finished flight record in DataBase , use in function below
     public void setFlightData(String fid , String pid , byte[]ts) {
-        //transaction.begin();
+        transaction.begin();
         History history1 = new History();
         history1.setFlightid(fid);
         history1.setPlaneid(pid);
@@ -135,16 +136,21 @@ public class dbhandler  implements dbhandler_api  {
 
     @Override //a function to save a finished flight in DataBase- flights table , plane table, and history table
     public void setFinishedFlight( FlightData flightData) throws IOException {
-        transaction.begin();
+        //transaction.begin();
         Flights flights = new Flights();
         if (isFirstFlight(flightData.getPlaneId())) {
             Plane plane1 =new Plane();
+            transaction.begin();
             plane1.setPlaneid(flightData.getPlaneId());
+            System.out.println(flightData.getPlaneId());
             plane1.setFirstflight(flightData.getStartTime());
+            System.out.println(flightData.getStartTime());
             entityManager.persist(plane1);
-            flights.setFlyFrom(objectToBytes(flightData.getFlyFrom()));
-            flights.setFlyTo(objectToBytes(flightData.getFlyTo()));
+            transaction.commit();
+
         }
+        flights.setFlyFrom(objectToBytes(flightData.getFlyFrom()));
+        flights.setFlyTo(objectToBytes(flightData.getFlyTo()));
         flights.setFlightid(flightData.getFlightId());
         flights.setPlaneid(flightData.getPlaneId());
         flights.setStartTime(flightData.getStartTime());
@@ -177,19 +183,27 @@ public class dbhandler  implements dbhandler_api  {
         return null;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         dbhandler db = new dbhandler();
-//        FlightData flightData = new FlightData();
-//        flightData.setFlightId("136");
-//        flightData.setPlaneId("137");
-//        flightData.setMiles(4000);
-//        flightData.setMaxAltitude(150);
-//        java.sql.Date date = new java.sql.Date(13);
-//        java.sql.Date date1 = new java.sql.Date(19);
-//        flightData.setStartTime(date);
-//        flightData.setEndTime(date1);
-//        flightData.setMaxSpeed(4300);
-//        db.setFinishedFlight(flightData);
+        FlightData flightData = new FlightData();
+        Location location = new Location();
+        location.setLongitude(100);
+        location.setLatitude(100);
+        flightData.setFlightId("697");
+        flightData.setPlaneId("481");
+        byte[] amit =db.objectToBytes(location);
+        Location location1 =new Location();
+        location1 =(Location) db.bytesToObject(amit);
+        flightData.setMiles(4000);
+        flightData.setMaxAltitude(150);
+        java.sql.Date date = new java.sql.Date(13);
+        java.sql.Date date1 = new java.sql.Date(19);
+        flightData.setStartTime(date);
+        flightData.setEndTime(date1);
+        flightData.setFlyTo(location);
+        flightData.setFlyFrom(location);
+        flightData.setMaxSpeed(4300);
+        db.setFinishedFlight(flightData);
         int x = 1;
         int y = 2;
         System.out.println(x+y);
