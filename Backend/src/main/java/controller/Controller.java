@@ -8,8 +8,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 public class Controller implements Observer {
@@ -18,7 +17,7 @@ public class Controller implements Observer {
     HashMap<String,Command> commandMap;
     Commands c ;
     ExecutorService es ;
-    public static HashMap<String,AgentSockets> activePlanes= new HashMap<>();
+    public static ConcurrentHashMap<String, AgentStreamers> activePlanes= new ConcurrentHashMap<>();
     private boolean stop ;
     public Controller(Model m, View v){
         this.m=m;
@@ -98,15 +97,17 @@ public class Controller implements Observer {
             System.out.println(str);
             String [] split = str.split(" ");
             String command = split[0]+" "+split[1];
-            es.execute(()-> {
-                try {
-                    commandMap.get(command).execute(str);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            });
+            if (commandMap.get(command) != null) {
+                es.execute(() -> {
+                    try {
+                        commandMap.get(command).execute(str);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
             //commandMap.get(command).execute(str);
             if (str.equals("bye"))
                 break;
@@ -123,18 +124,22 @@ public class Controller implements Observer {
             System.out.println(" waiting for agent....");
             Socket agent = ss.accept();
             System.out.println("agent has connected");
-            BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-            String agentId = in.readLine();
-            System.out.println(agentId);
-//            if (Controller.activePlanes.containsKey(agentId))
-//            {
-//                Controller.activePlanes.get(agentId).setManage(agent);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+//            String agentId = in.readLine();
+//            System.out.println(agentId);
+            PrintWriter outOp = new PrintWriter(agent.getOutputStream(),true);
+            BufferedReader inOp = new BufferedReader(new InputStreamReader(agent.getInputStream()));
+            ObjectInputStream obj = new ObjectInputStream(agent.getInputStream());
+//            if (Controller.activePlanes.containsKey(agentId)) {
+//                Controller.activePlanes.get(agentId).setObjectInputStream(obj).
+//                        setOperationOut(outOp).setOperationIn(inOp);
 //            }
 //            else{
-//                AgentSockets as =new AgentSockets(null,agent);
-//                 Controller.activePlanes.put(agentId,as);
+//                AgentStreamers agentStreamer = new AgentStreamers(inOp,outOp,obj);
+//                Controller.activePlanes.put(agentId,agentStreamer);
 //            }
-            Controller.activePlanes.put("100",new AgentSockets(null,agent));
+            Controller.activePlanes.put("100",new AgentStreamers(inOp,outOp,obj));
+
             commandMap.get("set agent").execute("set agent 100");
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,12 +186,12 @@ public class Controller implements Observer {
     public void update(Observable o, Object arg) {
     }
     //test only method
-    public void connectToFGAgent() {
-        try {
-            Socket Agent = new Socket("127.0.0.1",5404);
-            c.setAgentStreams(Agent);
-        } catch (IOException e) { e.printStackTrace(); }
-    }
+//    public void connectToFGAgent() {
+//        try {
+//            Socket Agent = new Socket("127.0.0.1",5404);
+//            c.setAgentStreams(Agent);
+//        } catch (IOException e) { e.printStackTrace(); }
+//    }
     // test main to check connections
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Model m = new Model();

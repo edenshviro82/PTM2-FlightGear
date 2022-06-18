@@ -1,7 +1,6 @@
 package test;
 
 import necessary_classes.FlightData;
-import necessary_classes.Location;
 import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
 
@@ -9,7 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -42,7 +41,7 @@ public class Test {
         getMap.put("get stream", this::getStream);
         getMap.put("get location", this::getLocation);
         getMap.put("get flight", this::getFlight);
-        getMap.put("get plane", this::getPlane);
+        getMap.put("get planes", this::getPlanes);
         getMap.put("start flight",this::startFlight);
         getMap.put("end flight", this::endFlight);
         getMap.put("1 1", this::getMilesPerMonth);
@@ -77,7 +76,7 @@ public class Test {
     }
 
     public void setBreaks(float value) {
-        out.println("set breaks " + value);
+        out.println("set brakes " + value);
     }
 
     //get methods///////////////////////////////////////////////////////////////////////////
@@ -102,7 +101,7 @@ public class Test {
     }
 
     public void getBreaks() {
-        out.println("get breaks");
+        out.println("get brakes");
         System.out.println(in.next());
     }
 
@@ -162,16 +161,16 @@ public class Test {
         } catch (IOException | ClassNotFoundException e) { e.printStackTrace(); }
     }
 
-    public void getPlane() {
+    public void getPlanes() {
         try {
-            out.println("get plane");
-            Plane plane = (Plane) objectInputStream.readObject();
-            System.out.println("alt: " +plane.getAlt());
-            System.out.println("plane id: " +plane.getPlainId());
-            System.out.println("flight id: " +plane.getFlightID());
-            System.out.println("heading: " +plane.getHeading());
-            System.out.println(plane.getLocation());
-            System.out.println("speed: " +plane.getSpeed());
+            out.println("get planes");
+            ArrayList<Plane> planes = (ArrayList<Plane>) objectInputStream.readObject();
+            System.out.println("alt: " +planes.get(0).getAlt());
+            System.out.println("planes id: " +planes.get(0).getPlainId());
+            System.out.println("flight id: " +planes.get(0).getFlightID());
+            System.out.println("heading: " +planes.get(0).getHeading());
+            System.out.println(planes.get(0).getLocation());
+            System.out.println("speed: " +planes.get(0).getSpeed());
         } catch (IOException e) { e.printStackTrace();}
         catch (ClassNotFoundException e) {e.printStackTrace();}
     }

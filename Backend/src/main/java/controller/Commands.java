@@ -44,10 +44,10 @@ public class Commands {
         this.sharedSate = new SharedSate(m,v);
     }
     //setting connections
-    public void setAgentStreams (Socket agent) throws IOException {
-        sharedSate.inFromAgent = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-        sharedSate.objectInputStream = new ObjectInputStream(agent.getInputStream());
-        sharedSate.out2agent = new PrintWriter(agent.getOutputStream(), true);
+    public void setAgentStreams (AgentStreamers agent) throws IOException {
+        sharedSate.inFromAgent = agent.operationIn;
+        sharedSate.objectInputStream = agent.objectInputStream;
+        sharedSate.out2agent = agent.operationOut;
     }
     public void setFrontStreams (Socket front) throws IOException {
         sharedSate.inFromFront = new BufferedReader(new InputStreamReader(front.getInputStream()));
@@ -59,8 +59,8 @@ public class Commands {
     public class  setAgentCommand implements Command  {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
-            String str = input.split(" ")[2];
-            setAgentStreams(Controller.activePlanes.get(str).manage);
+            String agentId = input.split(" ")[2];
+            setAgentStreams(Controller.activePlanes.get(agentId));
         }
     }
 
@@ -186,11 +186,14 @@ public class Commands {
             List<Plane> planesArr = new ArrayList<Plane>();
             Controller.activePlanes.forEach((s, aSocket) ->{
                 try {
-                    setAgentStreams(aSocket.manage);
-                    sharedSate.out2agent.println("get plane");
+                    System.out.println("inside foreach");
+                    PrintWriter out = new PrintWriter(aSocket.operationOut,true);
+                    ObjectInputStream objectInputStream = aSocket.objectInputStream;
+                    out.println("get plane");
+                    System.out.println("printed get plane");
                     planesArr.add((Plane) sharedSate.objectInputStream.readObject());
                 } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
+                    System.err.println("out of command");
                 }
             });
             sharedSate.objectOutputStream.writeObject(planesArr);
