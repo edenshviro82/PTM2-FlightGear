@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane prefHeight="428.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewGraph.GraphController">
+   <children>
+      <SplitPane dividerPositions="0.30930397727272724" prefHeight="160.0" prefWidth="200.0" StackPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ListView fx:id="listView" layoutX="40.0" layoutY="74.0" prefHeight="406.4" prefWidth="171.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <children>
+                  <SplitPane dividerPositions="0.5" layoutX="102.0" layoutY="88.0" orientation="VERTICAL" prefHeight="406.4" prefWidth="386.4" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="135.0" prefWidth="365.0">
+                           <children>
+                              <SplitPane dividerPositions="0.5" layoutX="82.0" layoutY="-5.0" prefHeight="149.6" prefWidth="365.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <LineChart fx:id="leftGraph" animated="false" layoutX="-13.0" layoutY="-108.0" legendVisible="false" maxWidth="-Infinity" prefHeight="157.0" prefWidth="191.2" title="Feature" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="-13.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <LineChart fx:id="rightGraph" animated="false" layoutX="-12.0" layoutY="-126.0" legendVisible="false" prefHeight="157.0" prefWidth="191.0" title="Correlated Feature" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="-12.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                           <children>
+                              <AnchorPane layoutX="60.0" prefHeight="189.6" prefWidth="364.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <StackPane fx:id="stackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Canvas height="200.0" width="367.0" />
+                                          <LineChart>
+                                            <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                            </yAxis>
+                                          </LineChart>
+                                       </children></StackPane>
+                                 </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+        </items>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </StackPane.margin>
+      </SplitPane>
+   </children>
+</StackPane>
