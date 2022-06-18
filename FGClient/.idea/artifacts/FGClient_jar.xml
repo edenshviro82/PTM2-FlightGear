@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FGClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FGClient_jar</output-path>
+    <root id="archive" name="FGClient.jar">
+      <element id="module-output" name="FGClient" />
+    </root>
+  </artifact>
+</component>
