@@ -37,7 +37,9 @@ public class Model extends Observable implements ModelAPI {
             out2FGServer = new PrintWriter(FGServer.getOutputStream(),true);
             fromFGServer = new BufferedReader(new InputStreamReader(in));
             objectInputStream = new ObjectInputStream(in);
-        } catch (IOException e) { e.printStackTrace(); }
+            Thread.sleep(2000);
+            out2FGServer.println("start flight");
+        } catch (IOException | InterruptedException e) { e.printStackTrace(); }
     }
 
     //set methods//////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,12 @@
+FGClient_ip,127.0.0.1
+FGClient_port,5403
+FGServer_ip,127.0.0.1
+FGServer_port,5401
+backend_server_port,5404
+view_print_stream_duration(secs),10
+view_client_port,5405
+backend_ip,127.0.0.1
+backend_port,6060
+stream_port,5050
+plainId,100
+flightId,1001

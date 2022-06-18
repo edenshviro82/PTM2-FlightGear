@@ -12,7 +12,5 @@ public class Main {
                 Model m = new Model();
                 View v = new View();
                 Controller c = new Controller(m,v);
-//                c.runBackendServer();
-                c.connect2backendOperation();
         }
 }
