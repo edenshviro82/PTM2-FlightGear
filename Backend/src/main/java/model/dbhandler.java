@@ -179,15 +179,10 @@ public class dbhandler  implements dbhandler_api  {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         dbhandler db = new dbhandler();
-        HashMap<Integer,Integer> map = db.getFleetSize(6);
         int x = 1;
         int y = 2;
         System.out.println(x+y);
-        FlightData flightData = new FlightData();
-        java.sql.Date date = new java.sql.Date(0);
-        flightData.setFlightId("241");
-        flightData.setPlaneId("614");
-        db.setFinishedFlight(flightData);
+
 
     }
 }
