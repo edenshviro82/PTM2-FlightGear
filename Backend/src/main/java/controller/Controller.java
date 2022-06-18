@@ -17,6 +17,7 @@ public class Controller implements Observer {
     Model m ;
     View v ;
     HashMap<String,Command> commandMap;
+    HashMap<String,Runnable> viewdMap;
     Commands c ;
     ExecutorService es  ;
     public static ConcurrentHashMap<String, AgentStreamers> activePlanes= new ConcurrentHashMap<>();
@@ -29,10 +30,6 @@ public class Controller implements Observer {
        // this.es = Executors.newSingleThreadExecutor();
         this.es = Executors.newFixedThreadPool(10);
         this.c = new Commands(m,v);
-        if (es instanceof ThreadPoolExecutor){
-            System.out.println("active Thread Count Is"+((ThreadPoolExecutor)es).getActiveCount());
-        }
-
         initCommandMap();
         this.es.execute(this::openAgentsServer);
         this.es.execute(() -> {
@@ -79,13 +76,39 @@ public class Controller implements Observer {
         commandMap.put("end flight", c.new endFlightCommand());
         commandMap.put("get planes", c.new getPlanePositionCommand());
         // command for view
-        commandMap.put("1", c.new endFlightCommand());
-        commandMap.put("2", c.new endFlightCommand());
-        commandMap.put("3", c.new endFlightCommand());
-        commandMap.put("4", c.new endFlightCommand());
-        commandMap.put("5", c.new endFlightCommand());
-
+        commandMap.put("shut down", c.new shutDown());
+        commandMap.put("do reset", c.new reset());
+        commandMap.put("active threads", c.new listOfThreads());
+        commandMap.put("waiting tasks", c.new listOfTasks());
+        commandMap.put("active planes", c.new ListOfActiveAgents());
     }
+    private void inniteViewMap(){
+        this.viewdMap = new HashMap<>();
+        viewdMap.put("shut down",()->{
+            this.v.sendResponse("server is closed");
+            this.es.shutdown();
+
+        });
+        viewdMap.put("active threads",()->{
+            if (es instanceof ThreadPoolExecutor){
+                this.v.sendResponse(""+((ThreadPoolExecutor)es).getActiveCount());
+            }
+
+
+        });
+        viewdMap.put("waiting tasks",()->{
+            if (es instanceof ThreadPoolExecutor){
+                this.v.sendResponse(""+((ThreadPoolExecutor)es).getTaskCount());
+            }
+
+
+        });
+        viewdMap.put("active planes", ()->{
+            this.v.sendResponse(""+activePlanes.size());
+
+        });
+    }
+
     // open frontend server
     public void openServer() throws IOException, ClassNotFoundException {
         ServerSocket ss = new ServerSocket(7070);
@@ -190,13 +213,18 @@ public class Controller implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-//          if (o == this.v) {
-//        es.execute(()-> {
-//            try {
-//                this.v.
-//            } catch (IOException | ClassNotFoundException e) {e.printStackTrace();}
-//        });
-    }
+        if (o == this.v) {
+            String str = this.v.getCommand();
+            System.out.println(str);
+            String [] split = str.split(" ");
+            String command = split[0]+" "+split[1];
+            if (viewdMap.get(command) != null) {
+                es.execute(viewdMap.get(str));
+
+            }
+        }
+        }
+
     //test only method
 //    public void connectToFGAgent() {
 //        try {
