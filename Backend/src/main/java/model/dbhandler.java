@@ -177,23 +177,21 @@ public class dbhandler  implements dbhandler_api  {
         return null;
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException {
         dbhandler db = new dbhandler();
-        FlightData flightData = new FlightData();
-        flightData.setFlightId("136");
-        flightData.setPlaneId("137");
-        flightData.setMiles(4000);
-        flightData.setMaxAltitude(150);
-        java.sql.Date date = new java.sql.Date(13);
-        java.sql.Date date1 = new java.sql.Date(19);
-        flightData.setStartTime(date);
-        flightData.setEndTime(date1);
-        flightData.setMaxSpeed(4300);
-        db.setFinishedFlight(flightData);
+//        FlightData flightData = new FlightData();
+//        flightData.setFlightId("136");
+//        flightData.setPlaneId("137");
+//        flightData.setMiles(4000);
+//        flightData.setMaxAltitude(150);
+//        java.sql.Date date = new java.sql.Date(13);
+//        java.sql.Date date1 = new java.sql.Date(19);
+//        flightData.setStartTime(date);
+//        flightData.setEndTime(date1);
+//        flightData.setMaxSpeed(4300);
+//        db.setFinishedFlight(flightData);
         int x = 1;
         int y = 2;
         System.out.println(x+y);
-
-
     }
 }
