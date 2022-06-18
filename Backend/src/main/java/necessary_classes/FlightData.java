@@ -4,8 +4,27 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class FlightData implements Serializable {
-    private java.sql.Date startTime;
+    private Date startTime;
     private Date endTime;
+    private String planeId;
+    private String flightId;
+
+    public String getPlaneId() {
+        return planeId;
+    }
+
+    public void setPlaneId(String planeId) {
+        this.planeId = planeId;
+    }
+
+    public String getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(String flightId) {
+        this.flightId = flightId;
+    }
+
     private float maxSpeed;
     private float maxAltitude;
     private double miles;

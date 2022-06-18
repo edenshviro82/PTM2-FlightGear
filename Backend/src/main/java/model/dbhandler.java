@@ -134,25 +134,25 @@ public class dbhandler  implements dbhandler_api  {
     }
 
     @Override //a function to save a finished flight in DataBase- flights table , plane table, and history table
-    public void setFinishedFlight(String pid, String fid, FlightData flightData) throws IOException {
+    public void setFinishedFlight( FlightData flightData) throws IOException {
         transaction.begin();
         Flights flights = new Flights();
-        if (isFirstFlight(pid)) {
+        if (isFirstFlight(flightData.getPlaneId())) {
             Plane plane1 =new Plane();
-            plane1.setPlaneid(pid);
+            plane1.setPlaneid(flightData.getPlaneId());
             plane1.setFirstflight(flightData.getStartTime());
             entityManager.persist(plane1);
             flights.setFlyFrom(objectToBytes(flightData.getFlyFrom()));
             flights.setFlyTo(objectToBytes(flightData.getFlyTo()));
         }
-        flights.setFlightid(fid);
-        flights.setPlaneid(pid);
+        flights.setFlightid(flightData.getFlightId());
+        flights.setPlaneid(flightData.getPlaneId());
         flights.setStartTime(flightData.getStartTime());
         flights.setEndTime(flightData.getEndTime());
         flights.setMiles(flightData.getMiles());
         flights.setMaxSpeed((double) flightData.getMaxSpeed());
         flights.setMaxAlitude((double) flightData.getMaxAltitude());
-        setFlightData(fid,pid ,this.objectToBytes(flightData.getTs()));
+        setFlightData(flights.getFlightid(), flightData.getPlaneId(),this.objectToBytes(flightData.getTs()));
         entityManager.persist(flights);
         transaction.commit();
 

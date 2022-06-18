@@ -103,7 +103,7 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             FlightData flightData = (FlightData) sharedSate.objectInputStream.readObject();
-            sharedSate.m.setFinishedFlight("127","865",flightData);
+            sharedSate.m.setFinishedFlight(flightData);
         }
     }
     // start and end of flight
@@ -118,7 +118,9 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             sharedSate.out2agent.println(input);
+            sharedSate.out2agent.println("get flight");
            FlightData fd=(FlightData) sharedSate.objectInputStream.readObject();
+           sharedSate.m.setFinishedFlight(fd);
         }
     }
 
@@ -205,9 +207,7 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             FlightData flightData = (FlightData) sharedSate.objectInputStream.readObject();
-            String pid = "777";
-            String fid = "999";
-            sharedSate.m.setFinishedFlight(pid , fid , flightData);
+            sharedSate.m.setFinishedFlight(flightData);
         }
     }
 
@@ -260,7 +260,7 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException {
             int month = Integer.parseInt(Instant.now().toString().split("T")[0].split("-")[1]);
-            sharedSate.out2front.println(sharedSate.m.getFleetSize(month));
+            sharedSate.objectOutputStream.writeObject(sharedSate.m.getFleetSize(month));
         }
     }
 

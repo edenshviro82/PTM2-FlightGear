@@ -46,8 +46,8 @@ public class Model extends Observable implements Model_api {
     }
 
     @Override
-    public void setFinishedFlight(String pid , String fid , FlightData flightData) throws IOException {
-        db.setFinishedFlight(pid, fid, flightData);
+    public void setFinishedFlight( FlightData flightData) throws IOException {
+        db.setFinishedFlight( flightData);
     }
 
     @Override

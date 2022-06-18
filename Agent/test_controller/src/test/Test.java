@@ -215,13 +215,13 @@ public class Test {
         }
     }
     public void getFleetSize () {
-        out.println("get MilesPerMonthYear");
+        out.println("get FleetSize");
         try {
             HashMap<Integer,Integer> fleetSize=(HashMap<Integer, Integer>) objectInputStream.readObject();
-//            fleetSize.forEach((s, aDouble) -> {
-//                System.out.println(s);
-//                System.out.println(aDouble);
-//            });
+            fleetSize.forEach((s, aDouble) -> {
+                System.out.println(s);
+                System.out.println(aDouble);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

@@ -60,7 +60,7 @@ public class Controller implements Observer {
         commandMap.put("get roll", c.new getRollCommand());
         commandMap.put("get pitch", c.new getPitchCommand());
         //commandMap.put("get location", c.new getLocationCommand());
-        commandMap.put("get flight", c.new setFinishedFlight());
+        //commandMap.put("get flight", c.new setFinishedFlight());
         commandMap.put("get stream", c.new getDataStreamCommand());
         commandMap.put("get MilesPerMonth", c.new getMilesPerMonthCommand());
         commandMap.put("get MilesPerMonthYear", c.new getMilesPerMonthYearCommand());

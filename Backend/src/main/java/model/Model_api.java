@@ -13,7 +13,7 @@ public interface Model_api {
     public HashMap<Integer, Integer> getFleetSize (int month);
     public TimeSeries getFlightRecord (String id) throws IOException, ClassNotFoundException;
     public void setFlightData (String fid , String pid , byte[]ts);
-    public void setFinishedFlight(String pid , String fid , FlightData flightData) throws IOException;
+    public void setFinishedFlight( FlightData flightData) throws IOException;
     public boolean isFirstFlight(String pid);
     public Date dateFirstFlight(String pid);
 }
