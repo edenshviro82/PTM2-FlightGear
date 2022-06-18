@@ -15,7 +15,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Date;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,7 +48,7 @@ public class DataCollector {
     //at the beginning of the flight, we want to init the flight data object with the start time of the flight
     //and with the source location of the flight
     public void initFlightData(String stream) {
-        flightData.setStartTime(Instant.now().toString());
+        flightData.setStartTime(new Date(Calendar.getInstance().getTimeInMillis()));
         String[] params = stream.split(",");
         float longitude = Float.parseFloat(params[paramsIndex.get("longitude-deg")]);
         float latitude = Float.parseFloat(params[paramsIndex.get("latitude-deg")]);
@@ -67,7 +69,7 @@ public class DataCollector {
     //so he will be ready to sent to backend
     public void completeFlightData() {
         //get the parameters from the last time stamp of the flight
-        flightData.setEndTime(Instant.now().toString());
+        flightData.setEndTime(new Date(Calendar.getInstance().getTimeInMillis()));
         String[] params = flightData.getTs().getDataStreams().get(flightData.getTs().getDataStreams().size() - 1).split(",");
         float longitude = Float.parseFloat(params[paramsIndex.get("longitude-deg")]);
         float latitude = Float.parseFloat(params[paramsIndex.get("latitude-deg")]);

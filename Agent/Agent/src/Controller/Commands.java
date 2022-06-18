@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Model;
 import View.View;
+import necessary_classes.FlightData;
 import necessary_classes.Plane;
 import necessary_classes.Properties;
 
@@ -165,7 +166,10 @@ public class Commands {
     public class getFlightCommand implements Command {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
-            sharedSate.objectOutputStream.writeObject(sharedSate.m.getFlight());
+            FlightData flight = (FlightData) sharedSate.m.getFlight();
+            flight.setPlaneId(Properties.map.get("planeId"));
+            flight.setFlightId(Properties.map.get("flightId"));
+            sharedSate.objectOutputStream.writeObject(flight);
         }
     }
 
