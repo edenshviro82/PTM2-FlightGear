@@ -169,8 +169,6 @@ public class Commands {
             FlightData flight = (FlightData) sharedSate.m.getFlight();
             flight.setPlaneId(Properties.map.get("planeId"));
             flight.setFlightId(Properties.map.get("flightId"));
-            System.out.println(flight.getPlaneId());
-            System.out.println(Properties.map.get("planeId"));
             sharedSate.objectOutputStream.writeObject(flight);
         }
     }

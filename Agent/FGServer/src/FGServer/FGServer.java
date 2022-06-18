@@ -20,12 +20,14 @@ public class FGServer implements ServerService{
     //model's service members
     private PrintWriter out2model;
     private ObjectOutputStream objectOutputStream;
+    private volatile PrintWriter outStream;
 
     public FGServer() {
         this.dataCollector = new DataCollector();
         this.initCommandMap();
         es = Executors.newFixedThreadPool(3);
         es.execute(this::runFgServer);
+        es.execute(this::runStreamsServer);
     }
 
     //servers methods////////////////////////////////////////////////////////////////////////
@@ -51,6 +53,7 @@ public class FGServer implements ServerService{
                 this.dataCollector.initFlightData(in.readLine());
                 while(!stop) {
                     String stream = in.readLine();
+                    es.execute(()-> outStream.println(stream));
                     es.execute(()-> dataCollector.updateFlightData(stream));
                 }
             } catch (IOException e) { e.printStackTrace(); }
@@ -87,6 +90,16 @@ public class FGServer implements ServerService{
                 }
                 catch(SocketTimeoutException e) { }
             }
+        } catch (IOException e) { e.printStackTrace();}
+    }
+
+    public void runStreamsServer() {
+        try {
+            ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("stream_port")));
+            System.out.println("stream server is open");
+            Socket agent = server.accept();
+            System.out.println("Agent is connected to streams service");
+            outStream = new PrintWriter(new OutputStreamWriter(agent.getOutputStream()),true);
         } catch (IOException e) { e.printStackTrace();}
     }
 
