@@ -1,17 +1,16 @@
 package controller;
 
 import java.io.*;
-import java.net.Socket;
 
 public class AgentStreamers {
     PrintWriter operationOut;
     BufferedReader operationIn;
     ObjectInputStream objectInputStream;
 
-    BufferedReader streamOut;
+    BufferedReader streamIn;
 
     public AgentStreamers(BufferedReader in) {
-        this.streamOut = new BufferedReader(in);
+        this.streamIn = new BufferedReader(in);
     }
 
     public AgentStreamers(BufferedReader buff, PrintWriter out, ObjectInputStream obj) {
@@ -23,9 +22,9 @@ public class AgentStreamers {
     public PrintWriter getOperationOut() {return operationOut;}
     public BufferedReader getOperationIn() {return operationIn;}
     public ObjectInputStream getObjectInputStream() {return objectInputStream;}
-    public BufferedReader getStreamOut() {return streamOut;}
-    public AgentStreamers setStreamOut(BufferedReader streamOut) {
-        this.streamOut = streamOut;
+    public BufferedReader getStreamIn() {return streamIn;}
+    public AgentStreamers setStreamIn(BufferedReader streamIn) {
+        this.streamIn = streamIn;
         return this;
     }
     public AgentStreamers setOperationOut(PrintWriter operationOut) {
