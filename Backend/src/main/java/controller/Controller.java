@@ -11,12 +11,14 @@ import java.util.Observer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
 public class Controller implements Observer {
     Model m ;
     View v ;
     HashMap<String,Command> commandMap;
     Commands c ;
-    ExecutorService es ;
+    ExecutorService es  ;
     public static ConcurrentHashMap<String, AgentStreamers> activePlanes= new ConcurrentHashMap<>();
     private boolean stop ;
     public Controller(Model m, View v){
@@ -27,6 +29,10 @@ public class Controller implements Observer {
        // this.es = Executors.newSingleThreadExecutor();
         this.es = Executors.newFixedThreadPool(10);
         this.c = new Commands(m,v);
+        if (es instanceof ThreadPoolExecutor){
+            System.out.println("active Thread Count Is"+((ThreadPoolExecutor)es).getActiveCount());
+        }
+
         initCommandMap();
         this.es.execute(this::openAgentsServer);
         this.es.execute(() -> {
@@ -184,6 +190,12 @@ public class Controller implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
+//          if (o == this.v) {
+//        es.execute(()-> {
+//            try {
+//                this.v.
+//            } catch (IOException | ClassNotFoundException e) {e.printStackTrace();}
+//        });
     }
     //test only method
 //    public void connectToFGAgent() {

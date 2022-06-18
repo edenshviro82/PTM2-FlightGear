@@ -124,7 +124,7 @@ public class dbhandler  implements dbhandler_api  {
 
     @Override// a function to save a finished flight record in DataBase , use in function below
     public void setFlightData(String fid , String pid , byte[]ts) {
-        transaction.begin();
+        //transaction.begin();
         History history1 = new History();
         history1.setFlightid(fid);
         history1.setPlaneid(pid);
@@ -153,6 +153,7 @@ public class dbhandler  implements dbhandler_api  {
         flights.setMaxSpeed((double) flightData.getMaxSpeed());
         flights.setMaxAlitude((double) flightData.getMaxAltitude());
         setFlightData(flights.getFlightid(), flightData.getPlaneId(),this.objectToBytes(flightData.getTs()));
+        transaction.begin();
         entityManager.persist(flights);
         transaction.commit();
 
@@ -162,9 +163,9 @@ public class dbhandler  implements dbhandler_api  {
     public boolean isFirstFlight(String pid) {
         for (int i = 0; i < plane.getResultList().size() ; i++) {
             if (plane.getResultList().get(i).getPlaneid().equals(pid))
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
     @Override //a help function to other function
@@ -182,5 +183,11 @@ public class dbhandler  implements dbhandler_api  {
         int x = 1;
         int y = 2;
         System.out.println(x+y);
+        FlightData flightData = new FlightData();
+        java.sql.Date date = new java.sql.Date(0);
+        flightData.setFlightId("241");
+        flightData.setPlaneId("614");
+        db.setFinishedFlight(flightData);
+
     }
 }
