@@ -1,9 +1,7 @@
 package Controller;
-
 import Model.Model;
 import View.View;
 import necessary_classes.Properties;
-
 import java.io.IOException;
 
 

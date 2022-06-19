@@ -28,7 +28,7 @@ public class View extends Observable  implements viewIF{
 
     public void runViewServer() {
         try {
-            ServerSocket server = new ServerSocket(4040);
+            ServerSocket server = new ServerSocket(9090);
             System.out.println("view: waiting for backend view to connect...");
             server.setSoTimeout(1000);
             while(true) {

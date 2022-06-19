@@ -15,9 +15,9 @@ public class View extends Observable {
     Socket connected;
     private String Command;
 
-    public View() {
-        new Thread(this::runViewServer).start();
-    }
+//    public View() {
+//        new Thread(this::runViewServer).start();
+//    }
 
     public void runViewServer() {
         try {

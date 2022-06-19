@@ -19,11 +19,14 @@ public class Commands {
         PrintWriter out2agent;
         BufferedReader inFromAgent;
         ObjectInputStream objectInputStream;
+        BufferedReader streamInFromAgent;
 
         //front
         PrintWriter out2front;
         BufferedReader inFromFront;
         ObjectOutputStream objectOutputStream;
+
+
 
         Model m;
         View v;
@@ -48,6 +51,8 @@ public class Commands {
         sharedSate.inFromAgent = agent.operationIn;
         sharedSate.objectInputStream = agent.objectInputStream;
         sharedSate.out2agent = agent.operationOut;
+        sharedSate.streamInFromAgent = agent.streamIn;
+
     }
     public void setFrontStreams (Socket front) throws IOException {
         sharedSate.inFromFront = new BufferedReader(new InputStreamReader(front.getInputStream()));
@@ -174,13 +179,13 @@ public class Commands {
         }
     }
 
-    public class getDataStreamCommand implements Command {
-        @Override
-        public void execute(String input) throws IOException, ClassNotFoundException {
-            sharedSate.out2agent.println(input);
-            sharedSate.objectOutputStream.writeObject(sharedSate.objectInputStream.readObject());
-        }
-    }
+//    public class getDataStreamCommand implements Command {
+//        @Override
+//        public void execute(String input) throws IOException, ClassNotFoundException {
+//            sharedSate.out2agent.println(input);
+//            sharedSate.objectOutputStream.writeObject(sharedSate.objectInputStream.readObject());
+//        }
+//    }
 
     public class getPlanePositionCommand implements Command {
         @Override

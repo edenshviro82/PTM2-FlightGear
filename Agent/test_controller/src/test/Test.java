@@ -4,28 +4,34 @@ import necessary_classes.FlightData;
 import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 public class Test {
     Scanner in;
     PrintWriter out;
+    BufferedReader streamIn;
     ObjectInputStream objectInputStream;
     HashMap<String, Runnable> getMap;
     HashMap<String, Consumer<Float>> setMap;
+    ExecutorService es = Executors.newSingleThreadExecutor();
 
     public Test() throws IOException {
         Socket agent = new Socket("127.0.0.1", 7070);
         in = new Scanner(agent.getInputStream());
         out = new PrintWriter(agent.getOutputStream(), true);
         objectInputStream = new ObjectInputStream(agent.getInputStream());
+
+        Socket stream = new Socket("127.0.0.1",3030);
+        streamIn = new BufferedReader(new InputStreamReader(stream.getInputStream()));
 
         getMap = new HashMap<>();
         getMap.put("get aileron", this::getAileron);
@@ -182,6 +188,13 @@ public class Test {
 
     public void startFlight() {
         out.println("start flight");
+        es.execute(()-> {
+            while (true) {
+                try {
+                    System.out.println(streamIn.readLine());
+                } catch (IOException e) {e.printStackTrace();}
+            }
+        });
     }
 
     public void endFlight() {

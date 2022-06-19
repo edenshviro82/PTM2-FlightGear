@@ -6,11 +6,10 @@ public class AgentStreamers {
     PrintWriter operationOut;
     BufferedReader operationIn;
     ObjectInputStream objectInputStream;
-
     BufferedReader streamIn;
 
     public AgentStreamers(BufferedReader in) {
-        this.streamIn = new BufferedReader(in);
+        this.streamIn = in;
     }
 
     public AgentStreamers(BufferedReader buff, PrintWriter out, ObjectInputStream obj) {

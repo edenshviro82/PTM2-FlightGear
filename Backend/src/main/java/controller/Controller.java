@@ -16,13 +16,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class Controller implements Observer {
+    public static ConcurrentHashMap<String, AgentStreamers> activePlanes= new ConcurrentHashMap<>();
     Model m ;
     View v ;
     HashMap<String,Command> commandMap;
     HashMap<String,Runnable> viewdMap;
     Commands c ;
     ExecutorService es  ;
-    public static ConcurrentHashMap<String, AgentStreamers> activePlanes= new ConcurrentHashMap<>();
+    PrintWriter frontStreamWr;
     private boolean stop ;
     public Controller(Model m, View v){
         this.m=m;
@@ -30,20 +31,19 @@ public class Controller implements Observer {
         this.v=v;
         v.addObserver(this);
        // this.es = Executors.newSingleThreadExecutor();
-        this.es = Executors.newFixedThreadPool(10);
+        this.es = Executors.newFixedThreadPool(6);
         this.c = new Commands(m,v);
         initCommandMap();
-        this.es.execute(this::openAgentsServer);
         this.es.execute(() -> {
             try {
                 openServer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
         this.es.execute(this::openAgentsStreamServer);
+        this.es.execute(this::openAgentsServer);
+        this.es.execute(this::frontStreamServer);
     }
     //Command map .
 
@@ -66,7 +66,7 @@ public class Controller implements Observer {
         commandMap.put("get pitch", c.new getPitchCommand());
         //commandMap.put("get location", c.new getLocationCommand());
         //commandMap.put("get flight", c.new setFinishedFlight());
-        commandMap.put("get stream", c.new getDataStreamCommand());
+//        commandMap.put("get stream", c.new getDataStreamCommand());
         commandMap.put("get MilesPerMonth", c.new getMilesPerMonthCommand());
         commandMap.put("get MilesPerMonthYear", c.new getMilesPerMonthYearCommand());
         commandMap.put("is FirstFlight", c.new isFirstFlightCommand());
@@ -125,6 +125,9 @@ public class Controller implements Observer {
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         while (true) {
             String str = in.readLine();
+            if (str.equals("start flight")){
+                es.execute(this::sendStreams);
+            }
             System.out.println(str);
             String [] split = str.split(" ");
             String command = split[0]+" "+split[1];
@@ -144,6 +147,17 @@ public class Controller implements Observer {
                 break;
         }
     }
+
+    public void frontStreamServer() {
+        try {
+            ServerSocket server = new ServerSocket(3030);
+            System.out.println("stream server is open");
+            Socket front = server.accept();
+            System.out.println("front is connected to streams service");
+            frontStreamWr = new PrintWriter(new OutputStreamWriter(front.getOutputStream()),true);
+        } catch (IOException e) { e.printStackTrace();}
+    }
+
     // open agents server and maps each agent port to his id via map
     public void openAgentsServer(){
         ServerSocket ss = null;
@@ -177,9 +191,9 @@ public class Controller implements Observer {
                 AgentStreamers agentStreamer = new AgentStreamers(inOp,outOp,obj);
                 Controller.activePlanes.put("107",agentStreamer);
             }
-            Controller.activePlanes.put("107",new AgentStreamers(inOp,outOp,obj));
+//            Controller.activePlanes.put("107",new AgentStreamers(inOp,outOp,obj));
 
-            commandMap.get("set agent").execute("set agent 100");
+            commandMap.get("set agent").execute("set agent 107");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -191,6 +205,8 @@ public class Controller implements Observer {
 
 
     }
+
+
     public void openAgentsStreamServer(){
         ServerSocket stream = null;
         try {
@@ -219,7 +235,7 @@ public class Controller implements Observer {
                     }
                     else{
                         AgentStreamers as =new AgentStreamers(in);
-                        Controller.activePlanes.put("108",as);
+                        Controller.activePlanes.put("107",as);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -230,6 +246,17 @@ public class Controller implements Observer {
 
 
     }
+
+    public void sendStreams() {
+        while (!stop) {
+            try {
+                frontStreamWr.println(Controller.activePlanes.get("107").streamIn.readLine());
+            } catch (IOException e) {e.printStackTrace();}
+        }
+    }
+
+
+
     @Override
     public void update(Observable o, Object arg) {
         if (o == this.v) {
