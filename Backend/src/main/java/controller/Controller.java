@@ -169,36 +169,21 @@ public class Controller implements Observer {
             System.out.println(" waiting for agent....");
             Socket agent = ss.accept();
             System.out.println("agent has connected");
-//            BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-//            String agentId = in.readLine();
-//            System.out.println(agentId);
             PrintWriter outOp = new PrintWriter(agent.getOutputStream(),true);
             BufferedReader inOp = new BufferedReader(new InputStreamReader(agent.getInputStream()));
             ObjectInputStream obj = new ObjectInputStream(agent.getInputStream());
-//            if (Controller.activePlanes.containsKey(agentId)) {
-//                Controller.activePlanes.get(agentId).setObjectInputStream(obj).
-//                        setOperationOut(outOp).setOperationIn(inOp);
-//            }
-//            else{
-//                AgentStreamers agentStreamer = new AgentStreamers(inOp,outOp,obj);
-//                Controller.activePlanes.put(agentId,agentStreamer);
-//            }
-                    if (Controller.activePlanes.containsKey("107")) {
-                Controller.activePlanes.get("107").setObjectInputStream(obj).
-                        setOperationOut(outOp).setOperationIn(inOp);
+            String agentId = inOp.readLine();
+            System.out.println(agentId);
+            if (Controller.activePlanes.containsKey(agentId)) {
+                Controller.activePlanes.get(agentId).setObjectInputStream(obj).setOperationOut(outOp).setOperationIn(inOp);
             }
             else{
                 AgentStreamers agentStreamer = new AgentStreamers(inOp,outOp,obj);
-                Controller.activePlanes.put("107",agentStreamer);
+                Controller.activePlanes.put(agentId,agentStreamer);
             }
-//            Controller.activePlanes.put("107",new AgentStreamers(inOp,outOp,obj));
-
-            commandMap.get("set agent").execute("set agent 107");
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
+        }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -217,25 +202,16 @@ public class Controller implements Observer {
                     System.out.println(" waiting for agent...");
                     Socket agent = stream.accept();
                     System.out.println("agent stream has connected");
-                    //BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-                    //String agentId = in.readLine();
-                    //System.out.println(agentId);
-//                    if (Controller.activePlanes.containsKey(agentId))
-//                    {
-//                        Controller.activePlanes.get(agentId).setStream(agent);
-//                    }
-//                    else{
-//                        AgentSockets as =new AgentSockets(agent,null);
-//                        Controller.activePlanes.put(agentId,as);
-//                    }
                     BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-                    if (Controller.activePlanes.containsKey("107"))
+                    String agentId = in.readLine();
+                    System.out.println(agentId);
+                    if (Controller.activePlanes.containsKey(agentId))
                     {
-                        Controller.activePlanes.get("107").setStreamIn(in);
+                        Controller.activePlanes.get(agentId).setStreamIn(in);
                     }
                     else{
                         AgentStreamers as =new AgentStreamers(in);
-                        Controller.activePlanes.put("107",as);
+                        Controller.activePlanes.put(agentId,as);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -32,11 +32,6 @@ public class Controller implements Observer{
         m.addObserver(this);
         this.connect2FGStreams();
         this.connect2backendStreams();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         this.connect2backendOperation();
     }
 
@@ -44,10 +39,11 @@ public class Controller implements Observer{
         try {
             Socket backend = new Socket(Properties.map.get("backend_ip"),Integer.parseInt(Properties.map.get("backend_port")));
             c.setOutputStream(backend.getOutputStream());
+            PrintWriter out = new PrintWriter(backend.getOutputStream(),true);
+            out.println(Properties.map.get("planeId"));
             while(!stop) {
                 try {
                     BufferedReader in = new BufferedReader(new InputStreamReader(backend.getInputStream()));
-                    OutputStream out = backend.getOutputStream();
                     String line;
                     while(!(line = in.readLine()).equals("bye")) {
 
@@ -77,7 +73,8 @@ public class Controller implements Observer{
     public void connect2backendStreams() {
         try {
             Socket backend = new Socket(Properties.map.get("backend_ip"),Integer.parseInt(Properties.map.get("stream_port")));
-            this.outStreams = new PrintWriter(backend.getOutputStream());
+            this.outStreams = new PrintWriter(backend.getOutputStream(),true);
+            this.outStreams.println(Properties.map.get("planeId"));
         } catch (IOException e) { e.printStackTrace(); }
     }
 
