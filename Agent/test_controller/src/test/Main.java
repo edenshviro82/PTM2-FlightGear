@@ -1,10 +1,6 @@
 package test;
 
-import necessary_classes.FlightData;
-import necessary_classes.Location;
-
-import java.io.*;
-import java.net.Socket;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {

@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Client {
     //hash map for properties
-    private final Map<String,String> properties;
+    private final Map<String, String> properties;
     private Socket fg;
     private PrintWriter out2fg;
 
@@ -20,9 +20,9 @@ public class Client {
             //read the properties txt and put the values in the hashmap
             BufferedReader in = new BufferedReader(new FileReader(propertiesFileName));
             String line;
-            while((line=in.readLine())!=null) {
+            while ((line = in.readLine()) != null) {
                 String[] sp = line.split(",");
-                properties.put(sp[0],sp[1]);
+                properties.put(sp[0], sp[1]);
             }
             in.close();
         } catch (IOException e) {
@@ -34,7 +34,7 @@ public class Client {
     private void clientConnect() {
         try {
             fg = new Socket(properties.get("ip"), Integer.parseInt(properties.get("port")));
-            out2fg = new PrintWriter(fg.getOutputStream(),true);
+            out2fg = new PrintWriter(fg.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,23 +43,27 @@ public class Client {
     // plane instructions setters ////////////////////////////////////////////////////////
     public void setAileron(float x) {
         String command = properties.get("aileron");
-        out2fg.println(command+" "+x);
+        out2fg.println(command + " " + x);
     }
+
     public void setElevators(float x) {
         String command = properties.get("elevators");
-        out2fg.println(command+" "+x);
+        out2fg.println(command + " " + x);
     }
+
     public void setRudder(float x) {
         String command = properties.get("rudder");
-        out2fg.println(command+" "+x);
+        out2fg.println(command + " " + x);
     }
+
     public void setThrottle(float x) {
         String command = properties.get("throttle");
-        out2fg.println(command+" "+x);
+        out2fg.println(command + " " + x);
     }
+
     public void setBreaks(float x) {
         String command = properties.get("brakes");
-        out2fg.println(command+" "+x);
+        out2fg.println(command + " " + x);
     }
 
     @Override

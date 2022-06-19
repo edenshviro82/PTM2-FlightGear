@@ -15,6 +15,19 @@ import java.util.HashMap;
 
 public class Commands {
 
+    //commands data members
+    private SharedSate sharedSate;
+
+    //commands constructor
+    public Commands(Model m, View v) {
+        this.sharedSate = new SharedSate(m, v);
+    }
+
+    public void setOutputStream(OutputStream out) throws IOException {
+        this.sharedSate.out2back = new PrintWriter(out, true);
+        this.sharedSate.objectOutputStream = new ObjectOutputStream(out);
+    }
+
     //the shared state of all commands
     private class SharedSate {
         PrintWriter out2back;
@@ -22,23 +35,10 @@ public class Commands {
         Model m;
         View v;
 
-        public SharedSate(Model m,View v) {
+        public SharedSate(Model m, View v) {
             this.m = m;
             this.v = v;
         }
-    }
-
-    //commands data members
-    private SharedSate sharedSate;
-
-    //commands constructor
-    public Commands(Model m,View v) {
-        this.sharedSate = new SharedSate(m,v);
-    }
-
-    public void setOutputStream(OutputStream out) throws IOException {
-        this.sharedSate.out2back = new PrintWriter(out,true);
-        this.sharedSate.objectOutputStream = new ObjectOutputStream(out);
     }
 
     //commands implementation//////////////////////////////////////////////////////////////
@@ -186,7 +186,7 @@ public class Commands {
     public class startFlightCommand implements Command {
 
         @Override
-        public void execute(String input)  {
+        public void execute(String input) {
             sharedSate.m.startFlight();
         }
     }
@@ -204,14 +204,16 @@ public class Commands {
     public class viewPrintStreamCommand implements Command {
         PrintWriter out;
 
-        public viewPrintStreamCommand(PrintWriter out) { this.out = out; }
+        public viewPrintStreamCommand(PrintWriter out) {
+            this.out = out;
+        }
 
         @Override
         public void execute(String text) throws IOException {
             //get current time in milliseconds
             long start = System.currentTimeMillis();
             //get duration from properties txt file
-            long duration = Long.parseLong(Properties.map.get("view_print_stream_duration(secs)")) *1000;
+            long duration = Long.parseLong(Properties.map.get("view_print_stream_duration(secs)")) * 1000;
             //send the stream to the client
             while (System.currentTimeMillis() - start < duration)
                 out.println(sharedSate.m.getStream());
@@ -219,7 +221,7 @@ public class Commands {
     }
 
     public class viewCLI implements Command {
-        HashMap <String,Command> map;
+        HashMap<String, Command> map;
         PrintWriter out;
         Commands c;
 
@@ -239,7 +241,7 @@ public class Commands {
         public void execute(String text) throws IOException, ClassNotFoundException {
             System.out.println("from view: " + text);
             String[] split = text.split(" ");
-            String command = split.length > 1? split[0] + " " + split[1] : split[0];
+            String command = split.length > 1 ? split[0] + " " + split[1] : split[0];
             if (this.map.containsKey(command))
                 map.get(command).execute(text);
         }

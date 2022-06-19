@@ -1,7 +1,9 @@
 package controller;
+
 import command.Command;
 import model.Model;
 import view.View;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;

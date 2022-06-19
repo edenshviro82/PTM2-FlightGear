@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@NamedQuery(name = "getPlane",query = "select e from Plane e")
+@NamedQuery(name = "getPlane", query = "select e from Plane e")
 public class Plane {
     private String planeid;
     private Date firstflight;

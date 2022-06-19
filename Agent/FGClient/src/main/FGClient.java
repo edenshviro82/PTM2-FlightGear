@@ -1,6 +1,5 @@
 package main;
 
-import main.Client;
 import main.FGClientApi;
 
 import java.io.BufferedReader;
@@ -15,11 +14,11 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 public class FGClient implements FGClientApi {
+    private final Client FlightGear;
+    private final HashMap<String, Consumer<Float>> map;
     //server for the agent's model
     ServerSocket server;
     private volatile boolean stop;
-    private final Client FlightGear;
-    private final HashMap<String,Consumer<Float>> map;
     private ExecutorService es;
 
     public FGClient(Client cl) {
@@ -27,11 +26,11 @@ public class FGClient implements FGClientApi {
         this.FlightGear = cl;
         this.stop = false;
         this.map = new HashMap<>();
-        map.put("aileron",(value)-> this.setAileron(value));
-        map.put("throttle",(value)-> this.setThrottle(value));
-        map.put("rudder",(value)-> this.setRudder(value));
-        map.put("brakes",(value)-> this.setBrakes(value));
-        map.put("elevators",(value)-> this.setElevators(value));
+        map.put("aileron", (value) -> this.setAileron(value));
+        map.put("throttle", (value) -> this.setThrottle(value));
+        map.put("rudder", (value) -> this.setRudder(value));
+        map.put("brakes", (value) -> this.setBrakes(value));
+        map.put("elevators", (value) -> this.setElevators(value));
     }
 
     public void runServer() {
@@ -40,23 +39,23 @@ public class FGClient implements FGClientApi {
             System.out.println("server is open");
             server.setSoTimeout(1000);
             String line;
-            while(!stop) {
+            while (!stop) {
                 try {
                     Socket agent = server.accept();
                     System.out.println("Agent is connected to my service");
                     BufferedReader in = new BufferedReader(new InputStreamReader(agent.getInputStream()));
-                    while(!(line = in.readLine()).equals("bye")) {
+                    while (!(line = in.readLine()).equals("bye")) {
                         System.out.println(line);
                         //command example: set aileron 1
                         String[] split = line.split(" ");
                         String command = split[1];
                         Float value = Float.parseFloat(split[2]);
                         if (map.containsKey(command))
-                            es.execute(()-> map.get(command).accept(value));
+                            es.execute(() -> map.get(command).accept(value));
                     }
                     this.stop = true;
+                } catch (SocketTimeoutException e) {
                 }
-                catch(SocketTimeoutException e) { }
             }
         } catch (IOException e) {
             e.printStackTrace();

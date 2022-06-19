@@ -2,7 +2,6 @@ package necessary_classes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class TimeSeries implements Serializable {
     ArrayList<String> dataStreams;
@@ -19,7 +18,9 @@ public class TimeSeries implements Serializable {
         this.dataStreams = dataStreams;
     }
 
-    public int getSize() { return dataStreams.size(); }
+    public int getSize() {
+        return dataStreams.size();
+    }
 
     public String getStream(int index) {
         if (index > 0 && index < dataStreams.size())

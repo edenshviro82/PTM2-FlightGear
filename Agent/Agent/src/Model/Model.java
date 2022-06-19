@@ -10,12 +10,12 @@ import java.net.Socket;
 import java.util.Observable;
 
 public class Model extends Observable implements ModelAPI {
-    ObjectInputStream objectInputStream;
-    //FGClient's streams
-    PrintWriter out2FGClient;
     //FGServer's streams
     public PrintWriter out2FGServer;
     public BufferedReader fromFGServer;
+    ObjectInputStream objectInputStream;
+    //FGClient's streams
+    PrintWriter out2FGClient;
 
     public Model() {
         this.connectToFGClient();
@@ -25,37 +25,26 @@ public class Model extends Observable implements ModelAPI {
     //establishment methods////////////////////////////////////////////////////////////////
     public void connectToFGClient() {
         try {
-            Socket FGClient = new Socket(Properties.map.get("FGClient_ip"),Integer.parseInt(Properties.map.get("FGClient_port")));
-            out2FGClient = new PrintWriter(FGClient.getOutputStream(),true);
-        } catch (IOException e) { e.printStackTrace(); }
+            Socket FGClient = new Socket(Properties.map.get("FGClient_ip"), Integer.parseInt(Properties.map.get("FGClient_port")));
+            out2FGClient = new PrintWriter(FGClient.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void connectToFGServer() {
         try {
-            Socket FGServer = new Socket(Properties.map.get("FGServer_ip"),Integer.parseInt(Properties.map.get("FGServer_port")));
+            Socket FGServer = new Socket(Properties.map.get("FGServer_ip"), Integer.parseInt(Properties.map.get("FGServer_port")));
             InputStream in = FGServer.getInputStream();
-            out2FGServer = new PrintWriter(FGServer.getOutputStream(),true);
+            out2FGServer = new PrintWriter(FGServer.getOutputStream(), true);
             fromFGServer = new BufferedReader(new InputStreamReader(in));
             objectInputStream = new ObjectInputStream(in);
             Thread.sleep(2000);
             out2FGServer.println("start flight");
-        } catch (IOException | InterruptedException e) { e.printStackTrace(); }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
-
-    //set methods//////////////////////////////////////////////////////////////////////////
-    public void setAileron(float value) {
-        out2FGClient.println("set aileron " +value);
-    }
-    public void setElevators(float value) {
-        out2FGClient.println("set elevators " +value);
-    }
-    public void setRudder(float value) {
-        out2FGClient.println("set rudder " +value);
-    }
-    public void setThrottle(float value) {
-        out2FGClient.println("set throttle " +value);
-    }
-    public void setBrakes(float value) {out2FGClient.println("set brakes " + value);}
 
     //get methods///////////////////////////////////////////////////////////////////////////
     @Override
@@ -64,10 +53,19 @@ public class Model extends Observable implements ModelAPI {
         return fromFGServer.readLine();
     }
 
+    //set methods//////////////////////////////////////////////////////////////////////////
+    public void setAileron(float value) {
+        out2FGClient.println("set aileron " + value);
+    }
+
     @Override
     public String getElevators() throws IOException {
         out2FGServer.println("get elevators");
         return fromFGServer.readLine();
+    }
+
+    public void setElevators(float value) {
+        out2FGClient.println("set elevators " + value);
     }
 
     @Override
@@ -76,16 +74,28 @@ public class Model extends Observable implements ModelAPI {
         return fromFGServer.readLine();
     }
 
+    public void setRudder(float value) {
+        out2FGClient.println("set rudder " + value);
+    }
+
     @Override
     public String getThrottle() throws IOException {
         out2FGServer.println("get throttle");
         return fromFGServer.readLine();
     }
 
+    public void setThrottle(float value) {
+        out2FGClient.println("set throttle " + value);
+    }
+
     @Override
     public String getBrakes() throws IOException {
         out2FGServer.println("get brakes");
         return fromFGServer.readLine();
+    }
+
+    public void setBrakes(float value) {
+        out2FGClient.println("set brakes " + value);
     }
 
     @Override
@@ -142,8 +152,12 @@ public class Model extends Observable implements ModelAPI {
     }
 
     //start,end methods
-    public void startFlight() { out2FGServer.println("start flight");}
+    public void startFlight() {
+        out2FGServer.println("start flight");
+    }
 
-    public void endFlight()  { out2FGServer.println("end flight");}
+    public void endFlight() {
+        out2FGServer.println("end flight");
+    }
 
 }

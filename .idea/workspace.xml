@@ -2,96 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f1a7b64-1875-4540-8695-ce3f8f817e45" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPlaneCommand.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/necessary_classes/Plane.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agent/test_controller/out/production/test_controller/necessary_classes/Plane.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Agent/test_controller/src/necessary_classes/Plane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$3.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$4.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$SharedSate.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$SharedSate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$endFlightCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$endFlightCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAileronCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAileronCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAirSpeedCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAirSpeedCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAltCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getAltCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getBreaksCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getBreaksCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getElevatorsCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getElevatorsCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getFlightCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getFlightCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getHeadingCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getHeadingCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getLocationCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getLocationCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPitchCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPitchCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getPlainCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRollCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRollCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRudderCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getRudderCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getStreamCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getStreamCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getThrottleCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$getThrottleCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setAileronCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setAileronCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setBreaksCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setBreaksCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setElevatorsCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setElevatorsCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setRudderCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setRudderCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setThrottleCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$setThrottleCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$startFlightCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$startFlightCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewCLI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewCLI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewPrintStreamCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands$viewPrintStreamCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Commands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Controller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/ControllerAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/ControllerAPI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Controller/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/Model.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/ModelAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/Model/ModelAPI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/View.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/ViewAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/View/ViewAPI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/FlightData.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/FlightData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Location.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Location.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Properties.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/Properties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/TimeSeries.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/TimeSeries.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/plane.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/out/production/Agent/necessary_classes/plane.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/75725dd8-742b-4296-88a4-83221e37aa42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/75725dd8-742b-4296-88a4-83221e37aa42.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Agent/Agent/properties.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/properties.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/src/Controller/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/src/Controller/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/src/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/src/Controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/src/Model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/src/Model/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/src/Model/ModelAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/src/Model/ModelAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/src/View/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/src/View/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/Agent/src/necessary_classes/plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/Agent/src/necessary_classes/Plane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGClient/out/production/FGClient/Main/FGClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/out/production/FGClient/Main/FGClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGClient/out/production/FGClient/Main/FGClientApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/out/production/FGClient/Main/FGClientApi.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGClient/out/production/FGClient/Main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/out/production/FGClient/Main/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGClient/src/main/FGClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/src/main/FGClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGClient/src/main/FGClientApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/src/main/FGClientApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGClient/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGClient/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/FGServer/DataCollector.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/FGServer/DataCollector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/FGServer/FGServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/FGServer/FGServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/necessary_classes/plane.class" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/out/production/FGServer/necessary_classes/plane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/properties.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/properties.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/src/FGServer/DataCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/src/FGServer/DataCollector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/src/FGServer/FGServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/src/FGServer/FGServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/FGServer/src/necessary_classes/plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/FGServer/src/necessary_classes/Plane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Agent/test_controller/src/test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/test_controller/src/test/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/model/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/model/Model.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/necessary_classes/Plane.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/necessary_classes/Plane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/view/MainWindowController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewClocks/Clocks.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewClocks/Clocks.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewGraph/Graph.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewGraph/Graph.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/Joystick.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/Joystick.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewJoystick/JoystickController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewModel/ViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewModel/ViewModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/bin/viewPlay/user.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/bin/viewPlay/user.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/model/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/necessary_classes/Plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/necessary_classes/Plane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/view/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/view/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/view/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/view/MainWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/view/MainWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/view/MainWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/viewModel/ViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/viewModel/ViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/streamprop.txt" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/streamprop.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/teleoprationText.txt" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/teleoprationText.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +28,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Agent" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,6 +41,8 @@
       <workItem from="1655225869929" duration="72000" />
       <workItem from="1655480554503" duration="225000" />
       <workItem from="1655496452727" duration="53000" />
+      <workItem from="1655573763071" duration="287000" />
+      <workItem from="1655574092952" duration="68000" />
     </task>
     <servers />
   </component>

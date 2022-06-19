@@ -1,7 +1,6 @@
 package Controller;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 public abstract class ViewCommand implements Command {
     String name;

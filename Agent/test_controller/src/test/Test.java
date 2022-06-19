@@ -24,7 +24,7 @@ public class Test {
     public Test() throws IOException {
         Socket agent = new Socket("127.0.0.1", 7070);
         in = new Scanner(agent.getInputStream());
-        out = new PrintWriter(agent.getOutputStream(),true);
+        out = new PrintWriter(agent.getOutputStream(), true);
         objectInputStream = new ObjectInputStream(agent.getInputStream());
 
         getMap = new HashMap<>();
@@ -42,7 +42,7 @@ public class Test {
         getMap.put("get location", this::getLocation);
         getMap.put("get flight", this::getFlight);
         getMap.put("get planes", this::getPlanes);
-        getMap.put("start flight",this::startFlight);
+        getMap.put("start flight", this::startFlight);
         getMap.put("end flight", this::endFlight);
         getMap.put("1 1", this::getMilesPerMonth);
         getMap.put("2 2", this::getMilesPerMonthYear);
@@ -158,21 +158,26 @@ public class Test {
             System.out.println(flight.getMaxSpeed());
             System.out.println(flight.getMiles());
             System.out.println(flight.getTs());
-        } catch (IOException | ClassNotFoundException e) { e.printStackTrace(); }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getPlanes() {
         try {
             out.println("get planes");
             ArrayList<Plane> planes = (ArrayList<Plane>) objectInputStream.readObject();
-            System.out.println("alt: " +planes.get(0).getAlt());
-            System.out.println("planes id: " +planes.get(0).getPlainId());
-            System.out.println("flight id: " +planes.get(0).getFlightID());
-            System.out.println("heading: " +planes.get(0).getHeading());
+            System.out.println("alt: " + planes.get(0).getAlt());
+            System.out.println("planes id: " + planes.get(0).getPlainId());
+            System.out.println("flight id: " + planes.get(0).getFlightID());
+            System.out.println("heading: " + planes.get(0).getHeading());
             System.out.println(planes.get(0).getLocation());
-            System.out.println("speed: " +planes.get(0).getSpeed());
-        } catch (IOException e) { e.printStackTrace();}
-        catch (ClassNotFoundException e) {e.printStackTrace();}
+            System.out.println("speed: " + planes.get(0).getSpeed());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void startFlight() {
@@ -186,10 +191,10 @@ public class Test {
     ///////////////////////////////////Backed/////////////////////
 
 
-    public void getMilesPerMonth()  {
+    public void getMilesPerMonth() {
         out.println("get MilesPerMonth");
         try {
-            Map<String,Double> miles = (Map<String, Double>) objectInputStream.readObject();
+            Map<String, Double> miles = (Map<String, Double>) objectInputStream.readObject();
             miles.forEach((s, aDouble) -> {
                 System.out.println(s);
                 System.out.println(aDouble);
@@ -200,10 +205,11 @@ public class Test {
             e.printStackTrace();
         }
     }
-    public void getMilesPerMonthYear()  {
+
+    public void getMilesPerMonthYear() {
         out.println("get MilesPerMonthYear");
         try {
-            HashMap<Integer,Double> milesYear= (HashMap<Integer, Double>) objectInputStream.readObject();
+            HashMap<Integer, Double> milesYear = (HashMap<Integer, Double>) objectInputStream.readObject();
             milesYear.forEach((s, aDouble) -> {
                 System.out.println(s);
                 System.out.println(aDouble);
@@ -214,10 +220,11 @@ public class Test {
             e.printStackTrace();
         }
     }
-    public void getFleetSize () {
+
+    public void getFleetSize() {
         out.println("get FleetSize");
         try {
-            HashMap<Integer,Integer> fleetSize=(HashMap<Integer, Integer>) objectInputStream.readObject();
+            HashMap<Integer, Integer> fleetSize = (HashMap<Integer, Integer>) objectInputStream.readObject();
             fleetSize.forEach((s, aDouble) -> {
                 System.out.println(s);
                 System.out.println(aDouble);
@@ -228,10 +235,11 @@ public class Test {
             e.printStackTrace();
         }
     }
-    public void getFlightRecord (){
+
+    public void getFlightRecord() {
         out.println("get FlightRecord 999");
         try {
-            TimeSeries ts =(TimeSeries) objectInputStream.readObject();
+            TimeSeries ts = (TimeSeries) objectInputStream.readObject();
             int num = ts.getSize();
             System.out.println(ts.getSize());
         } catch (IOException e) {

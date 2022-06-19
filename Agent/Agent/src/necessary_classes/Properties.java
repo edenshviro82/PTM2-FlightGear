@@ -1,12 +1,15 @@
 package necessary_classes;
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Properties {
-    public static HashMap<String,String> map;
+    public static HashMap<String, String> map;
 
     public Properties(String propertiesFileName) {
         try {
@@ -18,7 +21,7 @@ public class Properties {
                 String line = sc.next();
                 output.add(line);
                 String[] split = line.split(",");
-                map.put(split[0],split[1]);
+                map.put(split[0], split[1]);
                 //incrementing flight id parameter
                 if (split[0].equals("flightId")) {
                     int inc = Integer.parseInt(split[1]) + 1;
@@ -30,9 +33,11 @@ public class Properties {
             sc.close();
 
             //write the txt file back with a new incremented flightId
-            PrintWriter printer = new PrintWriter(new FileOutputStream(propertiesFileName),true);
+            PrintWriter printer = new PrintWriter(new FileOutputStream(propertiesFileName), true);
             output.forEach(s -> printer.println(s));
             printer.close();
-        } catch (IOException e) { e.printStackTrace();}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
