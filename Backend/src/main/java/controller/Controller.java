@@ -83,6 +83,7 @@ public class Controller implements Observer {
         commandMap.put("active threads", c.new listOfThreads());
         commandMap.put("waiting tasks", c.new listOfTasks());
         commandMap.put("active planes", c.new ListOfActiveAgents());
+        commandMap.put("run script", c.new InterpreterCommand());
     }
     private void inniteViewMap(){
         this.viewdMap = new HashMap<>();

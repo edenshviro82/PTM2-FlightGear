@@ -2,6 +2,7 @@ package controller;
 
 import command.Command;
 import model.Model;
+import model.Var;
 import necessary_classes.FlightData;
 import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
@@ -333,8 +334,40 @@ public class Commands {
         }
     }
 
-
-
+    public class InterpreterCommand implements Command{
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            sharedSate.out2agent.println("start flight");
+            Var brakes = new Var("brakes");
+            Var rudder = new Var("rudder");
+            Var aileron = new Var("aileron");
+            Var elevator = new Var("elevator");
+            Var alt = new Var("alt");
+            sharedSate.out2agent.println("set brakes 0");
+            brakes.setValue(0);
+            sharedSate.out2agent.println("set throttle 1");
+            sharedSate.out2agent.println("get heading");
+            float h0 = Float.parseFloat(sharedSate.inFromAgent.readLine());
+            while (alt.getValue() < 1000) {
+                sharedSate.out2agent.println("get heading");
+                rudder.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                sharedSate.out2agent.println("set rudder " + rudder.getValue());
+                sharedSate.out2agent.println("get roll");
+                aileron.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine())/-70);
+                sharedSate.out2agent.println("set aileron " + aileron.getValue());
+                sharedSate.out2agent.println("get pitch");
+                elevator.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine())/50);
+                sharedSate.out2agent.println("set elevators " +elevator.getValue());
+                sharedSate.out2agent.println("get alt");
+                alt.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {throw new RuntimeException(e);}
+                new endFlightCommand().execute("script");
+                System.out.println("done");
+            }
+        }
+    }
 
 
 }
