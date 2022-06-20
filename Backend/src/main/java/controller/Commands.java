@@ -194,11 +194,10 @@ public class Commands {
             Controller.activePlanes.forEach((s, aSocket) ->{
                 try {
                     System.out.println("inside foreach");
-                    PrintWriter out = new PrintWriter(aSocket.operationOut,true);
                     ObjectInputStream objectInputStream = aSocket.objectInputStream;
-                    out.println("get plane");
+                    aSocket.operationOut.println("get plane");
                     System.out.println("printed get plane");
-                    planesArr.add((Plane) sharedSate.objectInputStream.readObject());
+                    planesArr.add((Plane) aSocket.objectInputStream.readObject());
                 } catch (IOException | ClassNotFoundException e) {
                     System.err.println("out of command");
                 }
