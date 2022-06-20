@@ -1,4 +1,5 @@
-streamPort,5404
+streamPort,3030
+operationPort,7070
 ip,127.0.0.1
 rate,1000
 aileron,set aileron

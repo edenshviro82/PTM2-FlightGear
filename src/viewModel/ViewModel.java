@@ -78,7 +78,7 @@ public class ViewModel implements Observer{
 		isPlanepushOnce=new SimpleIntegerProperty();
 		isPlanepushTwice= new SimpleIntegerProperty();
 		
-		es = Executors.newFixedThreadPool(5);
+		es = Executors.newFixedThreadPool(6);
 
 		
 		isFleetPushed.addListener((o,ov,nv)->es.execute(()-> m.fleetActive()));
