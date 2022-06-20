@@ -221,7 +221,10 @@ public class MainWindowController implements Initializable,Observer{
 		miles=new HashMap<>();
 
 		//refresh();
-	
+		
+	//	canvasGc.scale(2, 2);
+		
+		
 		try {
 			airplane = new Image(new FileInputStream(("./imgs/plane.png")));
 			background = new Image(new FileInputStream("./imgs/map.jpeg"));
@@ -234,6 +237,7 @@ public class MainWindowController implements Initializable,Observer{
 //			this.textAreaPlane.setStyle("-fx-background-color: blue");
 //			this.textAreaPlane2.setStyle("-fx-background-color: blue");
 			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -279,6 +283,12 @@ public class MainWindowController implements Initializable,Observer{
 	//*********************************************************************************************
 	
 	
+	public void inZoom() {
+		
+	}
+	public void outZoom() {
+		
+	}	
 	
 	public void refresh()
 	{
@@ -370,7 +380,6 @@ public class MainWindowController implements Initializable,Observer{
 	    fleetLineChart.setData(FXCollections.observableArrayList(setL3));
 		 });
 		
-		System.out.println("Dddddddd");
 //		
 //		Thread.sleep(2000);	
 //		XYChart.Series setLineChart=new XYChart.Series<Integer,Integer>();
@@ -416,6 +425,7 @@ public class MainWindowController implements Initializable,Observer{
 			this.posX= planesArray.get(i).getLocation().getLongitude()%366;
 			this.posY=  planesArray.get(i).getLocation().getLatitude()%366;
 			changeAirplaneButton(i,posX,posY);
+
 			
 			
 				if(planesArray.get(i).getHeading()>= 0 && planesArray.get(i).getHeading() <= 90)
@@ -540,20 +550,19 @@ public class MainWindowController implements Initializable,Observer{
 			while(tabPane.getSelectionModel().getSelectedIndex()==0) {
 		
 			try {
-			System.out.println("Ssssss");
-			Thread.sleep(1000);
+			Thread.sleep(3000);
 			//planesArray=vm.m.planes;
-			Plane p = new Plane();
-			p.alt = 500;
-			p.heading = 20;
-			p.plainId = "12";
-			p.location = new Location();
-			p.location.setLatitude((float) 50.0000);
-			System.out.println("felisdjeljsfdisfe");
-			System.out.println(p.location.getLatitude());
-			p.location.setLongitude((float) 30.0000);
-			p.speed = 2000;
-			
+//			Plane p = new Plane();
+//			p.alt = 500;
+//			p.heading = 20;
+//			p.plainId = "12";
+//			p.location = new Location();
+//			p.location.setLatitude((float) 50.0000);
+//			System.out.println("felisdjeljsfdisfe");
+//			System.out.println(p.location.getLatitude());
+//			p.location.setLongitude((float) 30.0000);
+//			p.speed = 2000;
+//			
 			Plane p1 = new Plane();
 			p1.alt = 23500;
 			p1.heading = 278;
@@ -562,10 +571,9 @@ public class MainWindowController implements Initializable,Observer{
 			p1.location.setLatitude((float) 570.0000);
 			p1.location.setLongitude((float) 2340.0000);
 			p1.speed = 2000;
-		
-			planesArray.add(p);
-			planesArray.add(p1);
 
+			planesArray=vm.m.planes;
+			
 			Thread.sleep(1000);
 			drawAirplane();
 
