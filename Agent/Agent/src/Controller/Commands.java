@@ -169,6 +169,11 @@ public class Commands {
             FlightData flight = (FlightData) sharedSate.m.getFlight();
             flight.setPlaneId(Properties.map.get("planeId"));
             flight.setFlightId(Properties.map.get("flightId"));
+            System.out.println(flight.getPlaneId());
+            System.out.println(flight.getFlightId());
+            System.out.println(flight.getStartTime());
+            System.out.println(flight.getEndTime());
+            System.out.println(flight.getMaxAltitude());
             sharedSate.objectOutputStream.writeObject(flight);
         }
     }
@@ -177,7 +182,7 @@ public class Commands {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
             Plane plane = (Plane) sharedSate.m.getPlane();
-            plane.setPlainId(Properties.map.get("plainId"));
+            plane.setPlainId(Properties.map.get("planeId"));
             plane.setFlightID(Properties.map.get("flightId"));
             sharedSate.objectOutputStream.writeObject(plane);
         }
