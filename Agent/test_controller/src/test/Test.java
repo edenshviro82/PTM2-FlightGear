@@ -62,11 +62,16 @@ public class Test {
         setMap.put("set rudder", this::setRudder);
         setMap.put("set throttle", this::setThrottle);
         setMap.put("set brakes", this::setBreaks);
+        setMap.put("set agent", this::setAgent);
     }
 
     //set methods//////////////////////////////////////////////////////////////////////////
     public void setAileron(float value) {
         out.println("set aileron " + value);
+    }
+
+    public void setAgent(float value) {
+        out.println("set agent " + (int)value);
     }
 
     public void setElevators(float value) {

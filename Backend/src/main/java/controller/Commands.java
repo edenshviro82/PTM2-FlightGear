@@ -2,6 +2,7 @@ package controller;
 
 import command.Command;
 import model.Model;
+import model.Var;
 import necessary_classes.FlightData;
 import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
@@ -121,8 +122,9 @@ public class Commands {
     //after we send to agent we expect to get the flight data
     public class endFlightCommand implements Command {
         @Override
-        public void execute(String input) throws IOException, ClassNotFoundException {
+        public void execute(String input) throws IOException, ClassNotFoundException, InterruptedException {
             sharedSate.out2agent.println(input);
+            Thread.sleep(2000);
             sharedSate.out2agent.println("get flight");
            FlightData fd=(FlightData) sharedSate.objectInputStream.readObject();
            sharedSate.m.setFinishedFlight(fd);
@@ -299,6 +301,15 @@ public class Commands {
             sharedSate.objectOutputStream.writeObject(sharedSate.m.getFlightRecord(str));
         }
     }
+
+//    public class getHeadingCommand implements Command{
+//
+//        @Override
+//        public void execute(String input) throws IOException, ClassNotFoundException {
+//            sharedSate.out2agent.println(input);
+//            sharedSate.inFromAgent.readLine();
+//        }
+//    }
     // view commands
 
     public class shutDown implements Command {
@@ -329,6 +340,51 @@ public class Commands {
     public class ListOfActiveAgents implements Command {
         @Override
         public void execute(String input) throws IOException {
+
+        }
+    }
+
+    ///////////interpreter//////////////////////////////////////////
+
+    public class InterpreterCommand implements Command{
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException, InterruptedException {
+            //sharedSate.out2agent.println("start flight");
+            Var brakes = new Var("brakes");
+            Var rudder = new Var("rudder");
+            Var aileron = new Var("aileron");
+            Var elevator = new Var("elevator");
+            Var alt = new Var("alt");
+            Var heading = new Var("heading");
+            Var roll = new Var("roll");
+            Var pitch = new Var("pitch");
+            sharedSate.out2agent.println("set brakes 0");
+            brakes.setValue(0);
+            sharedSate.out2agent.println("set throttle 1");
+            sharedSate.out2agent.println("get heading");
+            float h0 = Float.parseFloat(sharedSate.inFromAgent.readLine());
+            while (alt.getValue() < 1000) {
+                sharedSate.out2agent.println("get heading");
+                heading.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                rudder.setValue((h0-heading.getValue())/20);
+                sharedSate.out2agent.println("set rudder " + rudder.getValue());
+                sharedSate.out2agent.println("get roll");
+                roll.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                aileron.setValue(-roll.getValue()/70);
+                sharedSate.out2agent.println("set aileron " + aileron.getValue());
+                sharedSate.out2agent.println("get pitch");
+                pitch.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                elevator.setValue(pitch.getValue()/50);
+                sharedSate.out2agent.println("set elevators " +elevator.getValue());
+                sharedSate.out2agent.println("get alt");
+                alt.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {throw new RuntimeException(e);}
+
+            }
+            new endFlightCommand().execute("end flight");
+            System.out.println("done");
 
         }
     }

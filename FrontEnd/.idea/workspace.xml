@@ -2,74 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d9712b81-5192-4b11-b880-fba97328712c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontEndFx.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Agent/Agent/properties.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Agent/Agent/properties.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/AnomalyReport.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/AnomalyReport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$Command.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$Command.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$DefaultIO.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$DefaultIO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$ExampleCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$ExampleCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$Setting.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$Setting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$SharedState.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$SharedState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$analayze.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$analayze.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$anomalyDetect.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$anomalyDetect.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$display.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$display.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$turnoff.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$turnoff.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands$uploadCSV.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands$uploadCSV.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Commands.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Commands.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/CorrelatedFeatures.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/CorrelatedFeatures.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Line.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/Point.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/SimpleAnomalyDetector.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/SimpleAnomalyDetector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/StatLib.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/StatLib.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/TimeSeries.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/TimeSeries.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/algorithms/TimeSeriesAnomalyDetector.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/algorithms/TimeSeriesAnomalyDetector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/AnomalyReport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$Command.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$DefaultIO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$ExampleCommand.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$Setting.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$SharedState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$analayze.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$anomalyDetect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$display.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$turnoff.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands$uploadCSV.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Commands.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/CorrelatedFeatures.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/model/Data.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Line.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Model.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/model/Model.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Plane.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/model/Plane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/Point.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/SimpleAnomalyDetector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/StatLib.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/TimeSeries.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/model/TimeSeriesAnomalyDetector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/necessary_classes/FlightData.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/necessary_classes/FlightData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/necessary_classes/Location.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/necessary_classes/Location.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/necessary_classes/Plane.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/necessary_classes/Plane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/necessary_classes/TimeSeries.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/necessary_classes/TimeSeries.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/view/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/view/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/view/MainWindowController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/view/MainWindowController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/view/MainWindowController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/view/MainWindowController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/view/MainWindowController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/view/MainWindowController$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/view/MainWindowController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/view/MainWindowController$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/view/MainWindowController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/view/MainWindowController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewClocks/ClockController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewClocks/ClockController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewGraph/GraphController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewGraph/GraphController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewJoystick/JoystickController$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewJoystick/JoystickController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewJoystick/JoystickController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewModel/ViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewModel/ViewModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/viewPlay/PlayController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/viewPlay/PlayController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Agent/test_controller/out/production/test_controller/test/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Agent/test_controller/out/production/test_controller/test/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Agent/test_controller/src/test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Agent/test_controller/src/test/Test.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +24,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Agent/Agent" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -123,6 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1655729600599</updated>
       <workItem from="1655729601980" duration="660000" />
+      <workItem from="1655803320744" duration="13000" />
     </task>
     <servers />
   </component>

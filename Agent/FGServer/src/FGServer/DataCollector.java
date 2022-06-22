@@ -173,23 +173,21 @@ public class DataCollector {
     }
 
     public String getAlt() {
-        return symbolTable.get("altitude-ft");
+        return symbolTable.get("encoder_indicated-altitude-ft");
     }
 
-    public String getHeading() {
-        return symbolTable.get("heading-deg");
-    }
+    public String getHeading() { return symbolTable.get("indicated-heading-deg");}
 
     public String getAirSpeed() {
-        return symbolTable.get("airspeed-kt");
+        return symbolTable.get("airspeed-indicator_indicated-speed-kt");
     }
 
     public String getRoll() {
-        return symbolTable.get("roll-deg");
+        return symbolTable.get("attitude-indicator_indicated-roll-deg");
     }
 
     public String getPitch() {
-        return symbolTable.get("pitch-deg");
+        return symbolTable.get("attitude-indicator_internal-pitch-deg");
     }
 
     public FlightData getFlight() {

@@ -8,7 +8,7 @@ view_client_port,5405
 backend_ip,127.0.0.1
 backend_port,6060
 stream_port,5050
-planeId,107
-flightId,127
+planeId,108
+flightId,165
 streams_ip,127.0.0.1
 streams_port,5000

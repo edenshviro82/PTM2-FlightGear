@@ -60,7 +60,7 @@ public class Controller implements Observer {
         commandMap.put("get throttle", c.new getThrottleCommand());
         commandMap.put("get elevators", c.new getElevatorCommand());
         commandMap.put("get alt", c.new getAltCommand());
-        //commandMap.put("get heading", c.new getHeadingCommand());
+//        commandMap.put("get heading", c.new getHeadingCommand());
         commandMap.put("get airspeed", c.new getAirspeedCommand());
         commandMap.put("get roll", c.new getRollCommand());
         commandMap.put("get pitch", c.new getPitchCommand());
@@ -83,6 +83,7 @@ public class Controller implements Observer {
         commandMap.put("active threads", c.new listOfThreads());
         commandMap.put("waiting tasks", c.new listOfTasks());
         commandMap.put("active planes", c.new ListOfActiveAgents());
+        commandMap.put("run script", c.new InterpreterCommand());
     }
     private void inniteViewMap(){
         this.viewdMap = new HashMap<>();
@@ -113,7 +114,7 @@ public class Controller implements Observer {
 
     // open frontend server
     public void openServer() throws IOException, ClassNotFoundException {
-        ServerSocket ss = new ServerSocket(7070);
+        ServerSocket ss = new ServerSocket(7171);
         System.out.println("server is running....");
         Socket s = ss.accept();
         //try
@@ -137,7 +138,7 @@ public class Controller implements Observer {
                         commandMap.get(command).execute(str);
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
+                    } catch (ClassNotFoundException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 });
