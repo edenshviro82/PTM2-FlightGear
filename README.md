@@ -7,4 +7,4 @@ Each section has his own responsibilities and abilities.
 The project is very comprehensive: we get a lot of data from our plane for analytics. We also have the ability to control the plane by using the agent's abilities. 
 As a whole, our project is a system in which allows you to control, learn and receive data and manage your fleet in the most elegant and proficient way to meet our needs.
 
-![Alt text]([http://class_diagrams/arch-page1-for-readme.jpg](https://github.com/edenshviro82/PTM2-FlightGear/blob/main/class_diagrams/arch-page1-for-readme.jpg) "Architecture")
+![Alt text](https://github.com/edenshviro82/PTM2-FlightGear/blob/main/class_diagrams/arch-page1-for-readme.jpg "Architecture")
