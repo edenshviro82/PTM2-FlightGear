@@ -14,18 +14,19 @@ public class View extends Observable {
     Socket waiting;
     Socket connected;
     private String Command;
+    public Thread t;
 
-//    public View() {
-//        new Thread(this::runViewServer).start();
-//    }
+    public View() {
+        t = new Thread(this::runViewServer);
+        t.start();
+    }
 
     public void runViewServer() {
         try {
             ServerSocket server = new ServerSocket(Integer.parseInt(Properties.map.get("view_client_port")));
-            System.out.println("view: waiting for client to connect...");
-            server.setSoTimeout(1000);
             while (true) {
                 try {
+                    System.out.println("view: waiting for client to connect...");
                     this.waiting = server.accept();
                     System.out.println("Client is connected to my service");
                     BufferedReader in = new BufferedReader(new InputStreamReader(waiting.getInputStream()));

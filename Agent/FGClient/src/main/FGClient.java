@@ -35,7 +35,7 @@ public class FGClient implements FGClientApi {
 
     public void runServer() {
         try {
-            server = new ServerSocket(5403);
+            server = new ServerSocket(Integer.parseInt(Client.properties.get("model_port")));
             System.out.println("server is open");
             server.setSoTimeout(1000);
             String line;

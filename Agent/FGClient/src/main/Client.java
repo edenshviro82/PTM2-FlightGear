@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Client {
     //hash map for properties
-    private final Map<String, String> properties;
+    public static Map<String, String> properties;
     private Socket fg;
     private PrintWriter out2fg;
 
@@ -33,7 +33,7 @@ public class Client {
 
     private void clientConnect() {
         try {
-            fg = new Socket(properties.get("ip"), Integer.parseInt(properties.get("port")));
+            fg = new Socket(properties.get("ip"), Integer.parseInt(properties.get("fg_port")));
             out2fg = new PrintWriter(fg.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();

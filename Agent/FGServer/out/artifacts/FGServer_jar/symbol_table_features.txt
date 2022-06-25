@@ -1,0 +1,12 @@
+aileron
+throttle
+rudder
+speedbrake
+elevator
+latitude-deg
+longitude-deg
+encoder_indicated-altitude-ft
+indicated-heading-deg
+airspeed-indicator_indicated-speed-kt
+attitude-indicator_indicated-roll-deg
+attitude-indicator_internal-pitch-deg

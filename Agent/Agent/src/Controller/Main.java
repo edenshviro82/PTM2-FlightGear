@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        new Properties("properties.txt");
+        new Properties("agent_properties.txt");
         Model m = new Model();
         View v = new View();
         Controller c = new Controller(m, v);

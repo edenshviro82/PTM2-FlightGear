@@ -1,0 +1,8 @@
+ip,127.0.0.1
+fg_port,5402
+model_port,5403
+aileron,set /controls/flight/aileron
+elevators,set /controls/flight/elevator
+rudder,set /controls/flight/rudder
+throttle,set /controls/engines/current-engine/throttle
+brakes,set /controls/flight/speedbrake

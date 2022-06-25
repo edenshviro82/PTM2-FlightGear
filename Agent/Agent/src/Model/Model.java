@@ -15,7 +15,7 @@ public class Model extends Observable implements ModelAPI {
     public BufferedReader fromFGServer;
     ObjectInputStream objectInputStream;
     //FGClient's streams
-    PrintWriter out2FGClient;
+    public PrintWriter out2FGClient;
 
     public Model() {
         this.connectToFGClient();

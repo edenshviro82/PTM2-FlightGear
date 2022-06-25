@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="FGServer">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/FGServer_jar/FGServer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

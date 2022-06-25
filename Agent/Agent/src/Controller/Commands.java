@@ -225,6 +225,20 @@ public class Commands {
         }
     }
 
+    public class viewShutDownCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException {
+            System.out.println("flight terminated");
+            sharedSate.out2back.close();
+            sharedSate.objectOutputStream.close();
+            sharedSate.m.out2FGServer.println("shut down");
+            sharedSate.m.out2FGClient.println("bye");
+            sharedSate.m.out2FGServer.close();
+            sharedSate.m.fromFGServer.close();
+            sharedSate.v.t.stop();
+        }
+    }
+
     public class viewCLI implements Command {
         HashMap<String, Command> map;
         PrintWriter out;
@@ -240,6 +254,7 @@ public class Commands {
             map.put("set rudder", new setRudderCommand());
             map.put("set brakes", new setBreaksCommand());
             map.put("print stream", new viewPrintStreamCommand(this.out));
+            map.put("shut down", new viewShutDownCommand());
         }
 
         @Override
@@ -249,6 +264,7 @@ public class Commands {
             String command = split.length > 1 ? split[0] + " " + split[1] : split[0];
             if (this.map.containsKey(command))
                 map.get(command).execute(text);
+            sharedSate.v.getConnected().close();
         }
     }
 }

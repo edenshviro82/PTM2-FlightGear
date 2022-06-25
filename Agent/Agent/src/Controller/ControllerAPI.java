@@ -42,4 +42,6 @@ public interface ControllerAPI {
     public void getFlight();
 
     public void getStream();
+
+    public void getPlane();
 }

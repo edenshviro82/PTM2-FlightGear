@@ -123,6 +123,7 @@ public class FGServer implements ServerService{
         commandMap.put("get plane", this::getPlane);
         commandMap.put("start flight",this::startFlight);
         commandMap.put("end flight",this::endFlight);
+        commandMap.put("shut down", this::shutDown);
     }
 
 
@@ -203,6 +204,17 @@ public class FGServer implements ServerService{
         try {
             objectOutputStream.writeObject(dataCollector.getPlane());
             objectOutputStream.flush();
+        } catch (IOException e) {e.printStackTrace();}
+    }
+
+    public void shutDown()  {
+        try {
+            this.stop = true;
+            outStream.close();
+            this.objectOutputStream.close();
+            this.outStream.close();
+            this.flightGear.close();
+            this.es.shutdown();
         } catch (IOException e) {e.printStackTrace();}
     }
 

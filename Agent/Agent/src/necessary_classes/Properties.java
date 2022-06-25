@@ -16,7 +16,7 @@ public class Properties {
             map = new HashMap<>();
             LinkedList<String> output = new LinkedList<>();
             //read the properties text file and store in data structure with updated flightId
-            Scanner sc = new Scanner(new FileReader("properties.txt"));
+            Scanner sc = new Scanner(new FileReader("agent_properties.txt"));
             while (sc.hasNext()) {
                 String line = sc.next();
                 output.add(line);
