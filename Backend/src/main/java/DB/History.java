@@ -11,7 +11,7 @@ public class History {
     private byte[] timeseries;
     private String flightid;
 
-    @Id
+    @Basic
     @Column(name = "planeid")
     public String getPlaneid() {
         return planeid;
@@ -31,7 +31,8 @@ public class History {
         this.timeseries = timeseries;
     }
 
-    @Basic
+
+    @Id
     @Column(name = "flightid")
     public String getFlightid() {
         return flightid;

@@ -23,8 +23,8 @@ public class Controller implements Observer {
     HashMap<String,Runnable> viewdMap;
     Commands c ;
     ExecutorService es  ;
-    PrintWriter frontStreamWr;
-    private boolean stop ;
+    public PrintWriter frontStreamWr;
+    public static boolean run = true ;
     public Controller(Model m, View v){
         this.m=m;
         m.addObserver(this);
@@ -34,6 +34,7 @@ public class Controller implements Observer {
         this.es = Executors.newFixedThreadPool(6);
         this.c = new Commands(m,v);
         initCommandMap();
+        inniteViewMap();
         this.es.execute(() -> {
             try {
                 openServer();
@@ -44,6 +45,7 @@ public class Controller implements Observer {
         this.es.execute(this::openAgentsStreamServer);
         this.es.execute(this::openAgentsServer);
         this.es.execute(this::frontStreamServer);
+
     }
     //Command map .
 
@@ -60,7 +62,7 @@ public class Controller implements Observer {
         commandMap.put("get throttle", c.new getThrottleCommand());
         commandMap.put("get elevators", c.new getElevatorCommand());
         commandMap.put("get alt", c.new getAltCommand());
-//        commandMap.put("get heading", c.new getHeadingCommand());
+        //commandMap.put("get heading", c.new getHeadingCommand());
         commandMap.put("get airspeed", c.new getAirspeedCommand());
         commandMap.put("get roll", c.new getRollCommand());
         commandMap.put("get pitch", c.new getPitchCommand());
@@ -77,24 +79,28 @@ public class Controller implements Observer {
         commandMap.put("start flight", c.new startFlightCommand());
         commandMap.put("end flight", c.new endFlightCommand());
         commandMap.put("get planes", c.new getPlanePositionCommand());
-        // command for view
-        commandMap.put("shut down", c.new shutDown());
-        commandMap.put("do reset", c.new reset());
-        commandMap.put("active threads", c.new listOfThreads());
-        commandMap.put("waiting tasks", c.new listOfTasks());
-        commandMap.put("active planes", c.new ListOfActiveAgents());
         commandMap.put("run script", c.new InterpreterCommand());
+        // command for view
+//        commandMap.put("shut down", c.new shutDown());
+//        commandMap.put("do reset", c.new reset());
+//        commandMap.put("active threads", c.new listOfThreads());
+//        commandMap.put("waiting tasks", c.new listOfTasks());
+//        commandMap.put("active planes", c.new ListOfActiveAgents());
+
     }
     private void inniteViewMap(){
         this.viewdMap = new HashMap<>();
         viewdMap.put("shut down",()->{
             this.v.sendResponse("server is closed");
-            this.es.shutdown();
+            this.es.shutdownNow();
+            this.run = false;
 
         });
         viewdMap.put("active threads",()->{
             if (es instanceof ThreadPoolExecutor){
                 this.v.sendResponse(""+((ThreadPoolExecutor)es).getActiveCount());
+
+
             }
 
 
@@ -114,7 +120,7 @@ public class Controller implements Observer {
 
     // open frontend server
     public void openServer() throws IOException, ClassNotFoundException {
-        ServerSocket ss = new ServerSocket(7171);
+        ServerSocket ss = new ServerSocket(7070);
         System.out.println("server is running....");
         Socket s = ss.accept();
         //try
@@ -124,7 +130,7 @@ public class Controller implements Observer {
         System.out.println("client has connected");
         PrintWriter out = new PrintWriter(s.getOutputStream());
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        while (true) {
+        while (run) {
             String str = in.readLine();
             if (str.equals("start flight")){
                 es.execute(this::sendStreams);
@@ -136,9 +142,7 @@ public class Controller implements Observer {
                 es.execute(() -> {
                     try {
                         commandMap.get(command).execute(str);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException | InterruptedException e) {
+                    } catch (IOException | InterruptedException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 });
@@ -147,6 +151,7 @@ public class Controller implements Observer {
             if (str.equals("bye"))
                 break;
         }
+
     }
 
     public void frontStreamServer() {
@@ -165,7 +170,7 @@ public class Controller implements Observer {
         try {
             ss = new ServerSocket(6060);
             System.out.println("agents server is open.....");
-            while(true)
+            while(run)
                 try {
             System.out.println(" waiting for agent....");
             Socket agent = ss.accept();
@@ -198,7 +203,7 @@ public class Controller implements Observer {
         try {
             stream = new ServerSocket(5050);
             System.out.println("agents stream server is open.....");
-            while(true)
+            while(run)
                 try {
                     System.out.println(" waiting for agent...");
                     Socket agent = stream.accept();
@@ -225,9 +230,9 @@ public class Controller implements Observer {
     }
 
     public void sendStreams() {
-        while (!stop) {
+        while (run) {
             try {
-                frontStreamWr.println(Controller.activePlanes.get("107").streamIn.readLine());
+                frontStreamWr.println(Controller.activePlanes.get(Commands.id).streamIn.readLine());
             } catch (IOException e) {e.printStackTrace();}
         }
     }

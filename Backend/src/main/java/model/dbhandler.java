@@ -112,12 +112,17 @@ public class dbhandler  implements dbhandler_api  {
 
 
 
-    @Override // pulls a flight record according to flight id as a timeseries
+    @Override // pulls a flight record according to flight id as a timeSeries
     public TimeSeries getFlightRecord(String id) throws IOException, ClassNotFoundException {
         for (int i = 0; i < history.getResultList().size() ; i++) {
+            String check = history.getResultList().get(i).getFlightid();
             if (history.getResultList().get(i).getFlightid().equals(id)){
                byte [] bytes = history.getResultList().get(i).getTimeseries();
-               return (TimeSeries) this.bytesToObject(bytes);
+               TimeSeries timeSeries=(TimeSeries) this.bytesToObject(bytes);
+                PrintWriter out = new PrintWriter(new FileWriter("matias.csv"));
+                timeSeries.getDataStreams().forEach((out::println));
+
+
             }
         }
         return null;
@@ -163,7 +168,6 @@ public class dbhandler  implements dbhandler_api  {
         transaction.commit();
 
     }
-
     @Override // a help function to other function
     public boolean isFirstFlight(String pid) {
         for (int i = 0; i < plane.getResultList().size() ; i++) {
@@ -182,34 +186,4 @@ public class dbhandler  implements dbhandler_api  {
         return null;
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        dbhandler db = new dbhandler();
-//        FlightData flightData = new FlightData();
-//        Location location = new Location();
-//        location.setLongitude(100);
-//        location.setLatitude(100);
-//        flightData.setFlightId("697");
-//        flightData.setPlaneId("481");
-//        byte[] amit =db.objectToBytes(location);
-//        Location location1 =new Location();
-//        location1 =(Location) db.bytesToObject(amit);
-//        flightData.setMiles(4000);
-//        flightData.setMaxAltitude(150);
-//        java.sql.Date date = new java.sql.Date(13);
-//        java.sql.Date date1 = new java.sql.Date(19);
-//        flightData.setStartTime(date);
-//        flightData.setEndTime(date1);
-//        flightData.setFlyTo(location);
-//        flightData.setFlyFrom(location);
-//        flightData.setMaxSpeed(4300);
-//        db.setFinishedFlight(flightData);
-//        int x = 1;
-//        int y = 2;
-//        System.out.println(x+y);
-        db.getMilesPerMonth(6);
-        HashMap<Integer,Integer> map = new HashMap<>();
-        map = db.getFleetSize(6);
-        System.out.println("eden");
-
-    }
 }

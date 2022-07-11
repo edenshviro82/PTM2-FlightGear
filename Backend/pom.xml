@@ -43,6 +43,16 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <mainfestFile>src/main/resources/META-INF/MAINFEST.MF</mainfestFile>
+                    </archive>
+                </configuration>
+                <version>3.3</version>
+            </plugin>
         </plugins>
     </build>
 </project>

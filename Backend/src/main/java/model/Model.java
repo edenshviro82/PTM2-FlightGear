@@ -60,5 +60,3 @@ public class Model extends Observable implements Model_api {
         return db.dateFirstFlight(pid);
     }
 }
-
-

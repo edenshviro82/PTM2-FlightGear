@@ -28,26 +28,33 @@ public class View extends Observable  implements viewIF{
 
     public void runViewServer() {
         try {
-            ServerSocket server = new ServerSocket(9090);
+
+            ServerSocket server = new ServerSocket(5090);
             System.out.println("view: waiting for backend view to connect...");
             server.setSoTimeout(1000);
-            while(true) {
+            while (Controller.run) {
                 try {
                     this.waiting = server.accept();
                     System.out.println("backend view is connected to my service");
                     BufferedReader in = new BufferedReader(new InputStreamReader(waiting.getInputStream()));
-                    this.printWriterView = new PrintWriter(waiting.getOutputStream(),true);
-                    this.setCommand(in.readLine());
-                    this.connected = waiting;
-                    this.setChanged();
-                    this.notifyObservers();
+                    this.printWriterView = new PrintWriter(waiting.getOutputStream(), true);
+                    while (Controller.run) {
+                        String inCommand = in.readLine();
+                        this.setCommand(inCommand);
+                        this.connected = waiting;
+                        this.setChanged();
+                        this.notifyObservers();
+                    }
+                    }
+                catch(SocketTimeoutException e){
+                    }
                 }
-                catch(SocketTimeoutException e) { }
+            } catch(IOException e){
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
+
 
     public Socket getConnected() { return connected; }
 
@@ -57,6 +64,8 @@ public class View extends Observable  implements viewIF{
     }
 
     public void setCommand(String command) {Command = command;}
+
+
 
 
 

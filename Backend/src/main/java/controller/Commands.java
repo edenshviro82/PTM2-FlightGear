@@ -2,6 +2,7 @@ package controller;
 
 import command.Command;
 import model.Model;
+import model.Var;
 import necessary_classes.FlightData;
 import necessary_classes.Plane;
 import necessary_classes.TimeSeries;
@@ -14,13 +15,13 @@ import java.util.List;
 
 public class Commands {
     //the shared state of all commands
+    public static String id;
     protected class SharedSate {
         //agent
         PrintWriter out2agent;
         BufferedReader inFromAgent;
         ObjectInputStream objectInputStream;
         BufferedReader streamInFromAgent;
-
         //front
         PrintWriter out2front;
         BufferedReader inFromFront;
@@ -35,7 +36,6 @@ public class Commands {
         public SharedSate(Model m,View v) {
             this.m = m;
             this.v = v;
-
         }
 
     }
@@ -66,6 +66,7 @@ public class Commands {
         public void execute(String input) throws IOException, ClassNotFoundException {
             String agentId = input.split(" ")[2];
             setAgentStreams(Controller.activePlanes.get(agentId));
+            id=agentId;
         }
     }
 
@@ -190,7 +191,7 @@ public class Commands {
     public class getPlanePositionCommand implements Command {
         @Override
         public void execute(String input) throws IOException, ClassNotFoundException {
-            List<Plane> planesArr = new ArrayList<Plane>();
+            ArrayList<Plane> planesArr = new ArrayList<Plane>();
             Controller.activePlanes.forEach((s, aSocket) ->{
                 try {
                     System.out.println("inside foreach");
@@ -203,6 +204,8 @@ public class Commands {
                 }
             });
             sharedSate.objectOutputStream.writeObject(planesArr);
+            System.out.println("The Plane "+planesArr.get(0).plainId);
+
         }
 
     }
@@ -336,5 +339,47 @@ public class Commands {
 
 
 
+    public  class InterpreterCommand implements Command {
+        @Override
+        public void execute(String input) throws IOException, ClassNotFoundException, InterruptedException {
+            //sharedSate.out2agent.println("start flight");
+            Var brakes = new Var("brakes");
+            Var rudder = new Var("rudder");
+            Var aileron = new Var("aileron");
+            Var elevator = new Var("elevator");
+            Var alt = new Var("alt");
+            Var heading = new Var("heading");
+            Var roll = new Var("roll");
+            Var pitch = new Var("pitch");
+            sharedSate.out2agent.println("set brakes 0");
+            brakes.setValue(0);
+            sharedSate.out2agent.println("set throttle 1");
+            sharedSate.out2agent.println("get heading");
+            float h0 = Float.parseFloat(sharedSate.inFromAgent.readLine());
+            while (alt.getValue() < 1000) {
+                sharedSate.out2agent.println("get heading");
+                heading.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                rudder.setValue((h0 - heading.getValue()) / 20);
+                sharedSate.out2agent.println("set rudder " + rudder.getValue());
+                sharedSate.out2agent.println("get roll");
+                roll.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                aileron.setValue(-roll.getValue() / 70);
+                sharedSate.out2agent.println("set aileron " + aileron.getValue());
+                sharedSate.out2agent.println("get pitch");
+                pitch.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                elevator.setValue(pitch.getValue() / 50);
+                sharedSate.out2agent.println("set elevators " + elevator.getValue());
+                sharedSate.out2agent.println("get alt");
+                alt.setValue(Float.parseFloat(sharedSate.inFromAgent.readLine()));
+                try {
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
+            }
+            new endFlightCommand().execute("end flight");
+            System.out.println("done");
+        }
+    }
 }

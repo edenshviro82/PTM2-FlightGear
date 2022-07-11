@@ -10,6 +10,7 @@ public class Plane implements Serializable {
     public double speed;
     public Location location;
 
+
     public String getPlainId() {return plainId;}
     public void setPlainId(String plainId) {this.plainId = plainId;}
     public String getFlightID() {return flightID;}
